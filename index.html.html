@@ -145,9 +145,9 @@
     }
     .hero-bg-img {
       position: absolute; inset: 0;
-      background-image: url('WhatsApp%20Image%202024-08-08%20at%2005.03.59_fef6c7d5.jpg');
+      background-image: url('WhatsApp%20Image%202024-08-08%20at%2005.03.59_bf6a5850.jpg');
       background-size: cover;
-      background-position: center 20%;
+      background-position: center 30%;
       z-index: 0;
     }
     /* Subtle grid overlay */
@@ -384,6 +384,104 @@
     .botcheck { display: none !important; }
 
     /* ════════════════════════════════════
+       LIGHTBOX
+    ════════════════════════════════════ */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(8,8,8,0.95);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: clamp(1rem, 4vw, 3rem);
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-inner {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2.5rem;
+      max-width: 1100px; width: 100%;
+      max-height: 90vh;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .lightbox.open .lightbox-inner { transform: translateY(0) scale(1); }
+    /* Image side */
+    .lightbox-img-wrap {
+      position: relative; overflow: hidden; border-radius: 6px;
+      background: var(--dark-3);
+    }
+    .lightbox-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: contain; object-position: center;
+      max-height: 82vh; display: block;
+    }
+    /* Info side */
+    .lightbox-info {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 1rem 0; overflow-y: auto;
+    }
+    .lightbox-tag {
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent-pale); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .lightbox-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent-pale); }
+    .lightbox-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 400;
+      color: var(--text-light); line-height: 1.15; margin-bottom: 1.25rem;
+    }
+    .lightbox-desc {
+      font-size: 0.9rem; color: rgba(245,240,235,0.6);
+      line-height: 1.75; font-weight: 300;
+    }
+    .lightbox-divider { width: 32px; height: 1px; background: var(--border-d); margin: 1.5rem 0; }
+    .lightbox-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 1.6rem; background: var(--accent);
+      color: var(--text-light); border-radius: var(--radius);
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; transition: background 0.2s; width: fit-content;
+    }
+    .lightbox-cta:hover { background: var(--accent-2); }
+    /* Close button */
+    .lightbox-close {
+      position: fixed; top: 1.5rem; right: 1.5rem;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid var(--border-d);
+      color: var(--text-light); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: background 0.2s;
+      z-index: 201;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.15); }
+    /* Expand hint on work cards */
+    .work-card { cursor: zoom-in; }
+    .work-expand-hint {
+      position: absolute; top: 1rem; right: 1rem;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 3; opacity: 0; transition: opacity 0.3s;
+    }
+    .work-card:hover .work-expand-hint { opacity: 1; }
+    .work-expand-hint svg { width: 14px; height: 14px; stroke: white; fill: none; stroke-width: 1.5; }
+    /* Mobile lightbox */
+    @media (max-width: 768px) {
+      .lightbox { align-items: flex-end; padding: 0; }
+      .lightbox-inner {
+        grid-template-columns: 1fr; gap: 0;
+        max-height: 95vh; border-radius: 12px 12px 0 0;
+        background: var(--dark-2); overflow: hidden;
+      }
+      .lightbox-img-wrap { border-radius: 0; max-height: 55vw; }
+      .lightbox-img-wrap img { max-height: 55vw; object-fit: cover; }
+      .lightbox-info { padding: 1.5rem; overflow-y: auto; max-height: 40vh; }
+      .lightbox-close { top: 0.75rem; right: 0.75rem; }
+    }
+
+    /* ════════════════════════════════════
        FOOTER
     ════════════════════════════════════ */
     .footer { background: var(--dark); border-top: 1px solid var(--border-d); padding: clamp(3rem, 5vw, 4.5rem) 0 2rem; }
@@ -542,6 +640,124 @@
       .footer-grid { padding-bottom: 2rem; }
       .footer-socials { gap: 1rem; }
     }
+
+    /* ─── STUDENT REVIEWS SECTION ─── */
+    .reviews-section {
+      background: var(--dark);
+      padding: 5rem 0 5.5rem;
+    }
+    .reviews-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .reviews-photo-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .reviews-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .reviews-photo-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(to top, rgba(12,12,12,0.85) 0%, transparent 100%);
+      font-size: 0.78rem;
+      color: var(--stone-2);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .reviews-form-side { display: flex; flex-direction: column; gap: 1.5rem; }
+    .reviews-header { display: flex; flex-direction: column; gap: 0.6rem; }
+    .reviews-header .label { color: var(--accent-pale); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .reviews-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.75rem, 3vw, 2.4rem); font-weight: 600; color: var(--warm); line-height: 1.15; }
+    .reviews-header p { font-size: 0.92rem; color: var(--stone-2); line-height: 1.65; max-width: 38ch; }
+    .review-form { display: flex; flex-direction: column; gap: 1rem; }
+    .review-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .review-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .review-field label { font-size: 0.72rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--stone); }
+    .review-field input,
+    .review-field textarea,
+    .review-field select {
+      background: var(--dark-2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: var(--warm);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .review-field input:focus,
+    .review-field textarea:focus,
+    .review-field select:focus {
+      border-color: var(--accent-pale);
+    }
+    .review-field textarea { min-height: 110px; }
+    .review-field select option { background: var(--dark-2); }
+    .review-stars { display: flex; gap: 0.35rem; align-items: center; }
+    .review-stars .star {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: rgba(255,255,255,0.15);
+      transition: color 0.15s;
+      user-select: none;
+      line-height: 1;
+    }
+    .review-stars .star.lit { color: #D4AF37; }
+    .review-submit-btn {
+      align-self: flex-start;
+      background: var(--accent);
+      color: var(--warm);
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .review-submit-btn:hover { background: var(--accent-2); transform: translateY(-1px); }
+    .review-submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .review-success {
+      display: none;
+      flex-direction: column;
+      gap: 0.6rem;
+      background: rgba(27,45,74,0.3);
+      border: 1px solid rgba(200,213,232,0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .review-success.show { display: flex; }
+    .review-success-icon { font-size: 1.5rem; }
+    .review-success h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--warm); }
+    .review-success p { font-size: 0.88rem; color: var(--stone-2); line-height: 1.6; }
+    .review-error { display: none; font-size: 0.82rem; color: #e07070; margin-top: 0.25rem; }
+    .review-error.show { display: block; }
+
+    @media (max-width: 768px) {
+      .reviews-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .reviews-photo-wrap { aspect-ratio: 3/2; }
+      .review-form-row { grid-template-columns: 1fr; }
+      .review-submit-btn { align-self: stretch; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .review-field input,
+      .review-field textarea,
+      .review-field select { font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -682,86 +898,189 @@
       <div class="work-grid reveal reveal-delay-2">
 
         <!-- ISA — Group delivery day -->
-        <div class="work-card">
+        <div class="work-card"
+          data-img="WhatsApp%20Image%202024-08-08%20at%2005.03.59_042cea4b.jpg"
+          data-tag="School · Varsity Collection"
+          data-title="ISA — International School of Almere, Class of 2024"
+          data-desc="Full varsity jacket campaign for the graduating class — custom embroidery, chenille patches, and individual name personalisation. Designed, produced, and delivered in 3 weeks.">
           <div class="work-card-img">
             <img src="WhatsApp%20Image%202024-08-08%20at%2005.03.59_042cea4b.jpg" alt="ISA Class of 2024 — full group wearing varsity jackets on delivery day" />
           </div>
           <div class="work-card-overlay">
             <div class="work-tag">School · Varsity Collection</div>
             <div class="work-title">ISA — International School of Almere, Class of 2024</div>
-            <div class="work-desc">Full varsity jacket campaign for the graduating class — custom embroidery, chenille patches, and individual name personalisation. Designed, produced, and delivered in 3 weeks.</div>
+            <div class="work-desc">Full varsity jacket campaign for the graduating class — custom embroidery, chenille patches, and individual name personalisation.</div>
           </div>
+          <div class="work-expand-hint"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
         </div>
 
         <!-- ISA — Jacket detail, skatepark -->
-        <div class="work-card">
+        <div class="work-card"
+          data-img="WhatsApp%20Image%202024-08-08%20at%2005.03.59_2e344814.jpg"
+          data-tag="School · Embroidery Detail"
+          data-title="ISA Class of '24 — Back Panel Detail"
+          data-desc="Hand-drawn wing embroidery, custom lettering, and chenille numerals. Every detail designed in-house and produced to a premium standard.">
           <div class="work-card-img">
             <img src="WhatsApp%20Image%202024-08-08%20at%2005.03.59_2e344814.jpg" alt="Class of '24 varsity jacket back detail — skatepark shoot" />
           </div>
           <div class="work-card-overlay">
             <div class="work-tag">School · Embroidery Detail</div>
             <div class="work-title">ISA Class of '24 — Back Panel Detail</div>
-            <div class="work-desc">Hand-drawn wing embroidery, custom lettering, and chenille numerals. Every detail designed in-house and produced to a premium standard.</div>
+            <div class="work-desc">Hand-drawn wing embroidery, custom lettering, and chenille numerals. Designed in-house.</div>
           </div>
+          <div class="work-expand-hint"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
         </div>
 
-        <!-- AICS — Jacket flat lay -->
-        <div class="work-card">
+        <!-- AICS — Hanger shot -->
+        <div class="work-card"
+          data-img="3.png"
+          data-tag="School · Custom Apparel"
+          data-title="AICS — Amsterdam International Community School"
+          data-desc="Bespoke varsity jacket collection featuring school colours, embroidered crests, and premium wool-leather construction. A signature piece for the school community.">
           <div class="work-card-img">
             <img src="3.png" alt="AICS custom varsity jacket — clean hanger product shot" />
           </div>
           <div class="work-card-overlay">
             <div class="work-tag">School · Custom Apparel</div>
             <div class="work-title">AICS — Amsterdam International Community School</div>
-            <div class="work-desc">Bespoke varsity jacket collection featuring school colours, embroidered crests, and premium wool-leather construction. A signature piece for the school community.</div>
+            <div class="work-desc">Bespoke varsity jacket with embroidered crests and premium wool-leather construction.</div>
           </div>
+          <div class="work-expand-hint"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
         </div>
 
         <!-- ISA — Portrait -->
-        <div class="work-card">
+        <div class="work-card"
+          data-img="WhatsApp%20Image%202024-08-08%20at%2005.03.59_46e6b4ce.jpg"
+          data-tag="School · Campaign Shoot"
+          data-title="ISA — Varsity Jacket Lookbook"
+          data-desc="On-location editorial shoot showcasing the finished product. Styled to feel personal, crafted to last. Every jacket tells a story.">
           <div class="work-card-img">
             <img src="WhatsApp%20Image%202024-08-08%20at%2005.03.59_46e6b4ce.jpg" alt="Student wearing ISA varsity jacket — front portrait" />
           </div>
           <div class="work-card-overlay">
             <div class="work-tag">School · Campaign Shoot</div>
             <div class="work-title">ISA — Varsity Jacket Lookbook</div>
-            <div class="work-desc">On-location editorial shoot showcasing the finished product. Styled to feel personal, crafted to last. Every jacket tells a story.</div>
+            <div class="work-desc">Styled to feel personal, crafted to last. Every jacket tells a story.</div>
           </div>
+          <div class="work-expand-hint"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
         </div>
 
         <!-- Sports kit -->
-        <div class="work-card">
+        <div class="work-card"
+          data-img="generated-image%20(5).png"
+          data-tag="Sports · Kit Design"
+          data-title="Endless Studios — Custom Match Kit"
+          data-desc="Fully sublimated match day kits with moisture-wicking fabric, custom colourways, and squad numbering. Built for performance on the pitch.">
           <div class="work-card-img">
             <img src="generated-image%20(5).png" alt="Custom football match kit" />
           </div>
           <div class="work-card-overlay">
             <div class="work-tag">Sports · Kit Design</div>
             <div class="work-title">Endless Studios — Custom Match Kit</div>
-            <div class="work-desc">Fully sublimated match day kits with moisture-wicking fabric, custom colourways, and squad numbering. Built for performance on the pitch.</div>
+            <div class="work-desc">Fully sublimated kits with custom colourways and squad numbering.</div>
           </div>
+          <div class="work-expand-hint"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
         </div>
 
         <!-- ISA — Delivery event -->
-        <div class="work-card">
+        <div class="work-card"
+          data-img="WhatsApp%20Image%202024-08-08%20at%2005.03.59_482e310c.jpg"
+          data-tag="School · Fulfillment"
+          data-title="ISA — Delivery Day"
+          data-desc="Individually packaged and labelled, ready for handover. We handle the logistics from production floor to school hall.">
           <div class="work-card-img">
             <img src="WhatsApp%20Image%202024-08-08%20at%2005.03.59_482e310c.jpg" alt="ISA jacket delivery day — packing and distribution" />
           </div>
           <div class="work-card-overlay">
             <div class="work-tag">School · Fulfillment</div>
             <div class="work-title">ISA — Delivery Day</div>
-            <div class="work-desc">Individually packaged and labelled, ready for handover. We handle the logistics from production floor to school hall.</div>
+            <div class="work-desc">Individually packaged and ready for handover. Production floor to school hall.</div>
           </div>
+          <div class="work-expand-hint"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
         </div>
 
         <!-- Graduation hoodie — full-width cinematic card -->
-        <div class="work-card">
+        <div class="work-card"
+          data-img="isalmere_hoodie_back.png"
+          data-tag="School · Graduation Campaign"
+          data-title="ISAlmere — Graduation Class of 2026"
+          data-desc="Custom hoodie campaign for the graduating class — arched typography, script lettering, full class name roster, and individual EST: 2002 detailing. Designed, printed, and delivered for the entire year group.">
           <div class="work-card-img">
             <img src="isalmere_hoodie_back.png" alt="ISAlmere Graduation Class of 2026 — navy hoodie back print with full class roster" />
           </div>
           <div class="work-card-overlay">
             <div class="work-tag">School · Graduation Campaign</div>
             <div class="work-title">ISAlmere — Graduation Class of 2026</div>
-            <div class="work-desc">Custom hoodie campaign for the graduating class — arched typography, script lettering, full class name roster, and individual "EST: 2002" detailing. Designed, printed, and delivered for the entire year group.</div>
+            <div class="work-desc">Custom hoodie with full class name roster, arched typography, and script lettering. Delivered for the entire year group.</div>
+          </div>
+          <div class="work-expand-hint"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ STUDENT REVIEWS ═══ -->
+  <section class="reviews-section">
+    <div class="container">
+      <div class="reviews-layout">
+
+        <!-- Left: Graduation photo -->
+        <div class="reviews-photo-wrap reveal">
+          <img src="WhatsApp%20Image%202024-08-08%20at%2005.03.59_bf6a5850.jpg" alt="Students at graduation ceremony holding Endless Studios tote bags" />
+          <div class="reviews-photo-caption">Graduation Ceremony · Amsterdam · Class of 2024</div>
+        </div>
+
+        <!-- Right: Review form -->
+        <div class="reviews-form-side reveal reveal-delay-1">
+          <div class="reviews-header">
+            <span class="label">From Our Students</span>
+            <h2>Share your<br />experience</h2>
+            <p>Wore our gear on your graduation day? We'd love to hear from you. Your message means everything to us — and inspires the next class.</p>
+          </div>
+
+          <form id="reviewForm" class="review-form" novalidate>
+            <input type="hidden" name="access_key" value="a4307aed-8c53-4d46-8eec-e94a108885ad" />
+            <input type="hidden" name="subject" value="Student Review — Endless Studios" />
+            <input type="hidden" name="from_name" value="Endless Studios — Student Review" />
+            <input type="checkbox" name="botcheck" class="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <div class="review-form-row">
+              <div class="review-field">
+                <label for="rev-name">Your name</label>
+                <input type="text" id="rev-name" name="name" placeholder="E.g. Sara K." required />
+              </div>
+              <div class="review-field">
+                <label for="rev-school">School / Class</label>
+                <input type="text" id="rev-school" name="school" placeholder="E.g. ISAlmere '26" />
+              </div>
+            </div>
+
+            <div class="review-field">
+              <label>Rating</label>
+              <div class="review-stars" id="reviewStars" aria-label="Star rating">
+                <span class="star" data-val="1">★</span>
+                <span class="star" data-val="2">★</span>
+                <span class="star" data-val="3">★</span>
+                <span class="star" data-val="4">★</span>
+                <span class="star" data-val="5">★</span>
+              </div>
+              <input type="hidden" name="rating" id="revRating" value="" />
+            </div>
+
+            <div class="review-field">
+              <label for="rev-message">Your review</label>
+              <textarea id="rev-message" name="message" placeholder="Tell us about your graduation gear — the quality, the design, how it felt on the day…" required></textarea>
+            </div>
+
+            <div class="review-error" id="reviewError">Something went wrong. Please try again.</div>
+            <button type="submit" class="review-submit-btn" id="reviewSubmitBtn">Submit Review</button>
+          </form>
+
+          <div class="review-success" id="reviewSuccess">
+            <div class="review-success-icon">✦</div>
+            <h4>Thank you — your review was sent.</h4>
+            <p>We really appreciate you sharing your experience. We'll be in touch if we'd like to feature your story.</p>
           </div>
         </div>
 
@@ -1077,6 +1396,25 @@
     </div>
   </section>
 
+  <!-- ═══ LIGHTBOX ═══ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&#x2715;</button>
+    <div class="lightbox-inner">
+      <div class="lightbox-img-wrap">
+        <img id="lightboxImg" src="" alt="" />
+      </div>
+      <div class="lightbox-info">
+        <div class="lightbox-tag" id="lightboxTag"></div>
+        <h2 class="lightbox-title" id="lightboxTitle"></h2>
+        <p class="lightbox-desc" id="lightboxDesc"></p>
+        <div class="lightbox-divider"></div>
+        <a href="#quote" class="lightbox-cta" id="lightboxCta" onclick="closeLightbox()">
+          Get a similar quote →
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
     <div class="container">
@@ -1106,6 +1444,43 @@
   </footer>
 
   <script>
+    /* ── Lightbox ── */
+    const lightbox      = document.getElementById('lightbox');
+    const lbImg         = document.getElementById('lightboxImg');
+    const lbTag         = document.getElementById('lightboxTag');
+    const lbTitle       = document.getElementById('lightboxTitle');
+    const lbDesc        = document.getElementById('lightboxDesc');
+    const lbClose       = document.getElementById('lightboxClose');
+
+    function openLightbox(card) {
+      lbImg.src        = card.dataset.img;
+      lbImg.alt        = card.dataset.title;
+      lbTag.textContent  = card.dataset.tag;
+      lbTitle.textContent = card.dataset.title;
+      lbDesc.textContent  = card.dataset.desc;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Click on any work card
+    document.querySelectorAll('.work-card[data-img]').forEach(card => {
+      card.addEventListener('click', () => openLightbox(card));
+    });
+    // Close button
+    lbClose.addEventListener('click', closeLightbox);
+    // Click outside the inner panel
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    // ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
     /* ── Hamburger menu ── */
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -1156,6 +1531,61 @@
         errorMsg.classList.add('show');
         btn.disabled = false;
         btn.textContent = 'Send project brief →';
+      }
+    });
+
+    /* ── Star rating widget ── */
+    (function() {
+      const stars = document.querySelectorAll('#reviewStars .star');
+      const ratingInput = document.getElementById('revRating');
+      let selected = 0;
+
+      stars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+          const v = +star.dataset.val;
+          stars.forEach(s => s.classList.toggle('lit', +s.dataset.val <= v));
+        });
+        star.addEventListener('click', () => {
+          selected = +star.dataset.val;
+          ratingInput.value = '★'.repeat(selected) + '☆'.repeat(5 - selected);
+          stars.forEach(s => s.classList.toggle('lit', +s.dataset.val <= selected));
+        });
+      });
+      document.getElementById('reviewStars').addEventListener('mouseleave', () => {
+        stars.forEach(s => s.classList.toggle('lit', +s.dataset.val <= selected));
+      });
+    })();
+
+    /* ── Student Review Form submission ── */
+    document.getElementById('reviewForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('reviewSubmitBtn');
+      const errorMsg = document.getElementById('reviewError');
+      const successDiv = document.getElementById('reviewSuccess');
+      const form = this;
+
+      errorMsg.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          form.style.display = 'none';
+          successDiv.classList.add('show');
+        } else {
+          throw new Error(json.message || 'Submission failed');
+        }
+      } catch (err) {
+        errorMsg.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Submit Review';
       }
     });
 
