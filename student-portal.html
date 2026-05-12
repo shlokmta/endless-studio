@@ -852,6 +852,10 @@
   /* ─── Web3Forms key (order capture) ─── */
   const WEB3FORMS_KEY = "a4307aed-8c53-4d46-8eec-e94a108885ad";
 
+  // ── Google Sheets tracker ──
+  // After deploying order-tracker.gs, paste your Web App URL here:
+  const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzLaa-BYH0tqGAocObpIqK3OqmF0orH4nJCm4WFs6JmKoAGKfuSX9Ln5xLlvqoaOrU4/exec";
+
   /* ═══════════════════════════════════════
      APP STATE
   ═══════════════════════════════════════ */
@@ -1105,24 +1109,36 @@
     const email = document.getElementById('studentEmail').value.trim();
     const ref   = window._orderRef;
 
-    // Always submit order details to Web3Forms first
+    // Submit order to Web3Forms (email) + Google Sheets (tracker)
+    const orderData = {
+      school:         s.name,
+      school_code:    currentSchoolCode,
+      product:        s.product,
+      size:           selectedSize,
+      student_name:   name,
+      email:          email,
+      amount:         s.currency + s.priceAmount,
+      payment_method: selectedPayment === 'ideal' ? 'iDEAL' : 'Bank transfer',
+      order_ref:      ref,
+    };
+
     try {
       const fd = new FormData();
-      fd.append('access_key',   WEB3FORMS_KEY);
-      fd.append('subject',      'Student Order — ' + s.name + ' — ' + name);
-      fd.append('from_name',    'Endless Studios Student Portal');
-      fd.append('school',       s.name);
-      fd.append('school_code',  currentSchoolCode);
-      fd.append('product',      s.product);
-      fd.append('size',         selectedSize);
-      fd.append('student_name', name);
-      fd.append('email',        email);
-      fd.append('amount',       s.currency + s.priceAmount);
-      fd.append('payment_method', selectedPayment === 'ideal' ? 'iDEAL' : 'Bank transfer');
-      fd.append('order_ref',    ref);
-      fd.append('botcheck',     '');
+      fd.append('access_key',  WEB3FORMS_KEY);
+      fd.append('subject',     'Student Order — ' + s.name + ' — ' + name);
+      fd.append('from_name',   'Endless Studios Student Portal');
+      fd.append('botcheck',    '');
+      Object.entries(orderData).forEach(([k, v]) => fd.append(k, v));
       await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
     } catch(e) { /* non-blocking */ }
+
+    // Send to Google Sheets tracker (silently, non-blocking)
+    if (SHEETS_URL) {
+      fetch(SHEETS_URL, {
+        method: 'POST',
+        body: JSON.stringify(orderData),
+      }).catch(() => {});
+    }
 
     if (selectedPayment === 'ideal' && s.mollieLink) {
       // Redirect to Mollie payment link
