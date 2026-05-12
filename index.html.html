@@ -87,17 +87,22 @@
     .nav-links a:hover { color: var(--text-light); }
     /* ── Hamburger ── */
     .nav-hamburger {
-      display: none; flex-direction: column; justify-content: center; gap: 5px;
-      width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 4px;
+      display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      width: 52px; height: 44px; cursor: pointer; background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 8px;
     }
     .nav-hamburger span {
-      display: block; height: 1.5px; background: var(--text-light);
+      display: block; height: 1.5px; width: 20px; background: var(--text-light);
       transition: transform 0.3s ease, opacity 0.3s ease;
       transform-origin: center;
     }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger-label {
+      font-size: 0.5rem; letter-spacing: 0.1em; color: var(--text-muted);
+      text-transform: uppercase; margin-top: 1px; line-height: 1;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
     /* ── Mobile menu drawer ── */
     .nav-mobile-menu {
       display: none; position: fixed; top: 60px; left: 0; right: 0;
@@ -831,6 +836,7 @@
       <a href="#quote" class="btn btn-primary nav-desktop-cta">Request Quote</a>
       <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
         <span></span><span></span><span></span>
+        <div class="nav-hamburger-label">Menu</div>
       </button>
     </div>
   </nav>
@@ -1483,15 +1489,18 @@
     /* ── Hamburger menu ── */
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
+    const hamburgerLabel = hamburger.querySelector('.nav-hamburger-label');
     hamburger.addEventListener('click', () => {
       const isOpen = mobileMenu.classList.toggle('open');
       hamburger.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (hamburgerLabel) hamburgerLabel.textContent = isOpen ? 'Close' : 'Menu';
     });
     function closeMenu() {
       mobileMenu.classList.remove('open');
       hamburger.classList.remove('open');
       document.body.style.overflow = '';
+      if (hamburgerLabel) hamburgerLabel.textContent = 'Menu';
     }
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
