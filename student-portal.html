@@ -507,12 +507,12 @@
       <span class="code-tagline">Student Ordering Portal</span>
 
       <div class="code-card">
-        <label class="code-label" for="schoolCode">Enter your school code</label>
+        <label class="code-label" for="schoolCode">Enter your access code</label>
         <input
           class="code-input"
-          type="text"
+          type="password"
           id="schoolCode"
-          placeholder="e.g. ISE2026"
+          placeholder="Enter code"
           autocomplete="off"
           autocorrect="off"
           spellcheck="false"
@@ -520,16 +520,14 @@
           onkeydown="if(event.key==='Enter') checkCode()"
         />
         <div class="code-error" id="codeError">
-          That code doesn't match any active school. Check with your class rep and try again.
+          Incorrect code. Please try again.
         </div>
         <button class="code-btn" onclick="checkCode()">Access my school's page →</button>
       </div>
 
-      <p class="code-helper">
-        Your class rep has the code. Lost it?
-        <a href="mailto:info@endless-studio.eu">Email us</a> or
-        <a href="https://wa.me/31620310744" target="_blank">WhatsApp us</a>
-        and we'll sort it.
+      <p style="margin-top:1.5rem; font-size:0.75rem; color:var(--stone-2); text-align:center; line-height:1.7;">
+        Ordering opens <strong style="color:var(--stone)">23 May 2026</strong>.<br />
+        You will receive your access code by then.
       </p>
     </div>
   </div>
@@ -811,7 +809,7 @@
   ═══════════════════════════════════════ */
   const SCHOOLS = {
 
-    "ISE2026": {
+    "ENDLESS": {
       name:        "International School Eindhoven",
       year:        "2026",
       product:     "Graduation Hoodie",
