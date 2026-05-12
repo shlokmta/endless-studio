@@ -647,17 +647,17 @@
     </div>
   </div>
 
-  <!-- ─── STEP 3: Payment ─── -->
+  <!-- ─── STEP 3: Order confirmation + iDEAL ─── -->
   <div class="step" id="step3">
     <div class="payment-screen">
 
       <div class="payment-header">
         <button class="payment-back" onclick="goBack(3)">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          Back to product
+          Back
         </button>
-        <h2 class="payment-title">Payment</h2>
-        <p class="payment-sub">Choose how you'd like to pay.</p>
+        <h2 class="payment-title">Confirm &amp; Pay</h2>
+        <p class="payment-sub">Review your order then pay securely with iDEAL.</p>
       </div>
 
       <!-- Order summary -->
@@ -685,55 +685,6 @@
         </div>
       </div>
 
-      <!-- Payment options -->
-      <div class="payment-options">
-        <div class="payment-option selected" id="opt-ideal" onclick="selectPayment('ideal')">
-          <div class="payment-option-icon icon-ideal">iDEAL</div>
-          <div class="payment-option-info">
-            <div class="payment-option-name">iDEAL</div>
-            <div class="payment-option-desc">Pay directly via your Dutch bank — instant confirmation</div>
-          </div>
-          <div class="payment-radio"></div>
-        </div>
-
-        <div class="payment-option" id="opt-bank" onclick="selectPayment('bank')">
-          <div class="payment-option-icon icon-bank">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-          </div>
-          <div class="payment-option-info">
-            <div class="payment-option-name">Bank transfer</div>
-            <div class="payment-option-desc">Transfer manually using the details below — allow 1–2 working days</div>
-          </div>
-          <div class="payment-radio"></div>
-        </div>
-      </div>
-
-      <!-- Bank details (shown when bank transfer selected) -->
-      <div class="bank-details" id="bankDetails">
-        <div class="bank-row">
-          <span class="bk-label">Account name</span>
-          <span class="bk-value">Endless Studios</span>
-        </div>
-        <div class="bank-row">
-          <span class="bk-label">IBAN</span>
-          <span class="bk-value" id="bankIBAN">—</span>
-        </div>
-        <div class="bank-row">
-          <span class="bk-label">BIC</span>
-          <span class="bk-value" id="bankBIC">—</span>
-        </div>
-        <div class="bank-row">
-          <span class="bk-label">Amount</span>
-          <span class="bk-value" id="bankAmount">—</span>
-        </div>
-        <div class="bank-row">
-          <span class="bk-label">Reference</span>
-          <span class="bk-value" id="bankRef">—</span>
-        </div>
-        <p class="bank-warning">⚠ Use the exact reference shown above. Without it we cannot match your payment to your order.</p>
-      </div>
-
-      <!-- Pay button — changes based on selection -->
       <button class="pay-btn ideal-btn" id="payBtn" onclick="handlePayment()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
         Pay with iDEAL
@@ -1049,104 +1000,53 @@
     const ref = currentSchoolCode + '-' + name.split(' ')[0].toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
     window._orderRef = ref;
 
-    // Bank transfer fields
-    document.getElementById('bankIBAN').textContent   = s.iban;
-    document.getElementById('bankBIC').textContent    = s.bic;
-    document.getElementById('bankAmount').textContent = s.currency + s.priceAmount;
-    document.getElementById('bankRef').textContent    = ref;
-
-    // Default to iDEAL if available, else bank
-    if (!s.mollieLink) {
-      selectPayment('bank');
-    } else {
-      selectPayment('ideal');
-    }
-
     showStep(3);
     window.scrollTo(0,0);
   }
 
   /* ═══════════════════════════════════════
-     STEP 3: Payment selection
-  ═══════════════════════════════════════ */
-  function selectPayment(type) {
-    selectedPayment = type;
-    const s = currentSchool;
-
-    document.getElementById('opt-ideal').classList.toggle('selected', type === 'ideal');
-    document.getElementById('opt-bank').classList.toggle('selected', type === 'bank');
-
-    const bankBlock = document.getElementById('bankDetails');
-    const payBtn = document.getElementById('payBtn');
-
-    if (type === 'ideal') {
-      bankBlock.classList.remove('show');
-      payBtn.className = 'pay-btn ideal-btn';
-      payBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> Pay with iDEAL';
-      if (!s.mollieLink) {
-        // iDEAL not yet set up — disable and show note
-        payBtn.disabled = true;
-        payBtn.innerHTML = 'iDEAL not yet available for this school';
-        document.getElementById('opt-ideal').style.opacity = '0.5';
-      } else {
-        payBtn.disabled = false;
-        document.getElementById('opt-ideal').style.opacity = '1';
-      }
-    } else {
-      bankBlock.classList.add('show');
-      payBtn.className = 'pay-btn bank-btn';
-      payBtn.innerHTML = 'Confirm order &amp; pay by bank transfer';
-      payBtn.disabled = false;
-    }
-  }
-
-  /* ═══════════════════════════════════════
-     Handle payment click
+     Handle payment click — iDEAL only
   ═══════════════════════════════════════ */
   async function handlePayment() {
-    const s = currentSchool;
+    const s    = currentSchool;
     const name  = document.getElementById('studentName').value.trim();
     const email = document.getElementById('studentEmail').value.trim();
     const ref   = window._orderRef;
+    const btn   = document.getElementById('payBtn');
 
-    // Submit order to Web3Forms (email) + Google Sheets (tracker)
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
     const orderData = {
-      school:         s.name,
-      school_code:    currentSchoolCode,
-      product:        s.product,
-      size:           selectedSize,
-      student_name:   name,
-      email:          email,
-      amount:         s.currency + s.priceAmount,
-      payment_method: selectedPayment === 'ideal' ? 'iDEAL' : 'Bank transfer',
-      order_ref:      ref,
+      school:          s.name,
+      school_code:     currentSchoolCode,
+      product:         s.product,
+      size:            selectedSize,
+      student_name:    name,
+      email:           email,
+      amount:          s.currency + s.priceAmount,
+      payment_method:  'iDEAL',
+      order_ref:       ref,
     };
 
+    // Capture order via Web3Forms (email to Endless Studios)
     try {
       const fd = new FormData();
-      fd.append('access_key',  WEB3FORMS_KEY);
-      fd.append('subject',     'Student Order — ' + s.name + ' — ' + name);
-      fd.append('from_name',   'Endless Studios Student Portal');
-      fd.append('botcheck',    '');
+      fd.append('access_key', WEB3FORMS_KEY);
+      fd.append('subject',    'Student Order — ' + s.name + ' — ' + name);
+      fd.append('from_name',  'Endless Studios Student Portal');
+      fd.append('botcheck',   '');
       Object.entries(orderData).forEach(([k, v]) => fd.append(k, v));
       await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
     } catch(e) { /* non-blocking */ }
 
-    // Send to Google Sheets tracker (silently, non-blocking)
+    // Log to Google Sheets
     if (SHEETS_URL) {
-      fetch(SHEETS_URL, {
-        method: 'POST',
-        body: JSON.stringify(orderData),
-      }).catch(() => {});
+      fetch(SHEETS_URL, { method: 'POST', body: JSON.stringify(orderData) }).catch(() => {});
     }
 
-    if (selectedPayment === 'ideal' && s.mollieLink) {
-      // Redirect to Mollie payment link
-      window.location.href = s.mollieLink;
-    } else {
-      // Bank transfer confirmation
-      showConfirmation('bank', s, name, email, ref);
-    }
+    // Redirect to Mollie iDEAL
+    window.location.href = s.mollieLink;
   }
 
   /* ═══════════════════════════════════════
