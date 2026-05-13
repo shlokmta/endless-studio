@@ -1,19 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/create-payment",
-      "dest": "/api/create-payment.js"
-    },
-    {
-      "src": "/api/webhook",
-      "dest": "/api/payment-webhook.js"
-    }
+  "rewrites": [
+    { "source": "/api/webhook", "destination": "/api/payment-webhook" }
   ]
 }
