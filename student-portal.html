@@ -1176,9 +1176,12 @@
       await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
     } catch(e) { /* non-blocking */ }
 
-    // Log to Google Sheets
+    // Log to Google Sheets — sendBeacon survives page navigation/redirect
     if (SHEETS_URL) {
-      fetch(SHEETS_URL, { method: 'POST', body: JSON.stringify(orderData) }).catch(() => {});
+      try {
+        const blob = new Blob([JSON.stringify(orderData)], { type: 'application/json' });
+        navigator.sendBeacon(SHEETS_URL, blob);
+      } catch(e) { /* non-blocking */ }
     }
 
     // Create Mollie payment via secure backend (Vercel function)
