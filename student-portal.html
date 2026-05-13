@@ -1181,8 +1181,36 @@
       fetch(SHEETS_URL, { method: 'POST', body: JSON.stringify(orderData) }).catch(() => {});
     }
 
-    // Redirect to Mollie iDEAL
-    window.location.href = s.mollieLink;
+    // Create Mollie payment via secure backend (Vercel function)
+    try {
+      const resp = await fetch('/api/create-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentName: name,
+          orderRef:    ref,
+          school:      s.name,
+          size:        selectedSize,
+          email:       email,
+          amount:      s.priceAmount, // e.g. "45.00"
+        }),
+      });
+
+      const result = await resp.json();
+
+      if (result.checkoutUrl) {
+        // Redirect student to Mollie's hosted iDEAL page
+        window.location.href = result.checkoutUrl;
+      } else {
+        // Fallback to payment link if API call fails
+        console.warn('API error, falling back to payment link:', result.error);
+        window.location.href = s.mollieLink;
+      }
+    } catch (err) {
+      // Network error — fall back to payment link
+      console.warn('Network error, falling back to payment link:', err);
+      window.location.href = s.mollieLink;
+    }
   }
 
   /* ═══════════════════════════════════════
