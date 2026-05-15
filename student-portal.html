@@ -1401,7 +1401,8 @@
     btn.disabled = true;
     btn.textContent = 'Processing…';
 
-    const totalAmount = window._orderTotal || s.priceAmount;
+    // Ensure amount always has exactly 2 decimal places for Mollie
+    const totalAmount = parseFloat(window._orderTotal || s.priceAmount).toFixed(2);
     const orderData = {
       school:          s.name,
       school_code:     currentSchoolCode,
@@ -1437,17 +1438,18 @@
       const result = await resp.json();
 
       if (result.checkoutUrl) {
-        // Redirect student to Mollie's hosted iDEAL page
         window.location.href = result.checkoutUrl;
       } else {
-        // Fallback to payment link if API call fails
-        console.warn('API error, falling back to payment link:', result.error);
-        window.location.href = s.mollieLink;
+        console.error('No checkoutUrl returned:', result);
+        btn.disabled = false;
+        btn.textContent = 'Pay with iDEAL';
+        alert('Payment could not be started: ' + (result.error || 'unknown error') + '\n\nPlease try again or contact hello@endless-studio.eu');
       }
     } catch (err) {
-      // Network error — fall back to payment link
-      console.warn('Network error, falling back to payment link:', err);
-      window.location.href = s.mollieLink;
+      console.error('Payment fetch error:', err);
+      btn.disabled = false;
+      btn.textContent = 'Pay with iDEAL';
+      alert('Could not connect to payment service. Please check your connection and try again.');
     }
   }
 
