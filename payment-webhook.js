@@ -48,6 +48,24 @@ module.exports = async (req, res) => {
       } else {
         console.warn('SHEETS_URL env var not set — skipping sheet log');
       }
+
+      // Email notification to Endless Studios via Web3Forms (confirmed payment only)
+      const web3Key = process.env.WEB3FORMS_KEY;
+      if (web3Key) {
+        await postJson('https://api.web3forms.com/submit', {
+          access_key:  web3Key,
+          from_name:   'Endless Studios Orders',
+          subject:     `✓ Payment confirmed — ${row.student_name} — ${row.order_ref}`,
+          school:      row.school,
+          size:        row.size,
+          quantity:    row.quantity,
+          amount:      row.amount,
+          email:       row.email,
+          order_ref:   row.order_ref,
+          payment_id:  row.payment_id,
+        });
+        console.log('Notification email sent ✓');
+      }
     }
 
     return res.status(200).send('OK');
@@ -58,8 +76,8 @@ module.exports = async (req, res) => {
   }
 };
 
-// ─── Lightweight HTTPS POST to Google Apps Script ───
-function postToSheets(url, data) {
+// ─── Lightweight HTTPS JSON POST (reusable) ───
+function postJson(url, data) {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(data);
     const urlObj  = new URL(url);
@@ -84,3 +102,6 @@ function postToSheets(url, data) {
     req.end();
   });
 }
+
+// Keep old name as alias for clarity
+const postToSheets = postJson;
