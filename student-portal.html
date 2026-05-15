@@ -1352,13 +1352,6 @@
     if (e.key === 'ArrowLeft')  lightboxNav(-1, { stopPropagation: () => {} });
   });
 
-  function selectSize(sz, btn) {
-    selectedSize = sz;
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    document.getElementById('sizeError').style.display = 'none';
-  }
-
   /* ═══════════════════════════════════════
      Go to payment (validate first)
   ═══════════════════════════════════════ */
@@ -1380,9 +1373,8 @@
     const s = currentSchool;
     const totalAmount = (parseFloat(s.priceAmount) * selectedQty).toFixed(2);
     document.getElementById('sumProduct').textContent = s.product;
-    document.getElementById('sumSize').textContent = selectedSize;
-    document.getElementById('sumQty').textContent = selectedQty + ' × ' + s.currency + s.priceAmount;
     document.getElementById('sumSize').textContent = selectedSizes.join(', ');
+    document.getElementById('sumQty').textContent = selectedQty + ' × ' + s.currency + s.priceAmount;
     document.getElementById('sumName').textContent = name;
     document.getElementById('sumSchool').textContent = s.name;
     document.getElementById('sumTotal').textContent = s.currency + totalAmount;
