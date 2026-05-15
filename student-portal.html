@@ -601,6 +601,89 @@
       display: block; margin: 0 auto 2.25rem;
       opacity: 0.9;
     }
+
+    /* ─── STEP 0: School Picker ─── */
+    .school-screen {
+      width: 100%; max-width: 480px;
+      padding: clamp(2.5rem, 7vw, 5rem) 2rem;
+      text-align: center;
+    }
+    .school-pick-label {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--stone); margin-bottom: 1.5rem; display: block;
+    }
+    .school-grid {
+      display: flex; flex-direction: column; gap: 0.75rem;
+      text-align: left;
+    }
+    .school-card {
+      width: 100%; background: #fff; border: 1.5px solid var(--warm-3);
+      border-radius: 14px; padding: 1.1rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      font-family: inherit;
+    }
+    .school-card:not(:disabled):hover {
+      border-color: var(--navy); box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .school-card:disabled { opacity: 0.45; cursor: not-allowed; }
+    .school-card-name {
+      font-size: 0.88rem; font-weight: 500; color: var(--dark); display: block;
+    }
+    .school-card-sub {
+      font-size: 0.7rem; color: var(--stone); margin-top: 0.2rem; display: block;
+    }
+    .school-card-arrow { color: var(--stone-2); font-size: 1rem; flex-shrink: 0; }
+    .school-card-soon {
+      font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+      background: var(--warm-2); color: var(--stone); padding: 0.2rem 0.55rem;
+      border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* ─── Step 1: selected school label + back ─── */
+    .school-back-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: none; border: none; font-family: inherit;
+      font-size: 0.72rem; color: var(--stone); cursor: pointer;
+      letter-spacing: 0.06em; margin-bottom: 1.25rem;
+      padding: 0; transition: color 0.2s;
+    }
+    .school-back-btn:hover { color: var(--dark); }
+    .school-selected-chip {
+      display: inline-block; font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; background: var(--warm-2);
+      color: var(--stone); padding: 0.3rem 0.8rem; border-radius: 20px;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ─── Quantity stepper ─── */
+    .qty-row {
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+    }
+    .qty-stepper {
+      display: flex; align-items: center;
+      background: var(--cream); border: 1.5px solid var(--warm-3);
+      border-radius: 10px; overflow: hidden;
+    }
+    .qty-btn {
+      width: 44px; height: 46px; background: none; border: none;
+      font-size: 1.25rem; color: var(--dark); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s; font-family: inherit;
+    }
+    .qty-btn:hover:not(:disabled) { background: var(--warm-2); }
+    .qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .qty-display {
+      min-width: 44px; text-align: center; font-size: 1rem;
+      font-weight: 500; color: var(--dark);
+      border-left: 1px solid var(--warm-3); border-right: 1px solid var(--warm-3);
+      line-height: 46px; padding: 0 0.35rem;
+    }
+    .qty-total-hint {
+      font-size: 0.82rem; color: var(--stone);
+    }
+    .qty-total-hint strong { color: var(--dark); font-weight: 600; }
   </style>
 </head>
 <body>
@@ -636,11 +719,52 @@
 <!-- ═══ PORTAL WRAPPER ═══ -->
 <div class="portal-wrap" id="portalWrap">
 
-  <!-- ─── STEP 1: School Code ─── -->
-  <div class="step active" id="step1">
-    <div class="code-screen">
-      <!-- Graduation crest emblem -->
+  <!-- ─── STEP 0: School Picker ─── -->
+  <div class="step active" id="step0">
+    <div class="school-screen">
       <img class="emblem-img" src="EMBELEM%20GRADUATION.png" alt="Endless Studios — Emblem Graduation" draggable="false" />
+      <span class="school-pick-label">Select your school</span>
+      <div class="school-grid">
+
+        <button class="school-card" onclick="selectSchool('ISE')">
+          <div>
+            <span class="school-card-name">International School Eindhoven</span>
+            <span class="school-card-sub">ISE · Class of 2026</span>
+          </div>
+          <span class="school-card-arrow">→</span>
+        </button>
+
+        <button class="school-card" disabled>
+          <div>
+            <span class="school-card-name">Amsterdam International Community School</span>
+            <span class="school-card-sub">AICS · Class of 2026</span>
+          </div>
+          <span class="school-card-soon">Coming soon</span>
+        </button>
+
+        <button class="school-card" disabled>
+          <div>
+            <span class="school-card-name">International School Almere</span>
+            <span class="school-card-sub">ISAlmere · Class of 2026</span>
+          </div>
+          <span class="school-card-soon">Coming soon</span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── STEP 1: School Code ─── -->
+  <div class="step" id="step1">
+    <div class="code-screen">
+
+      <button class="school-back-btn" onclick="showStep(0)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Change school
+      </button>
+
+      <img class="emblem-img" src="EMBELEM%20GRADUATION.png" alt="Endless Studios — Emblem Graduation" draggable="false" />
+      <span class="school-selected-chip" id="selectedSchoolChip">—</span>
 
       <div class="code-card">
         <label class="code-label" for="schoolCode">Enter your access code</label>
@@ -774,6 +898,19 @@
           <div class="field-error" id="emailError">Please enter a valid email address.</div>
         </div>
 
+        <!-- Quantity -->
+        <div class="option-block">
+          <div class="option-label">Quantity</div>
+          <div class="qty-row">
+            <div class="qty-stepper">
+              <button class="qty-btn" id="qtyMinus" onclick="updateQty(-1)" disabled>−</button>
+              <span class="qty-display" id="qtyDisplay">1</span>
+              <button class="qty-btn" id="qtyPlus" onclick="updateQty(1)">+</button>
+            </div>
+            <span class="qty-total-hint" id="qtyHint"></span>
+          </div>
+        </div>
+
         <button class="cta-primary" onclick="goToPayment()">
           Continue to payment
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -805,6 +942,10 @@
         <div class="order-row">
           <span class="label">Size</span>
           <span class="value" id="sumSize">—</span>
+        </div>
+        <div class="order-row">
+          <span class="label">Quantity</span>
+          <span class="value" id="sumQty">—</span>
         </div>
         <div class="order-row">
           <span class="label">Name on hoodie</span>
@@ -940,25 +1081,64 @@
   const WEB3FORMS_KEY = "a4307aed-8c53-4d46-8eec-e94a108885ad";
 
   // ── Google Sheets tracker ──
-  // After deploying order-tracker.gs, paste your Web App URL here:
   const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzLaa-BYH0tqGAocObpIqK3OqmF0orH4nJCm4WFs6JmKoAGKfuSX9Ln5xLlvqoaOrU4/exec";
+
+  /* ═══════════════════════════════════════
+     SCHOOL GROUPS — maps picker cards to valid codes
+     Add / remove schools here as you onboard them
+  ═══════════════════════════════════════ */
+  const SCHOOL_GROUPS = {
+    ISE: {
+      displayName: "International School Eindhoven",
+      codes: ["ENDLESS"],
+    },
+    AICS: {
+      displayName: "Amsterdam International Community School",
+      codes: ["AICS2026"],
+    },
+    ISALMERE: {
+      displayName: "International School Almere",
+      codes: ["ISALMERE2026"],
+    },
+  };
 
   /* ═══════════════════════════════════════
      APP STATE
   ═══════════════════════════════════════ */
-  let currentSchool = null;
+  let currentSchool     = null;
   let currentSchoolCode = "";
-  let selectedSize = "";
-  let selectedPayment = "ideal";
+  let selectedSchoolGroup = null;
+  let selectedSize      = "";
+  let selectedPayment   = "ideal";
+  let selectedQty       = 1;
 
   /* ═══════════════════════════════════════
-     STEP 1: Code check
+     STEP 0: School picker
+  ═══════════════════════════════════════ */
+  function selectSchool(groupKey) {
+    const group = SCHOOL_GROUPS[groupKey];
+    if (!group) return;
+    selectedSchoolGroup = group;
+    document.getElementById('selectedSchoolChip').textContent = group.displayName;
+    document.getElementById('schoolCode').value = '';
+    document.getElementById('codeError').style.display = 'none';
+    showStep(1);
+    window.scrollTo(0, 0);
+  }
+
+  /* ═══════════════════════════════════════
+     STEP 1: Code check (filtered to selected school)
   ═══════════════════════════════════════ */
   function checkCode() {
     const raw = document.getElementById('schoolCode').value.trim().toUpperCase();
     const errEl = document.getElementById('codeError');
 
-    if (!SCHOOLS[raw]) {
+    // Code must exist in SCHOOLS AND belong to the selected school group
+    const validCode = selectedSchoolGroup &&
+                      selectedSchoolGroup.codes.includes(raw) &&
+                      SCHOOLS[raw];
+
+    if (!validCode) {
       errEl.style.display = 'block';
       document.getElementById('schoolCode').focus();
       return;
@@ -967,6 +1147,7 @@
     errEl.style.display = 'none';
     currentSchool = SCHOOLS[raw];
     currentSchoolCode = raw;
+    selectedQty = 1;
     loadProductPage();
     showStep(2);
   }
@@ -1032,6 +1213,25 @@
       grid.appendChild(btn);
     });
     selectedSize = '';
+    // Init quantity display
+    selectedQty = 1;
+    document.getElementById('qtyDisplay').textContent = '1';
+    document.getElementById('qtyMinus').disabled = true;
+    document.getElementById('qtyHint').innerHTML = '1 × ' + s.currency + s.priceAmount + ' = <strong>' + s.currency + s.priceAmount + '</strong>';
+  }
+
+  /* ═══════════════════════════════════════
+     Quantity stepper
+  ═══════════════════════════════════════ */
+  function updateQty(delta) {
+    selectedQty = Math.max(1, Math.min(10, selectedQty + delta));
+    const s = currentSchool;
+    const total = (parseFloat(s.priceAmount) * selectedQty).toFixed(2);
+    document.getElementById('qtyDisplay').textContent = selectedQty;
+    document.getElementById('qtyMinus').disabled = selectedQty <= 1;
+    document.getElementById('qtyPlus').disabled  = selectedQty >= 10;
+    document.getElementById('qtyHint').innerHTML =
+      selectedQty + ' × ' + s.currency + s.priceAmount + ' = <strong>' + s.currency + total + '</strong>';
   }
 
   function switchThumb(index) {
@@ -1126,11 +1326,14 @@
 
     // Populate summary
     const s = currentSchool;
+    const totalAmount = (parseFloat(s.priceAmount) * selectedQty).toFixed(2);
     document.getElementById('sumProduct').textContent = s.product;
     document.getElementById('sumSize').textContent = selectedSize;
+    document.getElementById('sumQty').textContent = selectedQty + ' × ' + s.currency + s.priceAmount;
     document.getElementById('sumName').textContent = name;
     document.getElementById('sumSchool').textContent = s.name;
-    document.getElementById('sumTotal').textContent = s.currency + s.priceAmount;
+    document.getElementById('sumTotal').textContent = s.currency + totalAmount;
+    window._orderTotal = totalAmount;
 
     // Payment ref = SCHOOL-FIRSTNAME-RANDOM
     const ref = currentSchoolCode + '-' + name.split(' ')[0].toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
@@ -1153,14 +1356,16 @@
     btn.disabled = true;
     btn.textContent = 'Processing…';
 
+    const totalAmount = window._orderTotal || s.priceAmount;
     const orderData = {
       school:          s.name,
       school_code:     currentSchoolCode,
       product:         s.product,
       size:            selectedSize,
+      quantity:        selectedQty,
       student_name:    name,
       email:           email,
-      amount:          s.currency + s.priceAmount,
+      amount:          s.currency + totalAmount,
       payment_method:  'iDEAL',
       order_ref:       ref,
     };
@@ -1194,8 +1399,9 @@
           orderRef:    ref,
           school:      s.name,
           size:        selectedSize,
+          quantity:    selectedQty,
           email:       email,
-          amount:      s.priceAmount, // e.g. "45.00"
+          amount:      totalAmount, // total = qty × unit price
         }),
       });
 
@@ -1246,13 +1452,15 @@
      Navigation helpers
   ═══════════════════════════════════════ */
   function showStep(n) {
-    document.querySelectorAll('.step').forEach((el, i) => {
-      el.classList.toggle('active', i + 1 === n);
-    });
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    const target = document.getElementById('step' + n);
+    if (target) target.classList.add('active');
   }
 
   function goBack(fromStep) {
-    showStep(fromStep - 1);
+    // step3 → step2, step2 → step1, step1 → step0
+    const prev = fromStep - 1;
+    showStep(prev);
     window.scrollTo(0, 0);
   }
 
