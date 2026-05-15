@@ -739,7 +739,7 @@
             <span class="school-card-name">Amsterdam International Community School</span>
             <span class="school-card-sub">AICS · Class of 2026</span>
           </div>
-          <span class="school-card-soon">Coming soon</span>
+          <span class="school-card-soon">Completed</span>
         </button>
 
         <button class="school-card" disabled>
@@ -747,7 +747,7 @@
             <span class="school-card-name">International School Almere</span>
             <span class="school-card-sub">ISAlmere · Class of 2026</span>
           </div>
-          <span class="school-card-soon">Coming soon</span>
+          <span class="school-card-soon">Completed</span>
         </button>
 
       </div>
@@ -1037,7 +1037,7 @@
   ═══════════════════════════════════════ */
   const SCHOOLS = {
 
-    "ENDLESS": {
+    "ISE26ES": {
       name:        "International School Eindhoven",
       year:        "2026",
       product:     "Graduation Hoodie",
@@ -1090,7 +1090,7 @@
   const SCHOOL_GROUPS = {
     ISE: {
       displayName: "International School Eindhoven",
-      codes: ["ENDLESS"],
+      codes: ["ISE26ES"],
     },
     AICS: {
       displayName: "Amsterdam International Community School",
@@ -1370,24 +1370,8 @@
       order_ref:       ref,
     };
 
-    // Capture order via Web3Forms (email to Endless Studios)
-    try {
-      const fd = new FormData();
-      fd.append('access_key', WEB3FORMS_KEY);
-      fd.append('subject',    'Student Order — ' + s.name + ' — ' + name);
-      fd.append('from_name',  'Endless Studios Student Portal');
-      fd.append('botcheck',   '');
-      Object.entries(orderData).forEach(([k, v]) => fd.append(k, v));
-      await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
-    } catch(e) { /* non-blocking */ }
-
-    // Log to Google Sheets — sendBeacon survives page navigation/redirect
-    if (SHEETS_URL) {
-      try {
-        const blob = new Blob([JSON.stringify(orderData)], { type: 'application/json' });
-        navigator.sendBeacon(SHEETS_URL, blob);
-      } catch(e) { /* non-blocking */ }
-    }
+    // ⚠️ Email + sheet logging now happen server-side in the webhook
+    // ONLY after Mollie confirms payment as paid — not here.
 
     // Create Mollie payment via secure backend (Vercel function)
     try {

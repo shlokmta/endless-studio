@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
         value:    String(amount),
       },
       description:  `Endless Studios — Graduation Hoodie — ${studentName} — ${orderRef}`,
-      redirectUrl:  'https://www.endless-studio.eu/student-portal.html',
+      redirectUrl:  'https://www.endless-studio.eu/thank-you.html',
       webhookUrl:   'https://www.endless-studio.eu/api/payment-webhook',
       metadata: {
         studentName,

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You — Endless Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #0C0C0C;
+      --warm:    #F5F0EB;
+      --warm-2:  #EDE7DF;
+      --stone:   #8A8175;
+      --stone-2: #B5AFA8;
+      --cream:   #FAF7F3;
+    }
+
+    html, body {
+      min-height: 100svh;
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--warm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif; font-weight: 700;
+      font-size: 1.1rem; color: var(--warm); text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .nav-logo span { color: rgba(245,240,235,0.3); }
+
+    /* ─── MAIN ─── */
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .card {
+      max-width: 520px; width: 100%; text-align: center;
+    }
+
+    /* Emblem */
+    .emblem {
+      width: min(60vw, 200px);
+      display: block; margin: 0 auto 2.5rem;
+      opacity: 0.85;
+      animation: fadeUp 1s ease both;
+    }
+
+    /* Ornament */
+    .ornament {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: rgba(245,240,235,0.2);
+      letter-spacing: 0.5em; display: block;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease 0.15s both;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 300; line-height: 1.15;
+      color: var(--warm); margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease 0.25s both;
+    }
+    h1 em { font-style: italic; color: rgba(245,240,235,0.55); }
+
+    .body-text {
+      font-size: 0.9rem; line-height: 1.85;
+      color: rgba(245,240,235,0.55);
+      max-width: 380px; margin: 0 auto 2.5rem;
+      animation: fadeUp 1s ease 0.35s both;
+    }
+
+    .divider {
+      width: 40px; height: 1px;
+      background: rgba(245,240,235,0.15);
+      margin: 0 auto 2.5rem;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+
+    .detail {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(245,240,235,0.25);
+      animation: fadeUp 1s ease 0.45s both;
+    }
+
+    .links {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; margin-top: 3rem;
+      animation: fadeUp 1s ease 0.55s both;
+    }
+    .links a {
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(245,240,235,0.35); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .links a:hover { color: var(--warm); }
+    .links-sep {
+      width: 1px; height: 12px;
+      background: rgba(245,240,235,0.12);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html.html" class="nav-logo">Endless <span>Studios.</span></a>
+</nav>
+
+<main>
+  <div class="card">
+
+    <img class="emblem" src="EMBELEM%20GRADUATION.png" alt="Endless Studios Graduation" draggable="false" />
+
+    <span class="ornament">✦</span>
+
+    <h1>Thank you for being part of<br /><em>Endless Studios Graduation.</em></h1>
+
+    <p class="body-text">
+      Your order is confirmed and in production. You'll receive a
+      confirmation email shortly. We can't wait to see you wearing it
+      on the big day.
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="detail">Endless Studios · Class of 2026</p>
+
+    <div class="links">
+      <a href="graduation.html">Graduation page</a>
+      <div class="links-sep"></div>
+      <a href="index.html.html">Main site</a>
+      <div class="links-sep"></div>
+      <a href="mailto:hello@endless-studio.eu">Contact us</a>
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>
