@@ -684,6 +684,22 @@
       font-size: 0.82rem; color: var(--stone);
     }
     .qty-total-hint strong { color: var(--dark); font-weight: 600; }
+
+    /* ─── Per-hoodie size rows ─── */
+    .size-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--warm-3);
+      flex-wrap: wrap;
+    }
+    .size-row:last-child { border-bottom: none; }
+    .size-row-label {
+      font-size: 0.72rem; color: var(--stone);
+      letter-spacing: 0.06em; min-width: 64px; flex-shrink: 0;
+    }
+    .size-row .size-grid {
+      display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0;
+    }
   </style>
 </head>
 <body>
@@ -829,14 +845,27 @@
           Premium heavyweight hoodie with your class details screen-printed on the back. Every student's name included.
         </p>
 
-        <!-- Size -->
+        <!-- Quantity (moved above size so rows update reactively) -->
+        <div class="option-block">
+          <div class="option-label">How many hoodies?</div>
+          <div class="qty-row">
+            <div class="qty-stepper">
+              <button class="qty-btn" id="qtyMinus" onclick="updateQty(-1)" disabled>−</button>
+              <span class="qty-display" id="qtyDisplay">1</span>
+              <button class="qty-btn" id="qtyPlus" onclick="updateQty(1)">+</button>
+            </div>
+            <span class="qty-total-hint" id="qtyHint"></span>
+          </div>
+        </div>
+
+        <!-- Per-hoodie size selectors (dynamic) -->
         <div class="option-block">
           <div style="display:flex; align-items:center; justify-content:space-between;">
-            <div class="option-label" style="border-bottom:none; padding-bottom:0;">Select your size</div>
+            <div class="option-label" style="border-bottom:none; padding-bottom:0;">Size per hoodie</div>
             <button class="size-chart-link" onclick="openSizeChart()">Size chart</button>
           </div>
-          <div class="size-grid" id="sizeGrid"></div>
-          <div class="field-error" id="sizeError">Please select a size before continuing.</div>
+          <div id="sizeRows"></div>
+          <div class="field-error" id="sizeError">Please select a size for every hoodie.</div>
         </div>
 
         <!-- Size Chart Modal -->
@@ -896,19 +925,6 @@
             placeholder="your@email.com"
           />
           <div class="field-error" id="emailError">Please enter a valid email address.</div>
-        </div>
-
-        <!-- Quantity -->
-        <div class="option-block">
-          <div class="option-label">Quantity</div>
-          <div class="qty-row">
-            <div class="qty-stepper">
-              <button class="qty-btn" id="qtyMinus" onclick="updateQty(-1)" disabled>−</button>
-              <span class="qty-display" id="qtyDisplay">1</span>
-              <button class="qty-btn" id="qtyPlus" onclick="updateQty(1)">+</button>
-            </div>
-            <span class="qty-total-hint" id="qtyHint"></span>
-          </div>
         </div>
 
         <button class="cta-primary" onclick="goToPayment()">
@@ -1105,12 +1121,12 @@
   /* ═══════════════════════════════════════
      APP STATE
   ═══════════════════════════════════════ */
-  let currentSchool     = null;
-  let currentSchoolCode = "";
+  let currentSchool       = null;
+  let currentSchoolCode   = "";
   let selectedSchoolGroup = null;
-  let selectedSize      = "";
-  let selectedPayment   = "ideal";
-  let selectedQty       = 1;
+  let selectedSizes       = [""];   // one entry per hoodie
+  let selectedPayment     = "ideal";
+  let selectedQty         = 1;
 
   /* ═══════════════════════════════════════
      STEP 0: School picker
@@ -1202,36 +1218,72 @@
       });
     }
 
-    // Build size buttons
-    const grid = document.getElementById('sizeGrid');
-    grid.innerHTML = '';
-    s.sizes.forEach(sz => {
-      const btn = document.createElement('button');
-      btn.className = 'size-btn';
-      btn.textContent = sz;
-      btn.onclick = () => selectSize(sz, btn);
-      grid.appendChild(btn);
-    });
-    selectedSize = '';
-    // Init quantity display
-    selectedQty = 1;
+    // Init quantity + size rows
+    selectedQty   = 1;
+    selectedSizes = [""];
     document.getElementById('qtyDisplay').textContent = '1';
     document.getElementById('qtyMinus').disabled = true;
+    document.getElementById('qtyPlus').disabled  = false;
     document.getElementById('qtyHint').innerHTML = '1 × ' + s.currency + s.priceAmount + ' = <strong>' + s.currency + s.priceAmount + '</strong>';
+    buildSizeRows();
   }
 
   /* ═══════════════════════════════════════
-     Quantity stepper
+     Quantity stepper — adds/removes size rows
   ═══════════════════════════════════════ */
   function updateQty(delta) {
     selectedQty = Math.max(1, Math.min(10, selectedQty + delta));
-    const s = currentSchool;
+    const s     = currentSchool;
     const total = (parseFloat(s.priceAmount) * selectedQty).toFixed(2);
+
     document.getElementById('qtyDisplay').textContent = selectedQty;
     document.getElementById('qtyMinus').disabled = selectedQty <= 1;
     document.getElementById('qtyPlus').disabled  = selectedQty >= 10;
     document.getElementById('qtyHint').innerHTML =
       selectedQty + ' × ' + s.currency + s.priceAmount + ' = <strong>' + s.currency + total + '</strong>';
+
+    // Grow or shrink selectedSizes to match qty (preserve existing selections)
+    while (selectedSizes.length < selectedQty) selectedSizes.push("");
+    selectedSizes = selectedSizes.slice(0, selectedQty);
+
+    buildSizeRows();
+  }
+
+  /* ─── Render one size-button row per hoodie ─── */
+  function buildSizeRows() {
+    const s       = currentSchool;
+    const container = document.getElementById('sizeRows');
+    container.innerHTML = '';
+
+    selectedSizes.forEach((chosen, i) => {
+      const row = document.createElement('div');
+      row.className = 'size-row';
+
+      const lbl = document.createElement('span');
+      lbl.className = 'size-row-label';
+      lbl.textContent = selectedQty === 1 ? 'Size' : 'Hoodie ' + (i + 1);
+      row.appendChild(lbl);
+
+      const grid = document.createElement('div');
+      grid.className = 'size-grid';
+
+      s.sizes.forEach(sz => {
+        const btn = document.createElement('button');
+        btn.className = 'size-btn' + (chosen === sz ? ' selected' : '');
+        btn.textContent = sz;
+        btn.onclick = () => {
+          selectedSizes[i] = sz;
+          // Update button states within this row only
+          grid.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          document.getElementById('sizeError').style.display = 'none';
+        };
+        grid.appendChild(btn);
+      });
+
+      row.appendChild(grid);
+      container.appendChild(row);
+    });
   }
 
   function switchThumb(index) {
@@ -1315,7 +1367,7 @@
     const email = document.getElementById('studentEmail').value.trim();
     let ok = true;
 
-    if (!selectedSize) { document.getElementById('sizeError').style.display = 'block'; ok = false; }
+    if (selectedSizes.some(sz => !sz)) { document.getElementById('sizeError').style.display = 'block'; ok = false; }
     if (!name)         { document.getElementById('nameError').style.display = 'block'; ok = false; }
     if (!email || !email.includes('@')) { document.getElementById('emailError').style.display = 'block'; ok = false; }
 
@@ -1330,6 +1382,7 @@
     document.getElementById('sumProduct').textContent = s.product;
     document.getElementById('sumSize').textContent = selectedSize;
     document.getElementById('sumQty').textContent = selectedQty + ' × ' + s.currency + s.priceAmount;
+    document.getElementById('sumSize').textContent = selectedSizes.join(', ');
     document.getElementById('sumName').textContent = name;
     document.getElementById('sumSchool').textContent = s.name;
     document.getElementById('sumTotal').textContent = s.currency + totalAmount;
@@ -1361,7 +1414,7 @@
       school:          s.name,
       school_code:     currentSchoolCode,
       product:         s.product,
-      size:            selectedSize,
+      size:            selectedSizes.join(', '),
       quantity:        selectedQty,
       student_name:    name,
       email:           email,
@@ -1382,7 +1435,7 @@
           studentName: name,
           orderRef:    ref,
           school:      s.name,
-          size:        selectedSize,
+          size:        selectedSizes.join(', '),
           quantity:    selectedQty,
           email:       email,
           amount:      totalAmount, // total = qty × unit price
