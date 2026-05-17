@@ -685,6 +685,28 @@
     }
     .qty-total-hint strong { color: var(--dark); font-weight: 600; }
 
+    /* ─── Colour swatches ─── */
+    .colour-swatches {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem;
+    }
+    .colour-swatch {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      border: 1.5px solid var(--warm-3); border-radius: 10px;
+      cursor: pointer; background: #fff; font-family: inherit;
+      font-size: 0.82rem; color: var(--dark);
+      transition: border-color 0.2s, box-shadow 0.15s;
+    }
+    .colour-swatch:hover { border-color: var(--navy); }
+    .colour-swatch.selected {
+      border-color: var(--dark);
+      box-shadow: 0 0 0 1px var(--dark);
+    }
+    .colour-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0;
+    }
+
     /* ─── Per-hoodie size rows ─── */
     .size-row {
       display: flex; align-items: center; gap: 0.75rem;
@@ -845,6 +867,12 @@
           Premium heavyweight hoodie with your class details screen-printed on the back. Every student's name included.
         </p>
 
+        <!-- Colour -->
+        <div class="option-block">
+          <div class="option-label">Colour</div>
+          <div class="colour-swatches" id="colourSwatches"></div>
+        </div>
+
         <!-- Quantity (moved above size so rows update reactively) -->
         <div class="option-block">
           <div class="option-label">How many hoodies?</div>
@@ -956,6 +984,10 @@
           <span class="value" id="sumProduct">—</span>
         </div>
         <div class="order-row">
+          <span class="label">Colour</span>
+          <span class="value" id="sumColour">—</span>
+        </div>
+        <div class="order-row">
           <span class="label">Size</span>
           <span class="value" id="sumSize">—</span>
         </div>
@@ -1063,6 +1095,10 @@
       priceAmount: "45.00",
       currency:    "€",
       images:      ["ise-hoodie-model.png", "ise-hoodie-flat.png"],
+      colours: {
+        Black: ["ise-hoodie-model.png", "ise-hoodie-flat.png"],
+        Olive:  ["olive.png"],
+      },
       sizes:       ["XS", "S", "M", "L", "XL"],
       deadline:    "TBC",
 
@@ -1125,6 +1161,7 @@
   let currentSchoolCode   = "";
   let selectedSchoolGroup = null;
   let selectedSizes       = [""];   // one entry per hoodie
+  let selectedColour      = "Black"; // default
   let selectedPayment     = "ideal";
   let selectedQty         = 1;
 
@@ -1218,6 +1255,19 @@
       });
     }
 
+    // Build colour swatches
+    selectedColour = 'Black';
+    const swatchDefs = { Black: '#2A2A2A', Olive: '#6B7C52' };
+    const swatchWrap = document.getElementById('colourSwatches');
+    swatchWrap.innerHTML = '';
+    Object.entries(s.colours || { Black: s.images }).forEach(([colourName, imgs]) => {
+      const btn = document.createElement('button');
+      btn.className = 'colour-swatch' + (colourName === selectedColour ? ' selected' : '');
+      btn.innerHTML = `<span class="colour-dot" style="background:${swatchDefs[colourName] || '#ccc'}"></span>${colourName}`;
+      btn.onclick = () => selectColour(colourName, btn);
+      swatchWrap.appendChild(btn);
+    });
+
     // Init quantity + size rows
     selectedQty   = 1;
     selectedSizes = [""];
@@ -1226,6 +1276,32 @@
     document.getElementById('qtyPlus').disabled  = false;
     document.getElementById('qtyHint').innerHTML = '1 × ' + s.currency + s.priceAmount + ' = <strong>' + s.currency + s.priceAmount + '</strong>';
     buildSizeRows();
+  }
+
+  /* ─── Colour selection — swaps gallery images ─── */
+  function selectColour(colourName, btn) {
+    selectedColour = colourName;
+    document.querySelectorAll('.colour-swatch').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+
+    // Swap gallery images to match colour
+    const imgs = currentSchool.colours?.[colourName] || currentSchool.images;
+    window._portalImages = imgs;
+    currentThumbIndex = 0;
+    document.getElementById('productImage').src = imgs[0];
+
+    // Rebuild thumbnail strip
+    const strip = document.getElementById('thumbStrip');
+    strip.innerHTML = '';
+    if (imgs.length > 1) {
+      imgs.forEach((src, i) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb' + (i === 0 ? ' active' : '');
+        thumb.innerHTML = `<img src="${src}" alt="View ${i + 1}" />`;
+        thumb.onclick = () => switchThumb(i);
+        strip.appendChild(thumb);
+      });
+    }
   }
 
   /* ═══════════════════════════════════════
@@ -1373,6 +1449,7 @@
     const s = currentSchool;
     const totalAmount = (parseFloat(s.priceAmount) * selectedQty).toFixed(2);
     document.getElementById('sumProduct').textContent = s.product;
+    document.getElementById('sumColour').textContent = selectedColour;
     document.getElementById('sumSize').textContent = selectedSizes.join(', ');
     document.getElementById('sumQty').textContent = selectedQty + ' × ' + s.currency + s.priceAmount;
     document.getElementById('sumName').textContent = name;
@@ -1407,6 +1484,7 @@
       school:          s.name,
       school_code:     currentSchoolCode,
       product:         s.product,
+      colour:          selectedColour,
       size:            selectedSizes.join(', '),
       quantity:        selectedQty,
       student_name:    name,
@@ -1428,6 +1506,7 @@
           studentName: name,
           orderRef:    ref,
           school:      s.name,
+          colour:      selectedColour,
           size:        selectedSizes.join(', '),
           quantity:    selectedQty,
           email:       email,

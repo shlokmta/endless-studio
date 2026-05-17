@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
     const amount      = body.amount      || '45.00';
     const email       = body.email       || '';
     const school      = body.school      || '';
+    const colour      = body.colour      || 'Black';
     const size        = body.size        || '';
     const quantity    = body.quantity    || 1;
 
@@ -28,7 +29,7 @@ module.exports = async (req, res) => {
         currency: 'EUR',
         value:    String(amount),
       },
-      description:  `Endless Studios — Graduation Hoodie — ${studentName} — ${orderRef}`,
+      description:  `Endless Studios — Graduation Hoodie (${colour}) — ${studentName} — ${orderRef}`,
       redirectUrl:  'https://www.endless-studio.eu/thank-you.html',
       webhookUrl:   'https://www.endless-studio.eu/api/payment-webhook',
       metadata: {
@@ -36,6 +37,7 @@ module.exports = async (req, res) => {
         orderRef,
         email,
         school,
+        colour,
         size,
         quantity: String(quantity),
         amount:   String(amount),

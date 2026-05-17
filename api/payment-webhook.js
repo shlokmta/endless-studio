@@ -36,6 +36,7 @@ module.exports = async (req, res) => {
         amount:       '€' + (payment.amount?.value || meta.amount || '0.00'),
         payment_id:   id,
         status:       'PAID',
+        colour:       meta.colour      || 'Black',
       };
 
       console.log('✓ PAID —', row.student_name, '—', row.order_ref);
@@ -57,6 +58,7 @@ module.exports = async (req, res) => {
           from_name:   'Endless Studios Orders',
           subject:     `✓ Payment confirmed — ${row.student_name} — ${row.order_ref}`,
           school:      row.school,
+          colour:      row.colour,
           size:        row.size,
           quantity:    row.quantity,
           amount:      row.amount,
