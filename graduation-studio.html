@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Graduation Studio — Endless Studio</title>
+<meta name="description" content="A private studio for your graduating class. Enter your access code to view and order your graduation piece." />
+<style>
+  :root{
+    --paper:#f2f1ec;
+    --ink:#111110;
+    --graphite:#3a3a38;
+    --grey:#8b8b86;
+    --line:#d8d7d0;
+    --radius:22px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--ink);
+    font-family:"Helvetica Neue", Arial, "Segoe UI", sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  .frame{ background:var(--paper); margin:14px; border-radius:var(--radius); overflow:hidden; min-height:calc(100vh - 28px); display:flex; flex-direction:column; padding-top:94px; padding-bottom:42px; }
+  /* fixed framed header + footer client ticker */
+  .topbar{ position:fixed; top:14px; left:14px; right:14px; z-index:120; background:var(--paper); border-radius:var(--radius) var(--radius) 0 0; overflow:hidden; }
+  .botbar{ position:fixed; bottom:14px; left:14px; right:14px; z-index:120; background:var(--paper); border-top:1px solid var(--line); border-radius:0 0 var(--radius) var(--radius); overflow:hidden; }
+  .botbar .ticker{ border-bottom:none; }
+
+  /* TICKER */
+  .ticker{ border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; }
+  .ticker__track{ display:inline-block; padding:9px 0; animation:scroll 40s linear infinite; font-size:11px; letter-spacing:.14em; font-weight:600; text-transform:uppercase; }
+  .ticker__track span{ margin:0 26px; color:var(--graphite); }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* NAV */
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:22px 34px 14px; }
+  .brand{ font-size:15px; font-weight:700; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+  .nav__note{ max-width:230px; text-align:right; font-size:10.5px; line-height:1.5; letter-spacing:.08em; text-transform:uppercase; color:var(--graphite); }
+  .nav__menu{ width:34px; height:34px; display:flex; flex-direction:column; justify-content:center; gap:5px; cursor:pointer; }
+  .nav__menu span{ height:1.5px; width:100%; background:var(--ink); }
+  .nav__tabs{ display:flex; gap:28px; }
+  .nav__tabs a{ font-size:11px; letter-spacing:.09em; text-transform:uppercase; text-decoration:none; color:var(--grey); transition:color .2s ease; }
+  .nav__tabs a:hover{ color:var(--ink); }
+  .nav__tabs a.active{ color:var(--ink); }
+  @media (max-width:760px){ .nav__tabs{ display:none; } }
+
+  .pill{
+    display:inline-block; border:1.5px solid var(--ink); border-radius:100px;
+    padding:13px 22px; font-size:11px; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; text-decoration:none; color:var(--ink);
+    background:transparent; transition:.25s ease; cursor:pointer; white-space:nowrap;
+  }
+  .pill:hover{ background:var(--ink); color:var(--paper); }
+  .pill--solid{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .pill--solid:hover{ background:transparent; color:var(--ink); }
+
+  /* ================= GATE ================= */
+  .gate{ flex:1; display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center; padding:40px 34px 60px; position:relative; }
+  .gate__intro, .gate .code{ position:relative; z-index:2; }
+  .gate__kicker{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); margin-bottom:22px; }
+  .gate__title{
+    font-size:clamp(52px, 8.8vw, 132px); line-height:.86; font-weight:700; letter-spacing:-0.04em;
+    background:linear-gradient(180deg,#1a1a18 0%,#45443f 60%,#6f6e67 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:26px;
+  }
+  .gate__sub{ max-width:420px; font-size:14px; line-height:1.7; color:var(--graphite); }
+  .gate__meta{ margin-top:30px; display:flex; gap:34px; }
+  .gate__meta div{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--grey); line-height:1.5; }
+  .gate__meta strong{ display:block; color:var(--ink); font-size:15px; letter-spacing:0; }
+
+  /* code card */
+  .code{ }
+  .code__label{ font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-bottom:10px; }
+  .code__field{ display:flex; align-items:center; gap:0; border-bottom:1.5px solid var(--ink); }
+  .code__field input{
+    flex:1; font-family:inherit; font-size:22px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    background:transparent; border:none; outline:none; padding:10px 0; color:var(--ink);
+  }
+  .code__field input::placeholder{ color:#c3c2ba; letter-spacing:.14em; }
+  .code__btn{ border:none; background:transparent; font-size:24px; cursor:pointer; color:var(--ink); padding:6px; }
+  .code__error{ display:none; margin-top:12px; font-size:12px; color:#9a2b2b; }
+  .code__error.show{ display:block; }
+  .code__hint{ margin-top:22px; font-size:12px; line-height:1.6; color:var(--grey); max-width:340px; }
+  .code__hint a{ color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line); }
+  .code__seal{ position:absolute; right:-150px; top:50%; transform:translateY(-50%); width:460px; height:460px; pointer-events:none; }
+  .code__seal svg{ width:100%; height:100%; animation:spin 34s linear infinite; }
+  .code__seal .dot{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:30px; }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+
+  /* ---- NAMED (worked-with credits) ---- */
+  .named__h{ font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-bottom:10px; }
+  .named__list{ font-family:Georgia, "Times New Roman", serif; color:var(--graphite); font-size:14px; line-height:1.55; }
+  .named__list span{ display:block; }
+  .named--left{ margin-top:22px; }
+  .named--right{ margin-bottom:28px; }
+
+  /* ================= PORTAL ================= */
+  .portal{ display:none; flex:1; padding:26px 34px 60px; }
+  .portal.show{ display:block; animation:fade .6s ease; }
+  @keyframes fade{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+
+  .portal__top{ display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid var(--line); padding:26px 0 30px; flex-wrap:wrap; gap:18px; }
+  .portal__school{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); margin-bottom:12px; }
+  .portal__title{ font-size:clamp(30px,4.4vw,54px); font-weight:700; letter-spacing:-0.03em; line-height:.98; }
+  .portal__deadline{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--grey); text-align:right; line-height:1.6; }
+  .portal__deadline strong{ display:block; color:var(--ink); font-size:14px; letter-spacing:0; }
+
+  .shop{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+
+  .gallery__main{ background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; aspect-ratio:4/5; }
+  .gallery__main img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery__thumbs{ display:flex; gap:10px; margin-top:12px; }
+  .gallery__thumbs button{ width:66px; height:80px; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; cursor:pointer; padding:0; opacity:.6; transition:.2s; }
+  .gallery__thumbs button.active{ opacity:1; border-color:var(--ink); }
+  .gallery__thumbs img{ width:100%; height:100%; object-fit:cover; }
+
+  .buy__price{ font-size:34px; font-weight:700; letter-spacing:-0.02em; }
+  .buy__price span{ font-size:13px; font-weight:400; color:var(--grey); margin-left:6px; }
+  .buy__desc{ font-size:13.5px; line-height:1.7; color:var(--graphite); margin:16px 0 24px; max-width:460px; }
+  .buy__details{ list-style:none; margin:0 0 28px; padding:0; border-top:1px solid var(--line); }
+  .buy__details li{ font-size:12.5px; color:var(--graphite); padding:10px 0; border-bottom:1px solid var(--line); display:flex; gap:10px; }
+  .buy__details li::before{ content:"—"; color:var(--grey); }
+
+  .opt{ margin-bottom:22px; }
+  .opt__label{ font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-bottom:10px; }
+  .swatches, .sizes{ display:flex; gap:8px; flex-wrap:wrap; }
+  .swatch, .size{
+    border:1px solid var(--ink); background:transparent; color:var(--ink);
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.04em;
+    padding:10px 16px; border-radius:100px; cursor:pointer; transition:.2s;
+  }
+  .swatch.sel, .size.sel{ background:var(--ink); color:var(--paper); }
+  .qty{ display:inline-flex; align-items:center; border:1px solid var(--ink); border-radius:100px; overflow:hidden; }
+  .qty button{ border:none; background:transparent; font-size:16px; width:40px; height:40px; cursor:pointer; }
+  .qty span{ min-width:34px; text-align:center; font-size:14px; font-weight:600; }
+
+  .field{ display:flex; flex-direction:column; margin-bottom:18px; }
+  .field label{ font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-bottom:8px; }
+  .field input{ font-family:inherit; font-size:14px; color:var(--ink); background:transparent; border:none; border-bottom:1px solid var(--ink); padding:6px 0; outline:none; }
+  .buy__total{ display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid var(--line); padding-top:18px; margin:8px 0 18px; }
+  .buy__total .t{ font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--grey); }
+  .buy__total .v{ font-size:22px; font-weight:700; }
+  .buy__submit{
+    width:100%; border:none; cursor:pointer; background:var(--ink); color:var(--paper);
+    border-radius:100px; padding:16px; font-family:inherit; font-size:12px; font-weight:600;
+    letter-spacing:.06em; text-transform:uppercase; transition:opacity .2s;
+  }
+  .buy__submit:hover{ opacity:.85; }
+  .buy__note{ font-size:10.5px; color:var(--grey); text-align:center; margin-top:12px; }
+
+  @media (max-width:900px){
+    .gate{ grid-template-columns:1fr; gap:36px; }
+    .shop{ grid-template-columns:1fr; gap:30px; }
+    .code__seal{ display:none; }
+    .nav__note{ display:none; }
+  }
+</style>
+</head>
+<body>
+  <!-- FIXED HEADER -->
+  <header class="topbar">
+    <div class="ticker">
+      <div class="ticker__track">
+        <span>Graduation Studio</span>·<span>Class of 2026</span>·<span>Made In-House</span>·<span>By Endless Studio</span>·
+        <span>Graduation Studio</span>·<span>Class of 2026</span>·<span>Made In-House</span>·<span>By Endless Studio</span>·
+      </div>
+    </div>
+    <nav>
+      <a href="index.html" class="brand">Endless Studio.</a>
+      <div class="nav__tabs">
+        <a href="index.html">Home</a>
+        <a href="start-a-project.html">Start a Project</a>
+        <a href="graduation-studio.html" class="active">Graduation Studio</a>
+        <a href="view-our-work.html">View Our Work</a>
+      </div>
+      <div class="nav__note">Graduation Studio — private class access.</div>
+    </nav>
+  </header>
+
+  <div class="frame">
+
+    <!-- ============ GATE (access code) ============ -->
+    <section class="gate" id="gate">
+      <div class="code__seal">
+        <svg viewBox="0 0 100 100">
+          <defs><path id="c" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" /></defs>
+          <text font-size="7.6" letter-spacing="1.35" fill="#111110" font-weight="600">
+            <textPath href="#c">GRADUATION STUDIO · CLASS OF 2026 · </textPath>
+          </text>
+        </svg>
+        <div class="dot">✦</div>
+      </div>
+
+      <div class="gate__intro">
+        <div class="gate__kicker">Private Access</div>
+        <h1 class="gate__title">Graduation<br />Studio.</h1>
+        <p class="gate__sub">A private studio built for your graduating class. Enter the access code shared by your school to view your piece, choose your size, and place your order — designed and made in-house by Endless Studio.</p>
+        <div class="gate__meta">
+          <div><strong>In-house</strong>Design &amp; production</div>
+          <div><strong>One class</strong>One collection</div>
+          <div><strong>Secure</strong>Checkout by Mollie</div>
+        </div>
+      </div>
+
+      <div class="code">
+        <div class="named named--right">
+          <div class="named__h">A few we've made for</div>
+          <div class="named__list">
+            <span>International School of Almere</span>
+            <span>International School Eindhoven</span>
+            <span>Amsterdam International Community School</span>
+          </div>
+        </div>
+        <div class="code__label">Enter your access code</div>
+        <div class="code__field">
+          <input id="codeInput" type="password" placeholder="CLASS CODE" autocomplete="off" autocapitalize="characters"
+                 spellcheck="false" onkeydown="if(event.key==='Enter') checkCode()" />
+          <button class="code__btn" onclick="checkCode()" aria-label="Enter">→</button>
+        </div>
+        <div class="code__error" id="codeError">That code isn't recognised. Please check with your class rep.</div>
+        <p class="code__hint">Don't have your code yet? Your school or class representative will share it ahead of the order window. Questions — <a href="mailto:info@endless-studio.eu">info@endless-studio.eu</a>.</p>
+      </div>
+
+    </section>
+
+    <!-- ============ PORTAL (revealed after access) ============ -->
+    <section class="portal" id="portal">
+      <div class="portal__top">
+        <div>
+          <div class="portal__school" id="pSchool">—</div>
+          <h2 class="portal__title" id="pTitle">—</h2>
+        </div>
+        <div class="portal__deadline">
+          <strong id="pDeadline">—</strong>
+          Order window
+        </div>
+      </div>
+
+      <div class="shop">
+        <!-- GALLERY -->
+        <div class="gallery">
+          <div class="gallery__main"><img id="mainImg" src="" alt="Graduation piece" /></div>
+          <div class="gallery__thumbs" id="thumbs"></div>
+        </div>
+
+        <!-- BUY -->
+        <div class="buy">
+          <div class="buy__price" id="pPrice">—</div>
+          <p class="buy__desc" id="pDesc">—</p>
+          <ul class="buy__details" id="pDetails"></ul>
+
+          <div class="opt">
+            <div class="opt__label">Colour</div>
+            <div class="swatches" id="swatches"></div>
+          </div>
+          <div class="opt">
+            <div class="opt__label">Size</div>
+            <div class="sizes" id="sizes"></div>
+          </div>
+          <div class="opt">
+            <div class="opt__label">Quantity</div>
+            <div class="qty">
+              <button onclick="changeQty(-1)" aria-label="Decrease">−</button>
+              <span id="qtyVal">1</span>
+              <button onclick="changeQty(1)" aria-label="Increase">+</button>
+            </div>
+          </div>
+
+          <div class="field"><label for="buyerName">Full name</label><input id="buyerName" type="text" /></div>
+          <div class="field"><label for="buyerEmail">Email</label><input id="buyerEmail" type="email" /></div>
+
+          <div class="buy__total">
+            <span class="t">Total</span>
+            <span class="v" id="pTotal">—</span>
+          </div>
+
+          <button class="buy__submit" id="buyBtn" onclick="reserveAndPay()">Reserve &amp; pay →</button>
+          <div class="buy__note">You'll be redirected to Mollie for secure iDEAL / card payment.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FIXED CLIENT-NAMES TICKER (bottom) -->
+  <div class="botbar">
+    <div class="ticker">
+      <div class="ticker__track">
+        <span>International School of Almere</span>·<span>Amsterdam International Community School</span>·<span>International School Eindhoven</span>·<span>University of Amsterdam</span>·<span>Erasmus University Rotterdam</span>·<span>Amsterdam Investment Club</span>·<span>Student Football League Amsterdam</span>·<span>Craft 34°</span>·
+        <span>International School of Almere</span>·<span>Amsterdam International Community School</span>·<span>International School Eindhoven</span>·<span>University of Amsterdam</span>·<span>Erasmus University Rotterdam</span>·<span>Amsterdam Investment Club</span>·<span>Student Football League Amsterdam</span>·<span>Craft 34°</span>·
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /* ============================================================
+     GRADUATION STUDIO — class configs
+     Add a class by copying a block. Codes are case-insensitive.
+     ============================================================ */
+  const SCHOOLS = {
+    "ISE26ES": {
+      school:   "International School Eindhoven",
+      title:    "Graduation Hoodie — Class of 2026",
+      desc:     "Crafted from 350 gsm 100% cotton in a relaxed, comfortable fit. Kangaroo pocket and adjustable hood, with detailed embroidery front and back — clean, minimalist typography with a sporty edge. Built to carry the memory of your class long after the ceremony.",
+      details:  ["350 gsm · 100% cotton","Relaxed & comfortable fit","Kangaroo pocket · hood","Embroidery front & back","Minimalist, sporty style"],
+      priceLabel:"€45", priceAmount:45, currency:"€",
+      colours:  { "Black":["assets/ise-hoodie-model.png","assets/ise-hoodie-flat.png"], "Olive":["assets/ise-hoodie-olive.png"] },
+      sizes:    ["XS","S","M","L","XL"],
+      deadline: "TBC",
+      mollieLink:"https://payment-links.mollie.com/payment/xFz8446nk8KDAUYVMCFDN"
+    }
+    // "AICS2026": { ... }
+  };
+  const WEB3FORMS_KEY = "a4307aed-8c53-4d46-8eec-e94a108885ad";
+
+  let current = null, currentCode = "", colour = "", size = "", qty = 1;
+
+  function checkCode(){
+    const raw = document.getElementById('codeInput').value.trim().toUpperCase();
+    const err = document.getElementById('codeError');
+    const s = SCHOOLS[raw];
+    if(!s){ err.classList.add('show'); return; }
+    err.classList.remove('show');
+    current = s; currentCode = raw;
+    colour = Object.keys(s.colours)[0]; size = ""; qty = 1;
+    render();
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('portal').classList.add('show');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function render(){
+    const s = current;
+    document.getElementById('pSchool').textContent   = s.school;
+    document.getElementById('pTitle').textContent    = s.title;
+    document.getElementById('pDeadline').textContent = s.deadline;
+    document.getElementById('pPrice').innerHTML      = s.priceLabel + ' <span>per piece</span>';
+    document.getElementById('pDesc').textContent     = s.desc;
+    document.getElementById('pDetails').innerHTML    = s.details.map(d=>'<li>'+d+'</li>').join('');
+
+    // colours
+    document.getElementById('swatches').innerHTML = Object.keys(s.colours).map(c=>
+      '<button class="swatch'+(c===colour?' sel':'')+'" onclick="pickColour(\''+c+'\')">'+c+'</button>').join('');
+    // sizes
+    document.getElementById('sizes').innerHTML = s.sizes.map(z=>
+      '<button class="size'+(z===size?' sel':'')+'" onclick="pickSize(\''+z+'\')">'+z+'</button>').join('');
+
+    renderGallery();
+    document.getElementById('qtyVal').textContent = qty;
+    updateTotal();
+  }
+  function renderGallery(){
+    const imgs = current.colours[colour];
+    document.getElementById('mainImg').src = imgs[0];
+    document.getElementById('thumbs').innerHTML = imgs.map((src,i)=>
+      '<button class="'+(i===0?'active':'')+'" onclick="setMain(\''+src+'\',this)"><img src="'+src+'"></button>').join('');
+  }
+  function setMain(src,el){ document.getElementById('mainImg').src=src;
+    document.querySelectorAll('#thumbs button').forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
+  function pickColour(c){ colour=c; render(); }
+  function pickSize(z){ size=z; render(); }
+  function changeQty(d){ qty=Math.max(1, qty+d); document.getElementById('qtyVal').textContent=qty; updateTotal(); }
+  function updateTotal(){ document.getElementById('pTotal').textContent = current.currency + (current.priceAmount*qty).toFixed(2); }
+
+  a

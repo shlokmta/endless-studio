@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Selected Work — Endless Studio</title>
+<meta name="description" content="Selected work by Endless Studio — an editorial look at custom apparel, graduation collections, and match kits made in-house across Europe." />
+<style>
+  :root{
+    --paper:#f2f1ec; --ink:#141412; --graphite:#3a3a38; --grey:#8b8b86; --line:#d4d3cb;
+    --red:#c8362b; --radius:22px; --serif:Georgia,"Times New Roman",serif;
+    --script:"Segoe Script","Bradley Hand","Brush Script MT",cursive;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--ink); font-family:"Helvetica Neue",Arial,"Segoe UI",sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  .frame{ background:var(--paper); margin:14px; border-radius:var(--radius); overflow:hidden; padding-top:94px; padding-bottom:42px; }
+  /* fixed framed header + footer client ticker */
+  .topbar{ position:fixed; top:14px; left:14px; right:14px; z-index:120; background:var(--paper); border-radius:var(--radius) var(--radius) 0 0; overflow:hidden; }
+  .botbar{ position:fixed; bottom:14px; left:14px; right:14px; z-index:120; background:var(--paper); border-top:1px solid var(--line); border-radius:0 0 var(--radius) var(--radius); overflow:hidden; }
+  .botbar .ticker{ border-bottom:none; }
+
+  /* TICKER */
+  .ticker{ border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; }
+  .ticker__track{ display:inline-block; padding:9px 0; animation:scroll 42s linear infinite; font-size:11px; letter-spacing:.14em; font-weight:600; text-transform:uppercase; }
+  .ticker__track span{ margin:0 26px; color:var(--graphite); }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* NAV */
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:22px 34px 14px; }
+  .brand{ font-size:15px; font-weight:700; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+  .nav__note{ max-width:230px; text-align:right; font-size:10.5px; line-height:1.5; letter-spacing:.08em; text-transform:uppercase; color:var(--graphite); }
+  .nav__menu{ width:34px; height:34px; display:flex; flex-direction:column; justify-content:center; gap:5px; cursor:pointer; }
+  .nav__menu span{ height:1.5px; width:100%; background:var(--ink); }
+  .nav__tabs{ display:flex; gap:28px; }
+  .nav__tabs a{ font-size:11px; letter-spacing:.09em; text-transform:uppercase; text-decoration:none; color:var(--grey); transition:color .2s ease; }
+  .nav__tabs a:hover{ color:var(--ink); }
+  .nav__tabs a.active{ color:var(--ink); }
+  @media (max-width:760px){ .nav__tabs{ display:none; } }
+  .pill{ display:inline-block; border:1.5px solid var(--ink); border-radius:100px; padding:13px 22px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; color:var(--ink); background:transparent; transition:.25s ease; }
+  .pill--solid{ background:var(--ink); color:var(--paper); }
+  .pill--solid:hover{ background:transparent; color:var(--ink); }
+
+  /* MASTHEAD */
+  .mast{ padding:26px 34px 20px; }
+  .mast__row{ display:flex; justify-content:space-between; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); border-top:1px solid var(--ink); border-bottom:1px solid var(--line); padding:9px 0; }
+  .mast__title{ font-size:clamp(42px,7vw,104px); line-height:.88; font-weight:700; letter-spacing:-0.045em; margin:16px 0 12px; }
+  .mast__title em{ font-family:var(--serif); font-style:italic; font-weight:400; }
+  .mast__title .r{ color:var(--red); font-family:var(--script); font-style:normal; font-weight:400; }
+  .mast__intro{ max-width:500px; font-size:13px; line-height:1.6; color:var(--graphite); }
+
+  /* ================= SPREAD ================= */
+  .spread{ border-top:1px solid var(--line); padding:20px 34px 26px; }
+  .folio{ display:flex; justify-content:space-between; align-items:baseline; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-bottom:10px; }
+  .folio b{ color:var(--ink); font-weight:600; }
+
+  .canvas{ position:relative; width:100%; aspect-ratio:1.62; }
+  @media (max-width:1150px){ .canvas{ aspect-ratio:1.35; } }
+
+  .word{ position:absolute; font-weight:700; letter-spacing:-0.05em; line-height:.78; color:var(--ink); z-index:1; pointer-events:none; user-select:none; }
+  .word--out{ color:transparent; -webkit-text-stroke:1.4px var(--ink); }
+
+  .ph{ position:absolute; overflow:hidden; border-radius:6px; background:#fff; box-shadow:0 12px 30px rgba(0,0,0,.10); }
+  .ph img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.05) brightness(.99); transition:filter .6s ease, transform 1s cubic-bezier(.2,.7,.2,1); }
+  .ph:hover img{ filter:grayscale(0) contrast(1); transform:scale(1.05); }
+  /* subtle film grain */
+  .ph::after{ content:""; position:absolute; inset:0; pointer-events:none; mix-blend-mode:overlay; opacity:.20;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+
+  /* red typographic accents */
+  .accent{ position:absolute; z-index:4; color:var(--red); pointer-events:none; }
+  .accent--rot{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; transform:rotate(-8deg); font-weight:600; }
+  .accent--hand{ font-family:var(--script); font-size:clamp(26px,3.6vw,52px); transform:rotate(-6deg); }
+  .accent--seal svg{ width:clamp(96px,10vw,140px); height:clamp(96px,10vw,140px); animation:spin 26s linear infinite; }
+  .accent--seal svg textPath{ fill:var(--red); }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+
+  /* caption row under each collage */
+  .caprow{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-top:14px; flex-wrap:wrap; }
+  .caprow .l{ display:flex; align-items:baseline; gap:14px; }
+  .caprow .tag{ font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--grey); }
+  .caprow .name{ font-family:var(--serif); font-size:clamp(18px,2vw,26px); }
+  .caprow .school{ font-size:12px; color:var(--grey); }
+  .caprow .note{ font-size:12.5px; line-height:1.6; color:var(--graphite); max-width:360px; text-align:right; }
+
+  /* CLOSE */
+  .close{ text-align:center; padding:44px 34px 34px; border-top:1px solid var(--line); }
+  .close h3{ font-size:clamp(30px,5vw,58px); font-weight:700; letter-spacing:-0.03em; line-height:1; margin-bottom:20px; }
+  .close h3 .r{ color:var(--red); font-family:var(--script); }
+  .close p{ max-width:420px; margin:0 auto 24px; font-size:13px; line-height:1.7; color:var(--graphite); text-transform:uppercase; letter-spacing:.03em; }
+  .pill--solid:hover{ background:transparent; color:var(--ink); }
+  .close .pill{ cursor:pointer; }
+
+  /* LIGHTBOX */
+  .lb{ position:fixed; inset:0; background:rgba(20,20,18,.93); display:none; align-items:center; justify-content:center; z-index:200; padding:40px; cursor:zoom-out; }
+  .lb.show{ display:flex; }
+  .lb img{ max-width:90vw; max-height:86vh; border-radius:10px; }
+  .lb__close{ position:absolute; top:24px; right:30px; color:#fff; font-size:26px; cursor:pointer; background:none; border:none; }
+
+  /* ===== MOBILE: collages reflow to simple stacks ===== */
+  @media (max-width:760px){
+    .canvas{ aspect-ratio:auto; }
+    .word{ position:static; font-size:20vw !important; margin:8px 0; display:block; }
+    .ph{ position:static !important; width:100% !important; height:auto !important; aspect-ratio:4/5; margin-bottom:12px; box-shadow:none; }
+    .accent{ display:none; }
+    .nav__note{ display:none; }
+    .caprow .note{ text-align:left; }
+  }
+</style>
+</head>
+<body>
+  <!-- FIXED HEADER -->
+  <header class="topbar">
+    <div class="ticker">
+      <div class="ticker__track">
+        <span>Selected Work</span>·<span>Schools</span>·<span>Sports Teams</span>·<span>Universities</span>·<span>Made In-House</span>·
+        <span>Selected Work</span>·<span>Schools</span>·<span>Sports Teams</span>·<span>Universities</span>·<span>Made In-House</span>·
+      </div>
+    </div>
+    <nav>
+      <a href="index.html" class="brand">Endless Studio.</a>
+      <div class="nav__tabs">
+        <a href="index.html">Home</a>
+        <a href="start-a-project.html">Start a Project</a>
+        <a href="graduation-studio.html">Graduation Studio</a>
+        <a href="view-our-work.html" class="active">View Our Work</a>
+      </div>
+      <div class="nav__note">Selected work — schools, teams &amp; universities.</div>
+    </nav>
+  </header>
+
+  <div class="frame">
+
+    <!-- MASTHEAD -->
+    <header class="mast">
+      <div class="mast__row"><span>Endless Studio — Field Notes</span><span>Vol. 01 · Selected Work</span></div>
+      <h1 class="mast__title">Selected <span class="r">work</span>.</h1>
+      <p class="mast__intro">Fragments from the studio floor — custom apparel, graduation collections, and match kits, designed and made in-house across Europe.</p>
+    </header>
+
+    <!-- ══════════ SPREAD 01 · GRADUATION ══════════ -->
+    <section class="spread">
+      <div class="folio"><span><b>01</b> — Graduation</span><span>Schools · Class of 2026</span></div>
+      <div class="canvas">
+        <div class="word" style="left:1%; top:24%; font-size:24vw;">2026</div>
+
+        <div class="ph" style="left:4%;  top:5%;  width:25%; height:62%;" onclick="openLb('assets/ise-hoodie-model.png')"><img src="assets/ise-hoodie-model.png" alt="ISE graduation hoodie on model"></div>
+        <div class="ph" style="left:29%; top:15%; width:22%; height:74%; z-index:3;" onclick="openLb('assets/isalmere-hoodie-back.png')"><img src="assets/isalmere-hoodie-back.png" alt="ISAlmere roster hoodie back"></div>
+        <div class="ph" style="left:60%; top:5%;  width:37%; height:42%; z-index:2;" onclick="openLb('assets/graduation-ceremony.jpg')"><img src="assets/graduation-ceremony.jpg" alt="Graduation ceremony Amsterdam"></div>
+        <div class="ph" style="left:70%; top:50%; width:26%; height:45%; z-index:3;" onclick="openLb('assets/ise-hoodie-olive.png')"><img src="assets/ise-hoodie-olive.png" alt="ISE olive graduation hoodie"></div>
+
+        <div class="accent accent--seal" style="left:50%; top:56%;">
+          <svg viewBox="0 0 100 100"><defs><path id="s1" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"/></defs>
+            <text font-size="8" letter-spacing="1.6" font-weight="600"><textPath href="#s1">CLASS OF 2026 · MADE IN-HOUSE · </textPath></text></svg>
+        </div>
+      </div>
+      <div class="caprow">
+        <div class="l"><span class="tag">Graduation</span><div><div class="name">The Class Collections</div><div class="school">ISE · ISAlmere · Amsterdam</div></div></div>
+        <p class="note">Full-class rosters, arched script, and screen-printed backs — one collection per graduating year, delivered together.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ SPREAD 02 · CRAFT ══════════ -->
+    <section class="spread">
+      <div class="folio"><span><b>02</b> — Craft</span><span>Custom Apparel · Embroidery</span></div>
+      <div class="canvas">
+        <div class="word word--out" style="left:0%; top:60%; font-size:17vw;">CRAFT</div>
+
+        <div class="ph" style="left:6%;  top:5%;  width:25%; height:66%; z-index:2;" onclick="openLb('assets/aics-varsity-jacket.png')"><img src="assets/aics-varsity-jacket.png" alt="AICS varsity jacket"></div>
+        <div class="ph" style="left:33%; top:3%;  width:20%; height:44%; z-index:3;" onclick="openLb('assets/embroidery-macro.png')"><img src="assets/embroidery-macro.png" alt="Embroidery macro on corduroy"></div>
+        <div class="ph" style="left:34%; top:42%; width:23%; height:53%; z-index:2;" onclick="openLb('assets/isa-jacket-back-detail.jpg')"><img src="assets/isa-jacket-back-detail.jpg" alt="ISA back panel embroidery"></div>
+        <div class="ph" style="left:66%; top:12%; width:31%; height:60%; z-index:2;" onclick="openLb('assets/production-detail.jpg')"><img src="assets/production-detail.jpg" alt="Production floor detail"></div>
+
+        <div class="accent accent--rot" style="left:55%; top:80%;">stitched by hand</div>
+      </div>
+      <div class="caprow">
+        <div class="l"><span class="tag">Custom Apparel</span><div><div class="name">The AICS Varsity &amp; Crest Work</div><div class="school">Amsterdam International Community School</div></div></div>
+        <p class="note">Wool-leather bodies, chain-stitched lettering, and chenille numerals — every crest drawn and stitched in-house.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ SPREAD 03 · FIELD ══════════ -->
+    <section class="spread">
+      <div class="folio"><span><b>03</b> — Field</span><span>Sports · Kit &amp; Fulfillment</span></div>
+      <div class="canvas">
+        <div class="word" style="left:1%; top:22%; font-size:20vw;">FIELD</div>
+
+        <div class="ph" style="left:5%;  top:7%;  width:22%; height:70%; z-index:2;" onclick="openLb('assets/football-kit-front.jpeg')"><img src="assets/football-kit-front.jpeg" alt="Custom football kit"></div>
+        <div class="ph" style="left:28%; top:3%;  width:22%; height:82%; z-index:2;" onclick="openLb('assets/Chair%20photo.JPG')"><img src="assets/Chair%20photo.JPG" alt="Endless Studio custom tee"></div>
+        <div class="ph" style="left:57%; top:7%;  width:22%; height:50%; z-index:3;" onclick="openLb('assets/studio-hoodie.png')"><img src="assets/studio-hoodie.png" alt="Studio hoodie"></div>
+        <div class="ph" style="left:70%; top:47%; width:27%; height:48%; z-index:2;" onclick="openLb('assets/isa-delivery-day.jpg')"><img src="assets/isa-delivery-day.jpg" alt="Delivery day packaging"></div>
+
+        <div class="accent accent--hand" style="left:52%; top:68%;">matchday</div>
+      </div>
+      <div class="caprow">
+        <div class="l"><span class="tag">Sports &amp; Fulfillment</span><div><div class="name">Kits, Merch &amp; Delivery Day</div><div class="school">Student Football League · Amsterdam</div></div></div>
+        <p class="note">Sublimated match kits and studio merch — printed, packed, and delivered piece by piece across Europe.</p>
+      </div>
+    </section>
+
+    <!-- CLOSE -->
+    <section class="close">
+      <h3>Your project,<br />made <span class="r">properly</span>.</h3>
+      <p>Schools, teams, universities, and brands — briefed once, delivered in full.</p>
+      <a href="start-a-project.html" class="pill pill--solid">Start a Project →</a>
+    </section>
+
+  </div>
+
+  <!-- FIXED CLIENT-NAMES TICKER (bottom) -->
+  <div class="botbar">
+    <div 

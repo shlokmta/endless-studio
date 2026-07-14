@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Start a Project — Endless Studio</title>
+<meta name="description" content="From concept to delivery — Endless Studio handles design, production, and fulfillment in-house. Five production methods, one studio." />
+<style>
+  :root{
+    --paper:#f2f1ec;
+    --ink:#111110;
+    --graphite:#3a3a38;
+    --grey:#8b8b86;
+    --line:#d8d7d0;
+    --radius:22px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--ink);
+    font-family:"Helvetica Neue", Arial, "Segoe UI", sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  .frame{ background:var(--paper); margin:14px; border-radius:var(--radius); overflow:hidden; padding-top:94px; padding-bottom:42px; }
+  /* fixed framed header + footer client ticker */
+  .topbar{ position:fixed; top:14px; left:14px; right:14px; z-index:120; background:var(--paper); border-radius:var(--radius) var(--radius) 0 0; overflow:hidden; }
+  .botbar{ position:fixed; bottom:14px; left:14px; right:14px; z-index:120; background:var(--paper); border-top:1px solid var(--line); border-radius:0 0 var(--radius) var(--radius); overflow:hidden; }
+  .botbar .ticker{ border-bottom:none; }
+
+  /* ---- TICKER ---- */
+  .ticker{ border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; }
+  .ticker__track{
+    display:inline-block; padding:9px 0;
+    animation:scroll 38s linear infinite;
+    font-size:11px; letter-spacing:.14em; font-weight:600; text-transform:uppercase;
+  }
+  .ticker__track span{ margin:0 26px; color:var(--graphite); }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* ---- NAV ---- */
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:22px 34px 14px; }
+  .brand{ font-size:15px; font-weight:700; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+  .nav__note{
+    max-width:230px; text-align:right; font-size:10.5px; line-height:1.5;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--graphite);
+  }
+  .nav__menu{ width:34px; height:34px; display:flex; flex-direction:column; justify-content:center; gap:5px; cursor:pointer; }
+  .nav__menu span{ height:1.5px; width:100%; background:var(--ink); }
+  .nav__tabs{ display:flex; gap:28px; }
+  .nav__tabs a{ font-size:11px; letter-spacing:.09em; text-transform:uppercase; text-decoration:none; color:var(--grey); transition:color .2s ease; }
+  .nav__tabs a:hover{ color:var(--ink); }
+  .nav__tabs a.active{ color:var(--ink); }
+  @media (max-width:760px){ .nav__tabs{ display:none; } }
+
+  /* ================= HERO ================= */
+  .hero{
+    padding:64px 34px 56px;
+    display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;
+  }
+  .hero__intro{ padding-top:2px; }   /* aligns kicker baseline with the form title */
+  .hero__kicker{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); margin-bottom:22px; }
+  .hero__title{
+    font-size:clamp(56px, 9.4vw, 150px);
+    line-height:.88; font-weight:700; letter-spacing:-0.04em;
+    background:linear-gradient(180deg, #1a1a18 0%, #45443f 62%, #6f6e67 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero__sub{
+    max-width:460px; margin:26px 0 30px;
+    font-size:14px; line-height:1.7; color:var(--graphite);
+  }
+  .hero__cta{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  /* ---- CONTACT FORM (floating, borderless) ---- */
+  .brief{ background:transparent; border:none; padding:0; }
+  .brief__title{ font-size:15px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; margin-bottom:6px; }
+  .brief__note{ font-size:12px; line-height:1.55; color:var(--grey); margin-bottom:26px; max-width:400px; }
+  .brief__grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 22px; }
+  .field{ display:flex; flex-direction:column; }
+  .field--full{ grid-column:1 / -1; }
+  .field label{ font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-bottom:8px; }
+  .field input, .field select, .field textarea{
+    font-family:inherit; font-size:14px; color:var(--ink);
+    background:transparent; border:none; border-bottom:1px solid var(--ink);
+    border-radius:0; padding:6px 0; outline:none; transition:border-color .2s ease;
+  }
+  .field select{ appearance:none; -webkit-appearance:none; cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);
+    background-position:right 2px center, right 8px center; background-size:6px 6px,6px 6px; background-repeat:no-repeat;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:#b7b6ae; }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--ink); }
+  .field textarea{ resize:vertical; min-height:40px; }
+  .brief__submit{
+    grid-column:1 / -1; margin-top:10px; justify-self:start;
+    border:none; cursor:pointer;
+    background:var(--ink); color:var(--paper);
+    border-radius:100px; padding:14px 30px;
+    font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    font-family:inherit; transition:opacity .2s ease;
+  }
+  .brief__submit:hover{ opacity:.85; }
+  .brief__foot{ grid-column:1 / -1; font-size:10.5px; color:var(--grey); margin-top:6px; }
+  .brief__error{ grid-column:1 / -1; display:none; font-size:12px; color:#9a2b2b; margin-top:2px; }
+  .brief__error.show{ display:block; }
+  .brief__success{ display:none; align-self:center; }
+  .brief__success.show{ display:block; }
+
+  .pill{
+    display:inline-block; border:1.5px solid var(--ink); border-radius:100px;
+    padding:13px 22px; font-size:11px; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; text-decoration:none; color:var(--ink);
+    background:transparent; transition:.25s ease; cursor:pointer; white-space:nowrap;
+  }
+  .pill:hover{ background:var(--ink); color:var(--paper); }
+  .pill--solid{ background:var(--ink); color:var(--paper); }
+  .pill--solid:hover{ background:transparent; color:var(--ink); }
+
+  /* ================= SECTION SHELL ================= */
+  .sec{ padding:14px 34px; }
+  .sec__head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; padding:44px 0 30px; border-top:1px solid var(--line); flex-wrap:wrap; }
+  .sec__kicker{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); margin-bottom:14px; }
+  .sec__title{ font-size:clamp(30px, 4.6vw, 56px); font-weight:700; letter-spacing:-0.03em; line-height:.98; }
+  .sec__intro{ max-width:330px; font-size:13px; line-height:1.7; color:var(--graphite); }
+
+  /* ---- DESIGN → DELIVERY FLOW ---- */
+  .flow{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:34px; }
+  .flow__step{ background:var(--paper); padding:26px 22px 30px; }
+  .flow__no{ font-size:12px; font-weight:600; color:var(--grey); margin-bottom:34px; }
+  .flow__name{ font-size:19px; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px; }
+  .flow__step p{ font-size:12.5px; line-height:1.6; color:var(--graphite); }
+
+  /* ---- BUILT FROM SCRATCH ---- */
+  .build{ border-top:1px solid var(--line); }
+  .build__row{
+    display:grid; grid-template-columns:52px 1fr 2fr; gap:28px; align-items:baseline;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .build__no{ font-size:12px; font-weight:600; color:var(--grey); }
+  .build__name{ font-size:clamp(18px, 2.4vw, 26px); font-weight:700; letter-spacing:-0.02em; }
+  .build__desc{ font-size:13px; line-height:1.65; color:var(--graphite); max-width:540px; }
+  .build__lead{
+    font-size:clamp(20px,2.6vw,30px); line-height:1.35; font-weight:600; letter-spacing:-0.01em;
+    max-width:720px; margin-bottom:32px;
+  }
+  .build__lead em{ font-style:normal; color:var(--grey); }
+
+  /* ---- METHODS (tight, scannable) ---- */
+  .method{
+    display:grid; grid-template-columns:52px 1fr auto; gap:28px; align-items:baseline;
+    padding:22px 0; border-top:1px solid var(--line);
+  }
+  .method:last-child{ border-bottom:1px solid var(--line); }
+  .method__no{ font-size:12px; font-weight:600; color:var(--grey); }
+  .method__name{ font-size:clamp(20px, 2.6vw, 30px); font-weight:700; letter-spacing:-0.02em; }
+  .method__desc{ font-size:13px; line-height:1.6; color:var(--graphite); max-width:520px; margin-top:6px; }
+  .method__best{ font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--grey); text-align:right; white-space:nowrap; }
+
+  @media (max-width:900px){
+    .flow{ grid-template-columns:repeat(2,1fr); }
+    .hero{ grid-template-columns:1fr; gap:34px; }
+  }
+  @media (max-width:760px){
+    .method{ grid-template-columns:1fr; gap:6px; }
+    .method__best{ text-align:left; margin-top:8px; white-space:normal; }
+    .build__row{ grid-template-columns:1fr; gap:6px; }
+    .nav__note{ display:none; }
+    .flow__no{ margin-bottom:18px; }
+  }
+
+  /* ---- CLOSE ---- */
+  .close{ text-align:center; padding:64px 34px 40px; border-top:1px solid var(--line); margin-top:20px; }
+  .close h3{ font-size:clamp(30px, 5vw, 58px); font-weight:700; letter-spacing:-0.03em; line-height:1; margin-bottom:20px; }
+  .close p{ max-width:420px; margin:0 auto 24px; font-size:13px; line-height:1.7; color:var(--graphite); text-transform:uppercase; letter-spacing:.03em; }
+</style>
+</head>
+<body>
+  <!-- FIXED HEADER -->
+  <header class="topbar">
+    <div class="ticker">
+      <div class="ticker__track">
+        <span>Custom Design &amp; Manufacturing</span>·
+        <span>Schools</span>·<span>Sports Teams</span>·<span>Universities</span>·<span>Brands</span>·
+        <span>Custom Design &amp; Manufacturing</span>·
+        <span>Schools</span>·<span>Sports Teams</span>·<span>Universities</span>·<span>Brands</span>·
+      </div>
+    </div>
+    <nav>
+      <a href="index.html" class="brand">Endless Studio.</a>
+      <div class="nav__tabs">
+        <a href="index.html">Home</a>
+        <a href="start-a-project.html" class="active">Start a Project</a>
+        <a href="graduation-studio.html">Graduation Studio</a>
+        <a href="view-our-work.html">View Our Work</a>
+      </div>
+      <div class="nav__note">One studio — design, production &amp; delivery.</div>
+    </nav>
+  </header>
+
+  <div class="frame">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero__intro">
+        <div class="hero__kicker">Start a Project</div>
+        <h1 class="hero__title">Concept to<br />delivery.</h1>
+        <p class="hero__sub">We're not a marketplace or a middleman. Endless Studio designs, manufactures, and delivers under one roof — so your team briefs once and receives finished goods, on time and on brand.</p>
+        <div class="hero__cta">
+          <a href="graduation-studio.html" class="pill">Graduation Studio →</a>
+        </div>
+      </div>
+
+      <!-- CONTACT / PROJECT BRIEF -->
+      <form class="brief" id="projectForm" novalidate>
+        <!-- Web3Forms — submits to info@endless-studio.eu (same as live site) -->
+        <input type="hidden" name="access_key" value="a4307aed-8c53-4d46-8eec-e94a108885ad" />
+        <input type="hidden" name="subject" value="New Project Brief — Endless Studio" />
+        <input type="hidden" name="from_name" value="Endless Studio Website" />
+        <input type="checkbox" name="botcheck" class="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <div class="brief__title">Tell us about your project.</div>
+        <p class="brief__note">We reply within one business day with a clear scope and indicative quote. No commitment required.</p>
+
+        <div class="brief__grid">
+          <div class="field">
+            <label for="first">First name</label>
+            <input id="first" name="First Name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="last">Last name</label>
+            <input id="last" name="Last Name" type="text" required />
+          </div>
+          <div class="field field--full">
+            <label for="org">Organisation</label>
+            <input id="org" name="Organisation" type="text" />
+          </div>
+          <div class="field">
+            <label for="sector">Sector</label>
+            <select id="sector" name="Sector" required>
+              <option value="" disabled selected>Select sector</option>
+              <option>School</option>
+              <option>Sports Team</option>
+              <option>University</option>
+              <option>Company</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="qty">Estimated quantity</label>
+            <select id="qty" name="Estimated Quantity" required>
+              <option value="" disabled selected>Select range</option>
+              <option>Under 50</option>
+              <option>50 – 150</option>
+              <option>150 – 500</option>
+              <option>500 – 1,000</option>
+              <option>1,000+</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="email">Email</label>
+            <input id="email" name="Email" type="email" required />
+          </div>
+          <div class="field field--full">
+            <label for="msg">Tell us about your project</label>
+            <textarea id="msg" name="Message"></textarea>
+          </div>
+
+          <button type="submit" class="brief__submit" id="submitBtn">Send project brief →</button>
+          <div class="brief__error" id="formError">Something went wrong — please try again or email info@endless-studio.eu.</div>
+          <div class="brief__foot">We respond within one business day. Your information is never shared.</div>
+        </div>
+      </form>
+
+      <!-- SUCCESS STATE -->
+      <div class="brief__success" id="formSuccess">
+        <div class="brief__title">Brief received.</div>
+        <p class="brief__note">Thanks for reaching out. We'll review your project and get back to you within one business day.</p>
+      </div>
+    </header>
+
+    <!-- DESIGN → DELIVERY -->
+    <section class="sec">
+      <div class="sec__head">
+        <div>
+          <div class="sec__kicker">Design to delivery</div>
+          <h2 class="sec__title">Four steps.<br />One point of contact.</h2>
+        </div>
+        <p class="sec__intro">From the first brief to the day it lands in your hall or locker room, everything stays in-house — no handoffs, no chasing suppliers.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow__step">
+          <div class="flow__no">01</div>
+          <div class="flow__name">Brief &amp; Scope</div>
+          <p>You share the sector, quantities, and timeline. We ask the right questions and set a clear scope.</p>
+        </div>
+        <div class="flow__step">
+          <div class="flow__no">02</div>
+          <div class="flow__name">Design</div>
+          <p>Our in-house studio turns it into on-brand, production-ready concepts — with a sample to approve.</p>
+        </div>
+        <div class="flow__step">
+          <div class="flow__no">03</div>
+          <div class="flow__name">Produce</div>
+          <p>Once approved, we handle materials, manufacturing, and quality control across all five methods.</p>
+        </div>
+        <div class="flow__step">
+          <div class="flow__no">04</div>
+          <div class="flow__name">Deliver</div>
+          <p>Individually packaged or bulk-shipped across Europe — on time and ready to use immediately.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILT FROM SCRATCH -->
+    <section class="sec" id="craft">
+      <div class="sec__head">
+        <div>
+          <div class="sec__kicker">No white-label</div>
+          <h2 class="sec__title">Built from<br />the fabric up.</h2>
+        </div>
+        <p class="sec__intro">We don't print your logo on someone else's blank. Every piece starts at the cloth and is drafted, cut, and constructed to your specification.</p>
+      </div>
+
+      <p class="build__lead">Most suppliers buy stock garments and decorate them. <em>We start earlier</em> — selecting the fabric, drafting the pattern, and building the piece before a single stitch of branding is applied.</p>
+
+      <div class="build">
+        <div class="build__row">
+          <div class="build__no">01</div>
+          <div class="build__name">Fabric Selection</div>
+          <p class="build__desc">We choose the cloth first — weight, hand-feel, stretch, and durability matched to how the piece will actually be worn.</p>
+        </div>
+        <div class="build__row">
+          <div class="build__no">02</div>
+          <div class="build__name">Pattern Making</div>
+          <p class="build__desc">Patterns drafted in-house to our own blocks and fit — never pulled off a catalogue rail. The silhouette is yours.</p>
+        </div>
+        <div class="build__row">
+          <div class="build__no">03</div>
+          <div class="build__name">Cut &amp; Construction</div>
+          <p class="build__desc">Fabric cut and sewn to spec, with seams, trims, and finishing checked at every stage of the build.</p>
+        </div>
+        <div class="build__row">
+          <div class="build__no">04</div>
+          <div class="build__name">Branding &amp; Detailing</div>
+          <p class="build__desc">Embroidery, print, and hardware applied by the method the design calls for — the final layer, not the starting point.</p>
+        </div>
+        <div class="build__row">
+          <div class="build__no">05</div>
+          <div class="build__name">Quality Control &amp; Delivery</div>
+          <p class="build__desc">Every piece inspected, individually packaged, and delivered ready to wear — across Europe, on time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHODS -->
+    <section class="sec" id="methods">
+      <div class="sec__head">
+        <div>
+          <div class="sec__kicker">How we produce</div>
+          <h2 class="sec__title">Five methods,<br />one standard.</h2>
+        </div>
+        <p class="sec__intro">Every project takes a different route to the same quality. Here's the quick guide to which fits yours.</p>
+      </div>
+
+      <div class="method">
+        <div class="method__no">01</div>
+        <div>
+          <div class="method__name">Screen Printing</div>
+          <p class="method__desc">Bold, high-opacity graphics printed straight onto fabric — crisp, durable, and cost-effective at volume.</p>
+        </div>
+        <div class="method__best">Large runs · bold graphics<br />hoodies &amp; tees</div>
+      </div>
+
+      <div class="method">
+        <div class="method__no">02</div>
+        <div>
+          <div class="method__name">Embroidery</div>
+          <p class="method__desc">Thread stitched into the garment for a premium, tactile finish print can't match. The choice for crests and lettering.</p>
+        </div>
+        <div class="method__best">Logos &amp; crests · varsity<br />premium feel</div>
+      </div>
+
+      <div class="method">
+        <div class="method__no">03</div>
+        <div>
+          <div class="method__name">Sublimation Printing</div>
+          <p class="method__desc">Dye infused into the fabric for full-colour, edge-to-edge prints that never crack, fade, or peel.</p>
+        </div>
+        <div class="method__best">All-over prints · match kits<br />performance wear</div>
+      </div>
+
+      <div class="method">
+        <div class="method__no">04</div>
+        <div>
+          <div class="method__name">DTF Printing</div>
+          <p class="method__desc">Full-colour, high-detail transfers onto virtually any fabric or colour — ideal for short runs and personalisation.</p>
+        </div>
+        <div class="method__best">Small runs · personalisation<br />photographic detail</div>
+      </div>
+
+      <div class="method">
+        <div class="method__no">05</div>
+        <div>
+          <div class="method__name">Cut &amp; Sew</div>
+          <p class="method__desc">Garments built from scratch — pattern, fabric, and fit made to your exact spec. Our highest level of customisation.</p>
+        </div>
+        <div class="method__best">Custom silhouettes<br />premium collections</div>
+      </div>
+    </section>
+
+    <!-- CLOSE -->
+    <section class="close">
+      <h3>Ready when<br />you are.</h3>
+      <p>Found the method that fits? Send us the brief — we'll reply within one business day with a clear scope and indicative quote.</p>
+      <a href="#quote" class="pill pill--solid">Start your brief →</a>
+    </section>
+
+  </div>
+
+  <!-- FIXED CLIENT-NAMES TICKER (bottom) -->
+  <div class="botbar">
+    <div class="ticker">
+      <div class="ticker__track">
+        <span>International School of Almere</span>·<span>Amsterdam International Community School</span>·<span>International School Eindhoven</span>·<span>University of Amsterdam</span>·<span>Erasmus University Rotterdam</span>·<span>Amsterdam Investment Club</span>·<span>Student Football League Amsterdam</span>·<span>Craft 34°</span>·
+        <span>International School of Almere</span>·<span>Amsterdam International Community Sc
