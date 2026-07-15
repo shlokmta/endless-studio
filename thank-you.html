@@ -1,161 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thank You — Endless Studios</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Confirmed — Endless Studio</title>
+<meta name="description" content="Your order is confirmed. Thank you from Endless Studio." />
+<style>
+  :root{ --paper:#f2f1ec; --ink:#111110; --graphite:#3a3a38; --grey:#8b8b86; --line:#d8d7d0; --radius:22px; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--ink); font-family:"Helvetica Neue",Arial,"Segoe UI",sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  .frame{ background:var(--paper); margin:14px; border-radius:var(--radius); overflow:hidden; min-height:calc(100vh - 28px); display:flex; flex-direction:column; }
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .ticker{ border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; }
+  .ticker__track{ display:inline-block; padding:9px 0; animation:scroll 40s linear infinite; font-size:11px; letter-spacing:.14em; font-weight:600; text-transform:uppercase; }
+  .ticker__track span{ margin:0 26px; color:var(--graphite); }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
 
-    :root {
-      --dark:    #0C0C0C;
-      --warm:    #F5F0EB;
-      --warm-2:  #EDE7DF;
-      --stone:   #8A8175;
-      --stone-2: #B5AFA8;
-      --cream:   #FAF7F3;
-    }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:22px 34px 14px; }
+  .brand{ font-size:15px; font-weight:700; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+  .nav__note{ font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--graphite); }
 
-    html, body {
-      min-height: 100svh;
-      font-family: 'Inter', sans-serif;
-      background: #ffffff;
-      color: var(--dark);
-      display: flex;
-      flex-direction: column;
-    }
+  .wrap{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 34px 70px; position:relative; }
+  .kicker{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); margin-bottom:24px; }
+  h1{ font-size:clamp(46px,9vw,132px); line-height:.88; font-weight:700; letter-spacing:-0.04em;
+      background:linear-gradient(180deg,#1a1a18 0%,#45443f 60%,#6f6e67 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:24px; }
+  p{ max-width:460px; font-size:14px; line-height:1.7; color:var(--graphite); margin-bottom:12px; }
+  .ref{ font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--grey); margin-bottom:30px; }
+  .ref strong{ color:var(--ink); }
+  .pill{ display:inline-block; border:1.5px solid var(--ink); border-radius:100px; padding:14px 26px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; color:var(--ink); background:transparent; transition:.25s ease; }
+  .pill:hover{ background:var(--ink); color:var(--paper); }
 
-    /* ─── NAV ─── */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 60px;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-      flex-shrink: 0;
-    }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif; font-weight: 700;
-      font-size: 1.1rem; color: var(--dark); text-decoration: none;
-      letter-spacing: 0.04em;
-    }
-    .nav-logo span { color: rgba(0,0,0,0.3); }
-
-    /* ─── MAIN ─── */
-    main {
-      flex: 1; display: flex; align-items: center; justify-content: center;
-      padding: 3rem 1.5rem;
-    }
-
-    .card {
-      max-width: 520px; width: 100%; text-align: center;
-    }
-
-    /* Emblem */
-    .emblem {
-      width: min(60vw, 200px);
-      display: block; margin: 0 auto 2.5rem;
-      opacity: 0.9;
-      animation: fadeUp 1s ease both;
-    }
-
-    /* Ornament */
-    .ornament {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; color: rgba(0,0,0,0.15);
-      letter-spacing: 0.5em; display: block;
-      margin-bottom: 1.5rem;
-      animation: fadeUp 1s ease 0.15s both;
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 300; line-height: 1.15;
-      color: var(--dark); margin-bottom: 1.5rem;
-      animation: fadeUp 1s ease 0.25s both;
-    }
-    h1 em { font-style: italic; color: var(--stone); }
-
-    .body-text {
-      font-size: 0.9rem; line-height: 1.85;
-      color: var(--stone);
-      max-width: 380px; margin: 0 auto 2.5rem;
-      animation: fadeUp 1s ease 0.35s both;
-    }
-
-    .divider {
-      width: 40px; height: 1px;
-      background: rgba(0,0,0,0.12);
-      margin: 0 auto 2.5rem;
-      animation: fadeUp 1s ease 0.4s both;
-    }
-
-    .detail {
-      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--stone-2);
-      animation: fadeUp 1s ease 0.45s both;
-    }
-
-    .links {
-      display: flex; align-items: center; justify-content: center;
-      gap: 1.5rem; margin-top: 3rem;
-      animation: fadeUp 1s ease 0.55s both;
-    }
-    .links a {
-      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--stone-2); text-decoration: none;
-      transition: color 0.2s;
-    }
-    .links a:hover { color: var(--dark); }
-    .links-sep {
-      width: 1px; height: 12px;
-      background: rgba(0,0,0,0.12);
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  .seal{ position:absolute; right:-90px; bottom:-90px; width:360px; height:360px; pointer-events:none; }
+  .seal svg{ width:100%; height:100%; animation:spin 30s linear infinite; }
+  .seal .dot{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:26px; }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+  @media (max-width:760px){ .seal{ display:none; } }
+</style>
 </head>
 <body>
-
-<nav>
-  <a href="index.html.html" class="nav-logo">Endless <span>Studios.</span></a>
-</nav>
-
-<main>
-  <div class="card">
-
-    <img class="emblem" src="EMBELEM%20GRADUATION.png" alt="Endless Studios Graduation" draggable="false" />
-
-    <span class="ornament">✦</span>
-
-    <h1>Thank you for being part of<br /><em>Endless Studios Graduation.</em></h1>
-
-    <p class="body-text">
-      Your order is confirmed and in production. You'll receive a
-      confirmation email shortly. We can't wait to see you wearing it
-      on the big day.
-    </p>
-
-    <div class="divider"></div>
-
-    <p class="detail">Endless Studios · Class of 2026</p>
-
-    <div class="links">
-      <a href="graduation.html">Graduation page</a>
-      <div class="links-sep"></div>
-      <a href="index.html.html">Main site</a>
-      <div class="links-sep"></div>
-      <a href="mailto:hello@endless-studio.eu">Contact us</a>
+  <div class="frame">
+    <div class="ticker">
+      <div class="ticker__track">
+        <span>Order Confirmed</span>·<span>Made In-House</span>·<span>By Endless Studio</span>·<span>Thank You</span>·
+        <span>Order Confirmed</span>·<span>Made In-House</span>·<span>By Endless Studio</span>·<span>Thank You</span>·
+      </div>
     </div>
+    <nav>
+      <a href="index.html" class="brand">Endless Studio.</a>
+      <div class="nav__note">Order confirmed — thank you.</div>
+    </nav>
 
+    <div class="wrap">
+      <div class="seal">
+        <svg viewBox="0 0 100 100">
+          <defs><path id="c" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" /></defs>
+          <text font-size="7.6" letter-spacing="1.35" fill="#111110" font-weight="600">
+            <textPath href="#c">ENDLESS STUDIO · ORDER CONFIRMED · </textPath>
+          </text>
+        </svg>
+        <div class="dot">✦</div>
+      </div>
+
+      <div class="kicker">Payment received</div>
+      <h1>Thank you.</h1>
+      <p>Your payment is confirmed and your order is locked in. A confirmation has been sent to your email — we'll be in touch with delivery details.</p>
+      <div class="ref" id="ref"></div>
+      <a href="index.html" class="pill">Back to Endless Studio →</a>
+    </div>
   </div>
-</main>
 
+  <script>
+    var ref = new URLSearchParams(location.search).get('ref');
+    if (ref) document.getElementById('ref').innerHTML = 'Order reference — <strong>' + ref + '</strong>';
+  </script>
 </body>
 </html>

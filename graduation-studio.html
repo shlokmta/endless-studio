@@ -96,6 +96,25 @@
   .named--left{ margin-top:22px; }
   .named--right{ margin-bottom:28px; }
 
+  /* ---- size guide ---- */
+  .opt__label--row{ display:flex; justify-content:space-between; align-items:center; }
+  .sizeguide-link{ background:none; border:none; font-family:inherit; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); cursor:pointer; padding:0 0 2px; }
+  .sizeguide-link:hover{ opacity:.6; }
+  .sg{ position:fixed; inset:0; background:rgba(17,17,16,.6); display:none; align-items:center; justify-content:center; z-index:300; padding:24px; }
+  .sg.show{ display:flex; }
+  .sg__card{ background:var(--paper); border-radius:16px; max-width:560px; width:100%; padding:30px 30px 26px; position:relative; box-shadow:0 30px 80px rgba(0,0,0,.35); }
+  .sg__close{ position:absolute; top:14px; right:18px; background:none; border:none; font-size:18px; cursor:pointer; color:var(--ink); }
+  .sg__head{ text-align:center; border-bottom:1px solid var(--ink); padding-bottom:16px; margin-bottom:6px; }
+  .sg__title{ font-size:18px; font-weight:700; }
+  .sg__sub{ font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-top:5px; }
+  .sg__table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .sg__table th{ text-align:center; font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); padding:11px 6px 8px; border-bottom:1px solid var(--line); }
+  .sg__table td{ text-align:center; padding:9px 6px; border-bottom:1px solid var(--line); color:var(--graphite); }
+  .sg__table tr:last-child td{ border-bottom:none; }
+  .sg__table td:first-child, .sg__table th:first-child{ font-weight:700; color:var(--ink); }
+  .sg__note{ font-size:11.5px; line-height:1.6; color:var(--graphite); margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
+  .sg__note strong{ color:var(--ink); }
+
   /* ================= PORTAL ================= */
   .portal{ display:none; flex:1; padding:26px 34px 60px; }
   .portal.show{ display:block; animation:fade .6s ease; }
@@ -256,7 +275,10 @@
             <div class="swatches" id="swatches"></div>
           </div>
           <div class="opt">
-            <div class="opt__label">Size</div>
+            <div class="opt__label opt__label--row">
+              <span>Size</span>
+              <button type="button" id="sizeGuideBtn" class="sizeguide-link" onclick="openSizeGuide()">Size guide</button>
+            </div>
             <div class="sizes" id="sizes"></div>
           </div>
           <div class="opt">
@@ -282,6 +304,30 @@
       </div>
     </section>
 
+  </div>
+
+  <!-- SIZE GUIDE MODAL -->
+  <div class="sg" id="sizeGuide" onclick="if(event.target===this) closeSizeGuide()">
+    <div class="sg__card">
+      <button class="sg__close" onclick="closeSizeGuide()" aria-label="Close">✕</button>
+      <div class="sg__head">
+        <div class="sg__title" id="sgTitle">Size Guide</div>
+        <div class="sg__sub">Unisex size guide · centimetres</div>
+      </div>
+      <table class="sg__table">
+        <thead><tr><th>Size</th><th>EU</th><th>Chest</th><th>Waist</th><th>Hip</th></tr></thead>
+        <tbody>
+          <tr><td>XXS</td><td>40</td><td>78–83</td><td>66–71</td><td>80–84</td></tr>
+          <tr><td>XS</td><td>42/44</td><td>84–89</td><td>72–77</td><td>85–91</td></tr>
+          <tr><td>S</td><td>46/48</td><td>90–95</td><td>78–83</td><td>92–97</td></tr>
+          <tr><td>M</td><td>48/50</td><td>96–101</td><td>84–89</td><td>98–103</td></tr>
+          <tr><td>L</td><td>50/52</td><td>102–107</td><td>90–95</td><td>104–109</td></tr>
+          <tr><td>XL</td><td>54/56</td><td>108–113</td><td>96–101</td><td>110–115</td></tr>
+          <tr><td>XXL</td><td>58/60</td><td>114–120</td><td>102–108</td><td>116–122</td></tr>
+        </tbody>
+      </table>
+      <div class="sg__note"><strong>Choosing your size.</strong> This jersey is genderless and cut on a men's size scale with a slightly loose fit. Review the body measurements above to find the right size — international size conversions are a recommendation only.</div>
+    </div>
   </div>
 
   <!-- FIXED CLIENT-NAMES TICKER (bottom) -->
@@ -310,10 +356,25 @@
       sizes:    ["XS","S","M","L","XL"],
       deadline: "TBC",
       mollieLink:"https://payment-links.mollie.com/payment/xFz8446nk8KDAUYVMCFDN"
+    },
+
+    "EUC26GRADUATION": {
+      school:   "Erasmus University College",
+      title:    "EUC Graduation Jersey — Class of 2026",
+      desc:     "A retro-striped graduation football jersey in cream and soft pink, finished with an open ribbed collar, the Erasmus University College wordmark, and the EUC Graduation 2026 crest. Cut with a slightly loose, relaxed fit for an easy, worn-in feel — designed and produced in-house by Endless Studio.",
+      details:  ["Slightly loose, relaxed fit","Retro vertical stripe · cream & pink","Open ribbed collar","Erasmus University College print","EUC Graduation 2026 crest","Made in-house by Endless Studio"],
+      priceLabel:"€36", priceAmount:36, currency:"€",
+      colours:  { "Cream / Pink Stripe":["euc-front.png","euc-back.png"] },
+      sizes:    ["XS","S","M","L","XL"],
+      deadline: "TBC",
+      product:  "EUC Graduation Jersey",
+      useBackend: true,
+      sizeChart: true
     }
     // "AICS2026": { ... }
   };
   const WEB3FORMS_KEY = "a4307aed-8c53-4d46-8eec-e94a108885ad";
+  const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzLaa-BYH0tqGAocObpIqK3OqmF0orH4nJCm4WFs6JmKoAGKfuSX9Ln5xLlvqoaOrU4/exec";
 
   let current = null, currentCode = "", colour = "", size = "", qty = 1;
 
@@ -349,6 +410,7 @@
 
     renderGallery();
     document.getElementById('qtyVal').textContent = qty;
+    document.getElementById('sizeGuideBtn').style.display = s.sizeChart ? 'inline-block' : 'none';
     updateTotal();
   }
   function renderGallery(){
@@ -364,4 +426,88 @@
   function changeQty(d){ qty=Math.max(1, qty+d); document.getElementById('qtyVal').textContent=qty; updateTotal(); }
   function updateTotal(){ document.getElementById('pTotal').textContent = current.currency + (current.priceAmount*qty).toFixed(2); }
 
-  a
+  /* ---- size guide modal ---- */
+  function openSizeGuide(){
+    if(current) document.getElementById('sgTitle').textContent = current.title.split(' — ')[0];
+    document.getElementById('sizeGuide').classList.add('show');
+  }
+  function closeSizeGuide(){ document.getElementById('sizeGuide').classList.remove('show'); }
+
+  function makeRef(){ return currentCode.slice(0,4) + '-' + Date.now().toString().slice(-6); }
+
+  async function logToSheet(o){
+    try{
+      await fetch(SHEETS_URL, {
+        method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(o)
+      });
+    }catch(e){ /* non-blocking */ }
+  }
+
+  async function reserveAndPay(){
+    const s = current;
+    const name  = document.getElementById('buyerName').value.trim();
+    const email = document.getElementById('buyerEmail').value.trim();
+    const btn   = document.getElementById('buyBtn');
+    if(!size){ alert('Please choose a size.'); return; }
+    if(!name || !email){ alert('Please add your name and email so we can match your order.'); return; }
+
+    btn.disabled = true; btn.textContent = 'Reserving…';
+    const total = (s.priceAmount*qty).toFixed(2);   // quantity × unit price, 2 dp for Mollie
+    const ref   = makeRef();
+
+    // ── BACKEND PATH: dynamic amount via Mollie API ──
+    // Fulfillment (Google Sheet + confirmation email) happens ONLY in
+    // /api/webhook once Mollie confirms the payment is paid.
+    if(s.useBackend){
+      try{
+        const resp = await fetch('/api/create-payment', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            studentName:name, orderRef:ref, school:s.school,
+            product:s.product || s.title, colour:colour, size:size,
+            quantity:qty, email:email, amount:total
+          })
+        });
+        const result = await resp.json();
+        if(result.checkoutUrl){ window.location.href = result.checkoutUrl; return; }
+        throw new Error(result.error || 'No checkout URL returned');
+      }catch(err){
+        alert('Something went wrong starting checkout. Please try again or email info@endless-studio.eu.');
+        btn.disabled = false; btn.textContent = 'Reserve & pay →';
+      }
+      return;
+    }
+
+    // ── FIXED-LINK PATH (e.g. ISE hoodie): capture order client-side, then redirect ──
+    await logToSheet({
+      timestamp: new Date().toISOString(),
+      order_ref: ref, student_name: name, email: email,
+      school: s.school, size: size, quantity: qty,
+      amount: s.currency + total, colour: colour, status: 'SUBMITTED'
+    });
+    try{
+      const fd = new FormData();
+      fd.append('access_key', WEB3FORMS_KEY);
+      fd.append('subject', 'Graduation Order — '+s.school+' ('+currentCode+')');
+      fd.append('from_name', 'Graduation Studio');
+      fd.append('Order Ref', ref);
+      fd.append('Class', s.school); fd.append('Code', currentCode);
+      fd.append('Product', s.title); fd.append('Colour', colour);
+      fd.append('Size', size); fd.append('Quantity', qty);
+      fd.append('Total', s.currency+total);
+      fd.append('Name', name); fd.append('Email', email);
+      await fetch('https://api.web3forms.com/submit',{ method:'POST', body:fd });
+    }catch(e){ /* non-blocking */ }
+
+    if(s.mollieLink){
+      window.location.href = s.mollieLink;
+    } else {
+      alert('Checkout for this item isn\'t live yet — please email info@endless-studio.eu.');
+      btn.disabled = false; btn.textContent = 'Reserve & pay →';
+    }
+  }
+  </script>
+</body>
+</html>
