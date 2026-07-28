@@ -105,6 +105,8 @@
     .mobile-links a{padding:.85rem 0;font-size:.85rem;font-weight:500;color:var(--ink-2);border-bottom:1px solid var(--line)}
   }
   @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}.soon-eyebrow,.soon-tag,.soon-h1,.soon-copy,.soon-cta{opacity:1;animation:none}}
+  .nav{overflow:visible}
+  .nav-ticker{border-radius:16px 16px 0 0}
 </style>
 </head>
 <body>
@@ -130,7 +132,7 @@
             </summary>
             <div class="lang-menu">
               <a href="#" data-code="EN" class="active">English<span class="code">EN</span></a>
-              <a href="#" data-code="NL">Nederlands<span class="code">NL</span></a>
+              <a href="#" data-code="FR">Français<span class="code">FR</span></a>
               <a href="#" data-code="DE">Deutsch<span class="code">DE</span></a>
               <a href="#" data-code="ES">Español<span class="code">ES</span></a>
             </div>
@@ -214,5 +216,6 @@
     document.addEventListener('click',function(e){if(!lang.contains(e.target))lang.removeAttribute('open');});
   }
 </script>
+<script src="assets/i18n.js"></script>
 </body>
 </html>
