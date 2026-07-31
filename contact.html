@@ -376,7 +376,11 @@
       var data=new FormData(form);
       var res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:data});
       var out=await res.json();
-      if(out.success){ form.style.display='none'; done.classList.add('show'); done.scrollIntoView({behavior:'smooth',block:'center'}); }
+      if(out.success){
+        /* Google Ads — lead form conversion */
+        try{ gtag('event','conversion',{'send_to':'AW-18342149199/UyXCCNfAzdkcEM_4m6pE'}); }catch(e){}
+        form.style.display='none'; done.classList.add('show'); done.scrollIntoView({behavior:'smooth',block:'center'});
+      }
       else { btn.disabled=false; btn.textContent='Something went wrong — retry'; }
     }catch(err){ btn.disabled=false; btn.textContent='Network error — retry'; }
   });
