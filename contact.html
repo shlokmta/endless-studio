@@ -180,6 +180,7 @@
         <nav class="nav-links left">
           <a href="grad-project.html">The Grad Project</a>
           <a href="corporate.html">Corporate Clothing</a>
+          <a href="locker-room.html">Locker Room</a>
         </nav>
         <a href="index.html" class="brand" aria-label="Endless Studio home"><img src="assets/logo-black.png" alt="Endless Studio" /></a>
         <nav class="nav-links right">
@@ -203,6 +204,7 @@
       <nav class="mobile-links">
         <a href="grad-project.html">The Grad Project</a>
         <a href="corporate.html">Corporate Clothing</a>
+        <a href="locker-room.html">Locker Room</a>
         <a href="about.html">About Endless</a>
         <a href="contact.html">Contact Us</a>
         <a href="graduation-studio.html">Graduation Studio</a>
@@ -318,6 +320,7 @@
             <a href="index.html">Home</a>
             <a href="grad-project.html">The Grad Project</a>
             <a href="corporate.html">Corporate Clothing</a>
+            <a href="locker-room.html">Locker Room</a>
             <a href="graduation-studio.html">Graduation Studio</a>
           </div>
           <div class="foot-col">
@@ -360,6 +363,11 @@
       typeField.value=el.getAttribute('data-t');
     });
   });
+  // preselect from link, e.g. contact.html?type=Team
+  try{
+    var pre=new URLSearchParams(location.search).get('type');
+    if(pre){ var el=document.querySelector('#types .ty[data-t="'+pre.replace(/"/g,'')+'"]'); if(el) el.click(); }
+  }catch(e){}
 
   // submit -> web3forms
   var form=document.getElementById('enquiryForm');

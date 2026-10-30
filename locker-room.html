@@ -82,9 +82,9 @@
   .mobile-links{display:none}
 
   /* ── HERO: photo + team sheet ── */
-  .lr{max-width:1440px;margin:0 auto;padding:clamp(7.2rem,15vh,9rem) clamp(1.1rem,4vw,3rem) clamp(3rem,6vw,5rem)}
-  .lr-hero{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(1.6rem,4vw,4.5rem);align-items:center}
-  .lr-photo{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#dcdcdf}
+  .lr{max-width:1440px;margin:0 auto;min-height:100vh;display:flex;align-items:center;padding:clamp(7.2rem,15vh,9rem) clamp(1.1rem,4vw,3rem) clamp(2.5rem,5vw,4rem)}
+  .lr-hero{width:100%;display:grid;grid-template-columns:.9fr 1fr;gap:clamp(1.6rem,5vw,6rem);align-items:center}
+  .lr-photo{position:relative;height:min(76vh,760px);border-radius:14px;overflow:hidden;background:#dcdcdf}
   .lr-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
   .lr-photo .pill{position:absolute;left:.9rem;bottom:.9rem;background:var(--paper);font-family:var(--mono);
     font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.4rem .7rem;border-radius:100px}
@@ -113,50 +113,14 @@
   .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
   .btn.ghost:hover{background:var(--ink);color:var(--paper);opacity:1}
 
-  /* ── KIT ROOM strip ── */
-  .kits{margin-top:clamp(3.5rem,7vw,6rem)}
-  .kits-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;
-    border-bottom:1.5px solid var(--ink);padding-bottom:.9rem;margin-bottom:clamp(1.2rem,2.4vw,1.8rem)}
-  .kits-head h2{font-size:clamp(1.5rem,3vw,2.3rem);font-weight:700;letter-spacing:-.02em;line-height:1}
-  .kits-head span{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
-  .kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.7rem,1.4vw,1.2rem)}
-  .kit figure{aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#e4e4e7}
-  .kit img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--ease)}
-  .kit:hover img{transform:scale(1.035)}
-  .kit figcaption,.kit .cap{display:flex;justify-content:space-between;gap:.8rem;margin-top:.75rem;font-family:var(--mono);
-    font-size:.64rem;letter-spacing:.06em;text-transform:uppercase}
-  .kit .cap span:last-child{color:var(--ink-2)}
-
-  /* ── WHAT WE MAKE + HOW ── */
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,4rem);margin-top:clamp(3.5rem,7vw,6rem)}
-  .two h3{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
-    padding-bottom:.8rem;border-bottom:1.5px solid var(--ink);margin-bottom:.4rem}
-  .make li,.how li{list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:baseline;
-    padding:1rem 0;border-bottom:1px solid var(--line)}
-  .make li b,.how li b{font-size:clamp(1.05rem,1.8vw,1.4rem);font-weight:600;letter-spacing:-.01em}
-  .make li span,.how li span{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-align:right;max-width:28ch}
-  .how li em{font-style:normal;font-family:var(--mono);font-size:.64rem;color:var(--ink-2);margin-right:.9rem}
-
-  /* ── CLOSING CTA ── */
-  .close{margin-top:clamp(3.5rem,7vw,6rem);background:#0e0e0e;color:var(--paper);border-radius:22px;
-    padding:clamp(2.2rem,5vw,4rem) clamp(1.4rem,4vw,3.4rem);display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
-  .close h2{font-weight:700;letter-spacing:-.03em;line-height:.95;font-size:clamp(2.2rem,5.4vw,4.4rem)}
-  .close h2 .scr{font-family:'Kaushan Script',cursive;font-weight:400;letter-spacing:0;color:#e9a6b3}
-  .close p{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,244,245,.6);margin-top:1rem;line-height:1.8}
-  .close .btn{background:var(--paper);color:var(--ink)}
-  .close .mail{display:block;margin-top:.9rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,244,245,.6)}
-  .close .mail a{color:var(--paper);text-decoration:underline;text-underline-offset:3px}
-
   .rise{opacity:0;transform:translateY(18px);animation:up 1s var(--ease) forwards}
   .d1{animation-delay:.15s}.d2{animation-delay:.27s}.d3{animation-delay:.39s}.d4{animation-delay:.51s}.d5{animation-delay:.63s}
   @keyframes up{to{opacity:1;transform:none}}
 
   @media(max-width:900px){
-    .lr-hero,.two{grid-template-columns:1fr}
-    .lr-photo{aspect-ratio:4/5;max-height:72vh}
-    .kit-grid{grid-template-columns:1fr 1fr}
-    .kit:last-child{grid-column:1/-1}
-    .kit:last-child figure{aspect-ratio:16/10}
+    .lr{min-height:0}
+    .lr-hero{grid-template-columns:1fr}
+    .lr-photo{aspect-ratio:4/5;height:auto;max-height:none}
   }
   @media(max-width:820px){
     .nav-row{grid-template-columns:auto 1fr auto}
@@ -173,8 +137,6 @@
   }
   @media(max-width:520px){
     .sheet{transform:none}
-    .make li,.how li{flex-direction:column;gap:.3rem}
-    .make li span,.how li span{text-align:left}
   }
   @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}.rise{opacity:1;transform:none;animation:none}}
 
@@ -265,57 +227,6 @@
       </div>
     </section>
 
-    <!-- KIT ROOM -->
-    <section class="kits">
-      <div class="kits-head">
-        <h2>The Kit Room</h2>
-        <span>Recent jerseys · Endless Studio</span>
-      </div>
-      <div class="kit-grid">
-        <div class="kit"><figure><img src="assets/locker/jersey-green.jpg" alt="Green pinstripe Endless Studios jersey" loading="lazy" /></figure>
-          <div class="cap"><span>Pinstripe jersey</span><span>Forest / Gold</span></div></div>
-        <div class="kit"><figure><img src="assets/locker/jersey-front.jpg" alt="Retro jersey — front" loading="lazy" /></figure>
-          <div class="cap"><span>Retro jersey · Front</span><span>Cream / Brown</span></div></div>
-        <div class="kit"><figure><img src="assets/locker/jersey-back.jpg" alt="Retro jersey — back with number" loading="lazy" /></figure>
-          <div class="cap"><span>Retro jersey · Back</span><span>Your number</span></div></div>
-      </div>
-    </section>
-
-    <!-- WHAT WE MAKE / HOW IT WORKS -->
-    <section class="two">
-      <div>
-        <h3>What we make</h3>
-        <ul class="make">
-          <li><b>Match kits</b><span>Jerseys, shorts &amp; socks</span></li>
-          <li><b>Training wear</b><span>Tops, quarter-zips, track sets</span></li>
-          <li><b>Club hoodies</b><span>Embroidered crest &amp; club name</span></li>
-          <li><b>Varsity jackets</b><span>For seasons worth remembering</span></li>
-          <li><b>Travel &amp; supporters</b><span>Off-pitch pieces for the whole club</span></li>
-        </ul>
-      </div>
-      <div>
-        <h3>How it works</h3>
-        <ul class="how">
-          <li><b><em>01</em>Reach out</b><span>Tell us your club, sport &amp; timeline</span></li>
-          <li><b><em>02</em>Design</b><span>Crest, colours &amp; kit drawn up with you</span></li>
-          <li><b><em>03</em>Sample</b><span>Feel the fabric before you commit</span></li>
-          <li><b><em>04</em>Squad sizes</b><span>Names, numbers &amp; sizes collected</span></li>
-          <li><b><em>05</em>Delivered</b><span>Ready for kick-off</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- CLOSING CTA -->
-    <section class="close">
-      <div>
-        <h2>Your club,<br><span class="scr">next season.</span></h2>
-        <p>Football · Hockey · Rugby · Basketball · Student leagues &amp; more</p>
-      </div>
-      <div>
-        <a class="btn" href="contact.html?type=Team">Reach out →</a>
-        <span class="mail">or <a href="mailto:info@endless-studio.eu?subject=Locker%20Room%20%E2%80%94%20Club%20Kit%20Enquiry">info@endless-studio.eu</a></span>
-      </div>
-    </section>
   </main>
 
   <!-- SITE FOOTER -->
