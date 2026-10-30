@@ -84,7 +84,7 @@
     "you@organisation.com": {de:"du@organisation.com", es:"tu@organizacion.com", fr:"vous@organisation.com"},
     "e.g. 120": {de:"z. B. 120", es:"p. ej. 120", fr:"p. ex. 120"},
     "International School Eindhoven": {de:"International School Eindhoven", es:"International School Eindhoven", fr:"International School Eindhoven"},
-    "e.g. June 2026": {de:"z. B. Juni 2026", es:"p. ej. junio 2026", fr:"p. ex. juin 2026"},
+    "e.g. June 2027": {de:"z. B. Juni 2027", es:"p. ej. junio 2027", fr:"p. ex. juin 2027"},
     "Tell us what you'd like to make — pieces, quantities, colours, embroidery, deadlines...":
       {de:"Sag uns, was du machen möchtest — Teile, Mengen, Farben, Stickerei, Fristen …",
        es:"Cuéntanos qué te gustaría crear — prendas, cantidades, colores, bordados, fechas límite…",
