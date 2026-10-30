@@ -11,91 +11,228 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Graduation Studio — Private Access · Endless Studio</title>
+<title>Graduation Studio — Class of 2027 · Endless Studio</title>
 <link rel="icon" type="image/png" href="assets/favicon.png" />
-<meta name="description" content="Endless Studio Amsterdam — Graduation clothing | Corporate | Sports teams." />
+<meta name="description" content="Graduation Studio — every Class of 2027 project by Endless Studio Amsterdam. Browse every school's design; ordering opens with your class code." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --bg:#F0ECE3;--ink:#161513;--ink-2:#8a8578;--line:rgba(22,21,19,.18);
-    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--ease:cubic-bezier(.19,1,.22,1);
+    --ink:#0A0A0A;--ink-2:#5f5f63;--paper:#F4F4F5;
+    --glass:rgba(248,248,249,0.55);--glass-line:rgba(255,255,255,0.55);
+    --beige:#ECE5D6;--line:rgba(10,10,10,0.10);
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --mono:'Space Mono',ui-monospace,monospace;
+    --container:1600px;--ease:cubic-bezier(.19,1,.22,1);
+    /* lookbook sheet */
+    --sheet:#ECE8DF;--sheet-2:#E4DFD3;--s-ink:#151412;--s-ink-2:#6d685e;--s-line:rgba(21,20,18,.85);
+    --tape:#E6B4C1;--red:#D5231C;
   }
   html,body{height:100%}
-  body{font-family:var(--sans);background:var(--bg);color:var(--ink);
-    -webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:var(--ink);color:var(--bg)}
+  body{font-family:var(--sans);background:var(--sheet);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  body.locked{overflow:hidden}
+  a{text-decoration:none;color:inherit}
+  button{font:inherit;color:inherit}
+  ::selection{background:var(--s-ink);color:var(--sheet)}
 
-  .home{position:fixed;top:clamp(1.2rem,3vw,2rem);left:clamp(1.2rem,4vw,2.6rem);z-index:10;
-    display:flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:.62rem;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);transition:color .25s var(--ease)}
-  .home:hover{color:var(--ink)}
+  /* ── NAV (same as site) ── */
+  .navwrap{position:fixed;top:clamp(.7rem,1.6vw,1.1rem);left:0;right:0;z-index:100;
+    padding:0 clamp(.7rem,2.5vw,1.4rem);display:flex;justify-content:center}
+  .nav{width:100%;max-width:var(--container);background:var(--glass);
+    -webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);
+    border:1px solid var(--glass-line);border-radius:16px;overflow:visible;
+    box-shadow:0 6px 22px -14px rgba(0,0,0,.35),0 1px 4px -3px rgba(0,0,0,.18)}
+  .nav-ticker{height:24px;display:flex;align-items:center;overflow:hidden;border-radius:16px 16px 0 0;
+    background:var(--beige);border-bottom:1px solid var(--line);position:relative}
+  .nav-ticker::before,.nav-ticker::after{content:"";position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+  .nav-ticker::before{left:0;background:linear-gradient(90deg,var(--beige),transparent)}
+  .nav-ticker::after{right:0;background:linear-gradient(270deg,var(--beige),transparent)}
+  .ticker-track{display:flex;flex-shrink:0;white-space:nowrap;animation:scroll 44s linear infinite;will-change:transform}
+  .ticker-track span{font-size:.56rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink);opacity:.82;padding:0 1rem;display:inline-flex;align-items:center}
+  .ticker-track .dot{opacity:.4;padding:0 .1rem}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .nav-ticker:hover .ticker-track{animation-play-state:paused}
+  .nav-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:46px;padding:0 clamp(1rem,2.5vw,1.7rem)}
+  .nav-links{display:flex;align-items:center;gap:clamp(1.1rem,2vw,2rem)}
+  .nav-links.right{justify-content:flex-end}
+  .nav-links a{font-size:.7rem;font-weight:500;letter-spacing:.02em;color:var(--ink-2);
+    transition:color .25s var(--ease);position:relative;white-space:nowrap}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;height:1.5px;width:0;background:var(--ink);transition:width .35s var(--ease)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a:hover::after,.nav-links a.current::after{width:100%}
+  .nav-links a.current{color:var(--ink)}
+  .brand{display:flex;align-items:center;padding:0 1.4rem;line-height:1;transition:opacity .25s}
+  .brand img{height:28px;width:auto;display:block}
+  .brand:hover{opacity:.55}
+  .lang{position:relative}
+  .lang summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;
+    font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);transition:color .25s var(--ease)}
+  .lang summary::-webkit-details-marker{display:none}
+  .lang summary:hover,.lang[open] summary{color:var(--ink)}
+  .lang summary .caret{width:8px;height:8px;transition:transform .3s var(--ease)}
+  .lang[open] summary .caret{transform:rotate(180deg)}
+  .lang-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:150px;background:rgba(248,248,249,.9);
+    -webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);
+    border:1px solid var(--glass-line);border-radius:12px;overflow:hidden;box-shadow:0 12px 30px -14px rgba(0,0,0,.4);padding:.3rem}
+  .lang-menu a{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:8px;font-size:.74rem;font-weight:500;color:var(--ink-2);transition:.2s var(--ease)}
+  .lang-menu a .code{font-size:.6rem;letter-spacing:.1em;opacity:.6}
+  .lang-menu a:hover{background:rgba(10,10,10,.05);color:var(--ink)}
+  .lang-menu a.active{color:var(--ink)}
+  .burger{display:none;flex-direction:column;gap:5px;width:38px;height:38px;align-items:center;justify-content:center;cursor:pointer;border:none;background:transparent}
+  .burger span{width:18px;height:1.5px;background:var(--ink);transition:.3s var(--ease)}
+  .nav-toggle{display:none}
+  .mobile-links{display:none}
 
-  .portal{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;
-    gap:clamp(2rem,5vw,4rem);align-items:center;position:relative;overflow:hidden;
-    padding:clamp(3rem,8vh,6rem) clamp(1.2rem,4vw,2.6rem)}
+  /* ── LOOKBOOK SHEET ── */
+  .sheet{position:relative;background:var(--sheet);color:var(--s-ink);
+    padding:clamp(7.2rem,15vh,9rem) clamp(1.1rem,4vw,3.4rem) clamp(2rem,4vw,3rem)}
+  /* paper grain over the whole sheet */
+  .sheet::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .42 0 0 0 0 .36 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .sheet-in{position:relative;max-width:1440px;margin:0 auto}
+  .s-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:1rem;
+    font-family:var(--mono);font-size:clamp(.6rem,.85vw,.74rem);letter-spacing:.06em;text-transform:uppercase;
+    padding-bottom:.85rem;border-bottom:1.5px solid var(--s-line)}
+  .s-bar .r{text-align:right}
+  .mono{font-family:var(--mono);text-transform:uppercase}
 
-  /* left */
-  .p-eyebrow{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
-    color:var(--ink-2);margin-bottom:clamp(1rem,2.5vw,1.6rem);
-    opacity:0;animation:up .9s var(--ease) .2s forwards}
-  .p-title{font-weight:700;letter-spacing:-.03em;line-height:.92;
-    font-size:clamp(3rem,8.5vw,7rem);
-    background:linear-gradient(180deg,#161513 0%,#161513 45%,#9c988c 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    opacity:0;animation:up .95s var(--ease) .3s forwards}
-  .p-desc{margin-top:clamp(1.4rem,3vw,2.2rem);max-width:44ch;font-size:clamp(.92rem,1.15vw,1.05rem);
-    line-height:1.7;color:#3a382f;opacity:0;animation:up 1s var(--ease) .42s forwards}
-  .p-tri{display:flex;gap:clamp(2rem,5vw,4rem);flex-wrap:wrap;margin-top:clamp(2.4rem,5vw,3.6rem);
-    opacity:0;animation:up 1.05s var(--ease) .54s forwards}
-  .p-tri div .k{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;display:block}
-  .p-tri div .v{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-top:.3rem;display:block}
+  /* photo "prints": rough edge + grain (clip-path set by JS) */
+  .ph{position:relative;overflow:hidden;background:var(--sheet-2)}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.86) contrast(1.04) sepia(.06);
+    transition:transform .9s var(--ease)}
+  .ph::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .28 0 0 0 0 .25 0 0 0 .28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse at center,transparent 55%,rgba(60,50,35,.22) 100%)}
+  .ph.print{box-shadow:0 1px 0 rgba(0,0,0,.04)}
 
-  /* right */
-  .p-right{position:relative;z-index:2;max-width:460px;
-    opacity:0;animation:up 1s var(--ease) .5s forwards}
-  .p-madefor .lbl{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-2);display:block;margin-bottom:.9rem}
-  .p-madefor ul{list-style:none;font-family:'Playfair Display',Georgia,serif;font-size:clamp(1rem,1.4vw,1.2rem);
-    line-height:1.7;color:var(--ink)}
-  .p-form{margin-top:clamp(1.8rem,4vw,2.6rem)}
-  .p-form .lbl{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-2);display:block;margin-bottom:.7rem}
-  .p-input{display:flex;align-items:center;gap:1rem;border-bottom:1.5px solid var(--ink);padding-bottom:.6rem}
-  .p-input input{flex:1;border:none;outline:none;background:transparent;color:var(--ink);
-    font-family:'Space Mono',monospace;font-size:1.1rem;letter-spacing:.3em;padding:.3rem .2rem}
-  .p-input input::placeholder{color:var(--ink-2);letter-spacing:.1em}
-  .p-input input:focus{background:rgba(120,130,255,.14)}
-  .p-go{border:none;background:transparent;cursor:pointer;color:var(--ink);font-size:1.2rem;
-    line-height:1;transition:transform .25s var(--ease)}
-  .p-go:hover{transform:translateX(4px)}
-  .p-msg{margin-top:.8rem;font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.04em;
-    text-transform:uppercase;min-height:1em;color:#b23b2e}
-  .p-help{margin-top:1.4rem;font-size:.78rem;line-height:1.6;color:var(--ink-2);max-width:40ch}
-  .p-help a{color:var(--ink);border-bottom:1px solid var(--line)}
+  .s-foot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;
+    border-top:1.5px solid var(--s-line);padding-top:.95rem;
+    font-family:var(--mono);font-size:clamp(.58rem,.8vw,.7rem);letter-spacing:.1em;text-transform:uppercase}
+  .s-foot .c{text-align:center;word-spacing:.25em}
+  .s-foot .r{text-align:right;letter-spacing:.06em}
+  .s-foot svg{width:28px;height:28px;display:block}
 
-  /* rotating seal, partly off-screen right */
-  .p-seal{position:absolute;right:clamp(-160px,-8vw,-90px);top:50%;transform:translateY(-50%);z-index:0;
-    width:clamp(360px,42vw,620px);height:clamp(360px,42vw,620px);pointer-events:none;opacity:.9}
-  .p-seal svg{width:100%;height:100%;animation:spin 40s linear infinite}
-  .p-seal text{fill:var(--ink);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:5px;font-weight:700}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  /* ── CATALOGUE ── */
+  .cat{padding-top:0}
+  .cat-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;
+    padding:clamp(1.6rem,3vw,2.4rem) 0 clamp(1.3rem,2.4vw,1.8rem)}
+  .cat-head h1{font-weight:800;font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.05;text-transform:uppercase;letter-spacing:-.01em}
+  .lockline{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;font-family:var(--mono);font-size:.62rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--s-ink)}
+  .lockline svg{width:12px;height:12px}
+  .cat-head p{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;line-height:1.8;max-width:52ch;margin-top:1rem;color:var(--s-ink-2)}
+  .chips{display:flex;flex-wrap:wrap;gap:.45rem}
+  .chip{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    padding:.5rem .85rem;border:1.5px solid var(--s-ink);background:transparent;border-radius:100px;transition:.2s var(--ease)}
+  .chip:hover{background:rgba(21,20,18,.06)}
+  .chip.on{background:var(--s-ink);color:var(--sheet)}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1rem,2vw,1.8rem) clamp(.7rem,1.4vw,1.2rem);
+    padding-bottom:clamp(2rem,4vw,3rem)}
+  .card{background:none;border:none;cursor:pointer;text-align:left;display:block;width:100%}
+  .card.hide{display:none}
+  .card .ph{aspect-ratio:4/5}
+  .card .ph img{position:absolute;inset:0}
+  .card .ph .alt{opacity:0;transition:opacity .6s var(--ease),transform .9s var(--ease)}
+  .card:hover .ph .alt{opacity:1}
+  .card:hover .ph img{transform:scale(1.03)}
+  .card .no{position:absolute;top:.65rem;left:.7rem;z-index:2;font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;
+    background:var(--sheet);padding:.28rem .5rem;border-radius:100px}
+  .card .lk{position:absolute;top:.65rem;right:.7rem;z-index:2;width:24px;height:24px;border-radius:50%;
+    background:var(--sheet);display:grid;place-items:center}
+  .card .lk svg{width:11px;height:11px}
+  .card-meta{display:flex;justify-content:space-between;gap:.8rem;margin-top:.8rem;align-items:flex-start;
+    font-family:var(--mono);font-size:.64rem;letter-spacing:.04em;text-transform:uppercase;line-height:1.5}
+  .card-meta b{display:block;font-weight:700}
+  .card-meta .sch{color:var(--s-ink-2)}
+  .card-meta .view{white-space:nowrap;border-bottom:1.5px solid var(--s-ink);padding-bottom:1px}
 
-  @media(max-width:900px){
-    .portal{grid-template-columns:1fr;gap:2.4rem;padding-top:clamp(5rem,14vh,7rem)}
-    .p-seal{opacity:.12;right:-30%;top:12%;transform:none;width:80vw;height:80vw}
-    .p-right{max-width:none}
+  /* ── PRODUCT VIEW (overlay sheet) ── */
+  .pv{position:fixed;inset:0;z-index:200;display:none;background:rgba(10,10,10,.55);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:clamp(.6rem,2vw,1.6rem);overflow:auto}
+  .pv.open{display:block;animation:pvIn .45s var(--ease)}
+  @keyframes pvIn{from{opacity:0}to{opacity:1}}
+  .pv-sheet{position:relative;max-width:1240px;margin:0 auto;background:var(--sheet);color:var(--s-ink);
+    padding:clamp(1rem,2.4vw,1.8rem);box-shadow:0 40px 90px -30px rgba(0,0,0,.6);animation:pvUp .55s var(--ease)}
+  @keyframes pvUp{from{transform:translateY(18px)}to{transform:none}}
+  .pv-bar{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;padding-bottom:.8rem;border-bottom:1.5px solid var(--s-line);
+    font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase}
+  .pv-ctrl{display:flex;gap:.4rem}
+  .pv-ctrl button{width:34px;height:34px;border:1.5px solid var(--s-ink);background:transparent;border-radius:50%;cursor:pointer;
+    font-family:var(--mono);font-size:.8rem;display:grid;place-items:center;transition:.2s var(--ease)}
+  .pv-ctrl button:hover{background:var(--s-ink);color:var(--sheet)}
+  .pv-body{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(1.2rem,3vw,2.8rem);padding-top:clamp(1rem,2vw,1.6rem)}
+  .pv-main{aspect-ratio:4/5;background:var(--sheet-2)}
+  .pv-main img{object-fit:cover}
+  .pv-thumbs{display:flex;gap:.5rem;margin-top:.6rem}
+  .pv-thumbs button{width:68px;aspect-ratio:1;border:1.5px solid transparent;background:var(--sheet-2);cursor:pointer;padding:0;overflow:hidden;opacity:.6;transition:.2s}
+  .pv-thumbs button.on{border-color:var(--s-ink);opacity:1}
+  .pv-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+  .pv-info{display:flex;flex-direction:column}
+  .pv-school{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--s-ink-2)}
+  .pv-name{font-weight:800;font-size:clamp(1.5rem,2.8vw,2.3rem);line-height:1.05;text-transform:uppercase;letter-spacing:-.01em;margin:.6rem 0 .35rem}
+  .pv-col{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase}
+  .pv-desc{font-size:.92rem;line-height:1.7;color:#3a3732;margin:1.2rem 0 1.3rem;max-width:46ch}
+  .specs{list-style:none;font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:1.4rem}
+  .specs li{display:flex;align-items:flex-end;gap:.4rem;margin:.55rem 0}
+  .specs li i{flex:1;border-bottom:2px dotted var(--s-ink);margin-bottom:4px;min-width:14px}
+  .specs li span:first-child{color:var(--s-ink-2)}
+  .sz-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--s-ink-2);display:block;margin-bottom:.6rem}
+  .sizes{display:grid;grid-template-columns:repeat(6,1fr);gap:.4rem;margin-bottom:1.1rem}
+  .sizes button{font-family:var(--mono);font-size:.64rem;padding:.7rem 0;border:1.5px solid rgba(21,20,18,.25);background:transparent;cursor:pointer;transition:.2s var(--ease)}
+  .sizes button:hover{border-color:var(--s-ink)}
+  .sizes button.on{background:var(--s-ink);color:var(--sheet);border-color:var(--s-ink)}
+  .buy{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;border:none;cursor:pointer;
+    background:var(--s-ink);color:var(--sheet);padding:1.05rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;transition:opacity .25s}
+  .buy:hover{opacity:.86}
+  .buy svg{width:13px;height:13px}
+  .gate{display:none;margin-top:.7rem;border:1.5px solid var(--s-ink);padding:.9rem}
+  .gate.open{display:block;animation:pvIn .35s var(--ease)}
+  .gate label{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.55rem}
+  .gate-in{display:flex;border-bottom:1.5px solid var(--s-ink)}
+  .gate-in input{flex:1;border:none;background:transparent;outline:none;font-family:var(--mono);font-size:.95rem;letter-spacing:.2em;padding:.45rem 0;color:var(--s-ink)}
+  .gate-in button{border:none;background:none;cursor:pointer;font-size:1.1rem;padding:0 .3rem}
+  .gate-msg{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;margin-top:.6rem;min-height:1em;color:var(--s-ink-2)}
+  .gate-msg.err{color:#b23b2e}
+  .pv-fine{font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--s-ink-2);line-height:1.7;margin-top:1rem}
+  .pv-fine a{text-decoration:underline;text-underline-offset:2px;color:var(--s-ink)}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:1000px){
+    .grid{grid-template-columns:repeat(3,1fr)}
+    .pv-body{grid-template-columns:1fr}
   }
-  @media(prefers-reduced-motion:reduce){.p-seal svg{animation:none}*{animation-duration:.001s!important}}
+  @media(max-width:820px){
+    .nav-row{grid-template-columns:auto 1fr auto}
+    .nav-links.left,.nav-links.right{display:none}
+    .brand{justify-self:start;padding-left:0}
+    .burger{display:flex;justify-self:end}
+    .nav-toggle:checked ~ .mobile-links{display:flex}
+    .nav-toggle:checked ~ .nav-row .burger span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .nav-toggle:checked ~ .nav-row .burger span:nth-child(2){opacity:0}
+    .nav-toggle:checked ~ .nav-row .burger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mobile-links{flex-direction:column;border-top:1px solid var(--line);padding:.4rem clamp(1rem,2.5vw,1.8rem) 1rem}
+    .mobile-links a{padding:.85rem 0;font-size:.85rem;font-weight:500;color:var(--ink-2);border-bottom:1px solid var(--line)}
+    .mobile-links a:last-child{border-bottom:none}
+    .grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:600px){
+    .s-bar{grid-template-columns:1fr auto}
+    .s-bar .c{display:none}
+    .s-foot{grid-template-columns:auto 1fr}
+    .s-foot .c{display:none}
+    .sizes{grid-template-columns:repeat(3,1fr)}
+    .card-meta{flex-direction:column;gap:.4rem}
+  }
+  @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}*{transition:none!important;animation:none!important}}
+
   /* ── SITE FOOTER ── */
   .site-foot{background:#0e0e0e;color:#F4F4F5;font-family:var(--sans);padding:clamp(3rem,6vw,5rem) clamp(1.1rem,4vw,2.6rem) 2rem}
   .foot-in{max-width:1400px;margin:0 auto}
   .foot-top{display:flex;justify-content:space-between;gap:2.5rem;flex-wrap:wrap;padding-bottom:clamp(2rem,4vw,3rem);border-bottom:1px solid rgba(255,255,255,.12)}
-  .foot-brand .m{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1;color:#F4F4F5}
+  .foot-brand .m{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1}
   .foot-brand p{margin-top:.7rem;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,244,245,.5);line-height:1.7}
   .foot-cols{display:flex;gap:clamp(2.2rem,6vw,5rem);flex-wrap:wrap}
   .foot-col h4{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,244,245,.45);margin-bottom:1rem}
@@ -105,56 +242,121 @@
   .foot-disc h4{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,244,245,.4);margin-bottom:.8rem}
   .foot-disc p{font-size:.66rem;line-height:1.75;color:rgba(244,244,245,.4);max-width:120ch}
   .foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:1.4rem;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,244,245,.4)}
-  .nav{overflow:visible}
-  .nav-ticker{border-radius:16px 16px 0 0}
 </style>
 </head>
 <body>
 
-  <a href="index.html" class="home">← Endless Studio</a>
-
-  <main class="portal">
-    <!-- LEFT -->
-    <div class="p-left">
-      <div class="p-eyebrow">Private Access</div>
-      <h1 class="p-title">Graduation<br>Studio.</h1>
-      <p class="p-desc">A private studio built for your graduating class. Enter the access code shared by your school to view your piece, choose your size, and place your order — designed and developed by Endless Studio.</p>
-      <div class="p-tri">
-        <div><span class="k">End-to-End</span><span class="v">Design &amp; Delivery</span></div>
-        <div><span class="k">One Class</span><span class="v">One Collection</span></div>
-        <div><span class="k">Secure</span><span class="v">Checkout by Mollie</span></div>
+  <!-- NAV -->
+  <div class="navwrap">
+    <header class="nav">
+      <input type="checkbox" id="navToggle" class="nav-toggle" hidden />
+      <div class="nav-ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+      <div class="nav-row">
+        <nav class="nav-links left">
+          <a href="grad-project.html">The Grad Project</a>
+          <a href="corporate.html">Corporate Clothing</a>
+        </nav>
+        <a href="index.html" class="brand" aria-label="Endless Studio home"><img src="assets/logo-black.png" alt="Endless Studio" /></a>
+        <nav class="nav-links right">
+          <a href="about.html">About Endless</a>
+          <a href="contact.html">Contact Us</a>
+          <a href="graduation-studio.html" class="current">Graduation Studio</a>
+          <details class="lang" id="lang">
+            <summary aria-label="Select language"><span class="lang-code">EN</span>
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="lang-menu">
+              <a href="#" data-code="EN" class="active">English<span class="code">EN</span></a>
+              <a href="#" data-code="FR">Français<span class="code">FR</span></a>
+              <a href="#" data-code="DE">Deutsch<span class="code">DE</span></a>
+              <a href="#" data-code="ES">Español<span class="code">ES</span></a>
+            </div>
+          </details>
+        </nav>
+        <label for="navToggle" class="burger" aria-label="Menu"><span></span><span></span><span></span></label>
       </div>
-    </div>
+      <nav class="mobile-links">
+        <a href="grad-project.html">The Grad Project</a>
+        <a href="corporate.html">Corporate Clothing</a>
+        <a href="about.html">About Endless</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="graduation-studio.html">Graduation Studio</a>
+      </nav>
+    </header>
+  </div>
 
-    <!-- RIGHT -->
-    <div class="p-right">
-      <div class="p-madefor">
-        <span class="lbl">A few we’ve made for</span>
-        <ul>
-          <li>International School of Almere</li>
-          <li>International School Eindhoven</li>
-          <li>Amsterdam International Community School</li>
-        </ul>
-      </div>
-      <form class="p-form" id="accessForm">
-        <label class="lbl" for="code">Enter your access code</label>
-        <div class="p-input">
-          <input type="password" id="code" name="code" placeholder="••••••••••••" autocomplete="off" spellcheck="false" />
-          <button type="submit" class="p-go" aria-label="Enter">→</button>
+  <main class="sheet">
+    <div class="sheet-in">
+
+      <!-- ── CATALOGUE ── -->
+      <section class="cat" id="catalogue">
+        <div class="s-bar">
+          <span>Endless Studio · Graduation Studio</span>
+          <span class="c">Class of 2027 Catalogue</span>
+          <span class="r" id="count">07 pieces</span>
         </div>
-        <div class="p-msg" id="msg"></div>
-      </form>
-      <p class="p-help">Don’t have your code yet? Your school or class representative will share it ahead of the order window. Questions — <a href="mailto:info@endless-studio.eu?subject=Graduation%20Studio%20Access">info@endless-studio.eu</a>.</p>
-    </div>
-
-    <!-- rotating seal -->
-    <div class="p-seal" aria-hidden="true">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs><path id="sealCirc" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
-        <text><textPath href="#sealCirc" startOffset="0">GRADUATION · CLASS OF 2026 · ENDLESS STUDIO · </textPath></text>
-      </svg>
+        <div class="cat-head">
+          <div>
+            <h1>Class of 2027<br>Current Projects</h1>
+            <p>Every school. Every design. View every piece from every class — purchasing is private, only your class can order with the code from your class rep.</p>
+            <div class="lockline">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="11" width="16" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              <span>Ordering opens with your class code</span>
+            </div>
+          </div>
+          <div class="chips" id="chips"></div>
+        </div>
+        <div class="grid" id="grid"></div>
+        <div class="s-foot">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="20" cy="20" r="11"/><circle cx="20" cy="20" r="3.5"/><path d="M20 3v10M20 27v10M3 20h10M27 20h10"/></svg>
+          <span class="c">Always Grateful — Class of 2027</span>
+          <span class="r"><a href="contact.html">Your school next? →</a></span>
+        </div>
+      </section>
     </div>
   </main>
+
+  <!-- PRODUCT VIEW -->
+  <div class="pv" id="pv" role="dialog" aria-modal="true" aria-labelledby="pvName">
+    <div class="pv-sheet">
+      <div class="pv-bar">
+        <span id="pvNo">—</span>
+        <div class="pv-ctrl">
+          <button type="button" id="pvPrev" aria-label="Previous piece">←</button>
+          <button type="button" id="pvNext" aria-label="Next piece">→</button>
+          <button type="button" id="pvClose" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="pv-body">
+        <div>
+          <div class="ph pv-main" id="pvMain"><img alt="" /></div>
+          <div class="pv-thumbs" id="pvThumbs"></div>
+        </div>
+        <div class="pv-info">
+          <span class="pv-school" id="pvSchool"></span>
+          <h3 class="pv-name" id="pvName"></h3>
+          <span class="pv-col" id="pvCol"></span>
+          <p class="pv-desc" id="pvDesc"></p>
+          <ul class="specs" id="pvSpecs"></ul>
+          <span class="sz-lbl">Size</span>
+          <div class="sizes" id="pvSizes"></div>
+          <button type="button" class="buy" id="pvBuy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="11" width="16" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            <span>Purchase — class code required</span>
+          </button>
+          <form class="gate" id="gate" autocomplete="off">
+            <label for="gateCode">Enter your class code</label>
+            <div class="gate-in">
+              <input type="password" id="gateCode" placeholder="••••••••" spellcheck="false" />
+              <button type="submit" aria-label="Unlock">→</button>
+            </div>
+            <div class="gate-msg" id="gateMsg"></div>
+          </form>
+          <p class="pv-fine">Only students of this school can order. No code yet? Your class rep shares it when the order window opens — or ask us at <a href="mailto:info@endless-studio.eu?subject=Graduation%20Studio%20Access">info@endless-studio.eu</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- SITE FOOTER -->
   <footer class="site-foot">
@@ -197,20 +399,171 @@
   </footer>
 
 <script>
-  var form=document.getElementById('accessForm');
-  var msg=document.getElementById('msg');
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    var v=document.getElementById('code').value.trim();
-    if(!v){ msg.textContent='Please enter your access code.'; return; }
-    // Portal is not connected yet — placeholder behaviour.
-    msg.style.color='#8a8578';
-    msg.textContent='Checking…';
-    setTimeout(function(){
-      msg.style.color='#b23b2e';
-      msg.textContent='Invalid or expired code — check with your class rep.';
-    },900);
-  });
+/* ─────────────────────────────────────────────────────────────
+   CLASS OF 2027 — PRODUCTS
+   To add a piece: copy one block, give it a unique id, drop the
+   photos in assets/studio/ (first image = hanger/flat shot,
+   second = model shot; more are optional).
+   ───────────────────────────────────────────────────────────── */
+var SCHOOLS = {
+  ISE:  'International School Eindhoven',
+  ISA:  'International School Almere',
+  EUC:  'Erasmus University College',
+  AICS: 'Amsterdam International Community School'
+};
+var P = 'assets/studio/';
+var products = [
+  {id:'ise-black', school:'ISE', name:'ISE Graduation Hoodie', short:'ISE Grad Hoodie', colour:'Black',
+   imgs:['ise-black-hanger','ise-black-model'],
+   desc:'The signature piece. Full-width “Graduation Class Of” back embroidery with the school name and year — the hoodie the whole class wears home.',
+   specs:[['Fabric','350 GSM fleece'],['Detail','Full-back embroidery'],['Fit','Oversized']]},
+  {id:'isa-varsity', school:'ISA', name:'ISA Varsity Jacket', short:'ISA Varsity', colour:'Navy / Cream',
+   imgs:['isa-varsity-hanger','isa-varsity-model'],
+   desc:'The classic. Heavyweight Melton wool body with contrast cream sleeves, chain-stitch and felt embroidery on the chest, back and sleeves — the class years stitched to last.',
+   specs:[['Fabric','Melton wool'],['Detail','Embroidery all-over'],['Fit','Classic oversized']]},
+  {id:'ise-olive', school:'ISE', name:'ISE Graduation Hoodie', short:'ISE Grad Hoodie', colour:'Olive',
+   imgs:['ise-olive-flat','ise-olive-model','ise-embroidery'],
+   desc:'The same full-back embroidery in olive with cream thread — shown here with a close-up of the stitch.',
+   specs:[['Detail','Full-back embroidery'],['Thread','Cream'],['Fit','Oversized']]},
+  {id:'euc-brown', school:'EUC', name:'EUC Graduation Jersey', short:'EUC Jersey', colour:'Brown / Pink',
+   imgs:['euc-brown-flat','euc-brown-model','euc-brown-model2'],
+   desc:'A retro football jersey in deep brown with a soft pink collar and cuffs — tonal pinstripes, embroidered monogram and crest, and the college scripted across the chest.',
+   specs:[['Fabric','Knit jersey'],['Detail','Embroidered crest'],['Fit','Regular']]},
+  {id:'isa-names', school:'ISA', name:'ISA Class Hoodie', short:'ISA Class Hoodie', colour:'Navy',
+   imgs:['isa-names-hanger','isa-names-model'],
+   desc:'Every name in the year group embroidered on the back, under “Graduation Class Of”. One hoodie that carries the whole class.',
+   specs:[['Detail','Full-back name embroidery'],['Thread','Cream'],['Fit','Oversized']]},
+  {id:'euc-cream', school:'EUC', name:'EUC Graduation Jersey', short:'EUC Jersey', colour:'Cream / Brown',
+   imgs:['euc-cream-flat','euc-cream-model'],
+   desc:'The jersey, reversed — cream body with brown collar and cuffs, and the college scripted across the chest.',
+   specs:[['Fabric','Knit jersey'],['Detail','Embroidered crest'],['Fit','Regular']]},
+  {id:'aics-varsity', school:'AICS', name:'AICS Varsity Jacket', short:'AICS Varsity', colour:'Forest / Cream',
+   imgs:['aics-varsity-hanger'],
+   desc:'Forest-green body, cream sleeves and striped trims, with AICS lettering at the chest and the class number on the sleeve.',
+   specs:[['Detail','Embroidered lettering'],['Trim','Striped rib'],['Fit','Classic']]}
+];
+products.forEach(function(p,i){p.no=i;});
+function src(k){return P+k+'.jpg';}
+function byId(id){for(var i=0;i<products.length;i++) if(products[i].id===id) return products[i];}
+var LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="11" width="16" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+var pad=function(n){return ('0'+n).slice(-2);};
+
+/* catalogue */
+var grid=document.getElementById('grid');
+grid.innerHTML = products.map(function(p){
+  return '<button type="button" class="card" data-open="'+p.id+'" data-school="'+p.school+'">'
+    + '<div class="ph print"><img src="'+src(p.imgs[0])+'" alt="'+p.name+' — '+p.colour+'" loading="lazy" />'
+    + (p.imgs[1]?'<img class="alt" src="'+src(p.imgs[1])+'" alt="" loading="lazy" />':'')
+    + '<span class="no">N° '+pad(p.no+1)+'</span><span class="lk" title="Class code required">'+LOCK+'</span></div>'
+    + '<div class="card-meta"><div><b>'+p.name+'</b>'+p.colour+'<br><span class="sch">'+SCHOOLS[p.school]+'</span></div>'
+    + '<span class="view">View</span></div></button>';
+}).join('');
+
+/* school filter */
+var chips=document.getElementById('chips');
+chips.innerHTML = '<button type="button" class="chip on" data-f="all">All schools</button>'
+  + Object.keys(SCHOOLS).map(function(k){return '<button type="button" class="chip" data-f="'+k+'" title="'+SCHOOLS[k]+'">'+k+'</button>';}).join('');
+chips.addEventListener('click',function(e){
+  var b=e.target.closest('.chip'); if(!b) return;
+  chips.querySelectorAll('.chip').forEach(function(c){c.classList.toggle('on',c===b);});
+  var f=b.getAttribute('data-f');
+  grid.querySelectorAll('.card').forEach(function(c){c.classList.toggle('hide', f!=='all' && c.getAttribute('data-school')!==f);});
+  var n=grid.querySelectorAll('.card:not(.hide)').length;
+  document.getElementById('count').textContent=pad(n)+(n===1?' piece':' pieces');
+});
+
+/* ── product view ── */
+var pv=document.getElementById('pv'), cur=0, lastFocus=null;
+var SIZES=['XS','S','M','L','XL','XXL'];
+function show(i){
+  cur=(i+products.length)%products.length; var p=products[cur];
+  document.getElementById('pvNo').textContent='N° '+pad(cur+1)+' / '+pad(products.length)+' · Class of 2027';
+  document.getElementById('pvSchool').textContent=SCHOOLS[p.school];
+  document.getElementById('pvName').textContent=p.name;
+  document.getElementById('pvCol').textContent=p.colour;
+  document.getElementById('pvDesc').textContent=p.desc;
+  document.getElementById('pvSpecs').innerHTML=[['School',p.school]].concat(p.specs).concat([['Colour',p.colour]]).map(function(s){
+    return '<li><span>'+s[0]+'</span><i></i><span>'+s[1]+'</span></li>';}).join('');
+  document.getElementById('pvSizes').innerHTML=SIZES.map(function(s){return '<button type="button">'+s+'</button>';}).join('');
+  setMain(0);
+  document.getElementById('pvThumbs').innerHTML = p.imgs.length>1 ? p.imgs.map(function(k,j){
+    return '<button type="button" data-j="'+j+'" class="'+(j===0?'on':'')+'" aria-label="Photo '+(j+1)+'"><img src="'+src(k)+'" alt="" /></button>';}).join('') : '';
+  var g=document.getElementById('gate'); g.classList.remove('open'); document.getElementById('gateMsg').textContent=''; document.getElementById('gateCode').value='';
+  if(history.replaceState) history.replaceState(null,'','#'+p.id);
+}
+function setMain(j){
+  var p=products[cur], img=document.querySelector('#pvMain img');
+  img.src=src(p.imgs[j]); img.alt=p.name+' — '+p.colour;
+  document.querySelectorAll('#pvThumbs button').forEach(function(b){b.classList.toggle('on', +b.getAttribute('data-j')===j);});
+}
+function openPv(id){
+  var p=byId(id); if(!p) return;
+  lastFocus=document.activeElement;
+  show(p.no); pv.classList.add('open'); document.body.classList.add('locked');
+  pv.scrollTop=0; document.getElementById('pvClose').focus();
+}
+function closePv(){
+  pv.classList.remove('open'); document.body.classList.remove('locked');
+  if(history.replaceState) history.replaceState(null,'',location.pathname+location.search);
+  if(lastFocus) lastFocus.focus();
+}
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-open]'); if(t){ e.preventDefault(); openPv(t.getAttribute('data-open')); }
+});
+document.getElementById('pvClose').addEventListener('click',closePv);
+document.getElementById('pvPrev').addEventListener('click',function(){show(cur-1);});
+document.getElementById('pvNext').addEventListener('click',function(){show(cur+1);});
+pv.addEventListener('click',function(e){ if(e.target===pv) closePv(); });
+document.getElementById('pvThumbs').addEventListener('click',function(e){var b=e.target.closest('button'); if(b) setMain(+b.getAttribute('data-j'));});
+document.getElementById('pvSizes').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});
+});
+document.addEventListener('keydown',function(e){
+  if(!pv.classList.contains('open')) return;
+  if(e.key==='Escape') closePv();
+  if(e.key==='ArrowRight' && document.activeElement.id!=='gateCode') show(cur+1);
+  if(e.key==='ArrowLeft' && document.activeElement.id!=='gateCode') show(cur-1);
+});
+
+/* locked purchase — portal not connected yet (placeholder until checkout goes live) */
+document.getElementById('pvBuy').addEventListener('click',function(){
+  var g=document.getElementById('gate'); g.classList.add('open'); document.getElementById('gateCode').focus();
+});
+document.getElementById('gate').addEventListener('submit',function(e){
+  e.preventDefault();
+  var v=document.getElementById('gateCode').value.trim(), m=document.getElementById('gateMsg');
+  m.classList.remove('err');
+  if(!v){ m.textContent='Please enter your class code.'; return; }
+  m.textContent='Checking…';
+  setTimeout(function(){ m.classList.add('err'); m.textContent='Invalid or expired code — check with your class rep.'; },900);
+});
+
+/* deep link: graduation-studio#ise-black opens that piece */
+if(location.hash && byId(location.hash.slice(1))) openPv(location.hash.slice(1));
+
+/* rough "printed photo" edges */
+function rough(el){
+  var w=el.offsetWidth,h=el.offsetHeight; if(!w||!h) return;
+  var pts=[],step=12,j=function(){return (Math.random()*2.4).toFixed(1);},x,y;
+  for(x=0;x<=w;x+=step) pts.push(x+'px '+j()+'px');
+  for(y=0;y<=h;y+=step) pts.push((w-j())+'px '+y+'px');
+  for(x=w;x>=0;x-=step) pts.push(x+'px '+(h-j())+'px');
+  for(y=h;y>=0;y-=step) pts.push(j()+'px '+y+'px');
+  el.style.clipPath='polygon('+pts.join(',')+')';
+}
+var prints=document.querySelectorAll('.print');
+if('ResizeObserver' in window){
+  var ro=new ResizeObserver(function(es){es.forEach(function(e){rough(e.target);});});
+  prints.forEach(function(el){ro.observe(el);});
+} else { prints.forEach(rough); }
+
+/* ticker */
+var items=["Graduation Studio","Class of 2027 — Current Projects","International School Eindhoven","International School Almere","Erasmus University College","Amsterdam International Community School","Always Grateful"];
+var t=document.getElementById('ticker');
+if(t){var b=items.map(function(x){return '<span>'+x+'<span class="dot"> ◦ </span></span>';}).join('');t.innerHTML=b+b;}
+var lang=document.getElementById('lang');
+if(lang){ document.addEventListener('click',function(e){ if(!lang.contains(e.target)) lang.removeAttribute('open'); }); }
 </script>
 <script src="assets/i18n.js"></script>
 </body>

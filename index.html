@@ -552,6 +552,35 @@
     .lb-foot{grid-template-columns:1fr}
     .lb-foot a{border-right:none;border-bottom:1px solid var(--line)}
   }
+
+  /* ── CLASS OF '27 POP-UP ── */
+  .c27-bg{position:fixed;inset:0;z-index:150;background:rgba(5,5,5,.72);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    opacity:0;pointer-events:none;transition:opacity .5s var(--ease)}
+  .c27-bg.show{opacity:1;pointer-events:auto}
+  .c27{position:fixed;left:50%;top:50%;z-index:151;
+    width:min(460px,calc(100vw - 2rem));background:#EDE7D7;color:#161513;
+    border:1.5px solid #161513;font-family:'Space Mono',ui-monospace,monospace;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 2px 8px -4px rgba(0,0,0,.3);
+    opacity:0;transform:translate(-50%,-44%) rotate(-.8deg);pointer-events:none;
+    transition:opacity .55s var(--ease),transform .7s var(--ease)}
+  .c27.show{opacity:1;transform:translate(-50%,-50%) rotate(-.8deg);pointer-events:auto}
+  body.c27-lock{overflow:hidden}
+  .c27-top{display:flex;justify-content:space-between;align-items:center;padding:.55rem .8rem;
+    border-bottom:1.5px solid #161513;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase}
+  .c27-x{background:none;border:none;cursor:pointer;font-size:.9rem;line-height:1;padding:.1rem .2rem;color:inherit}
+  .c27-x:hover{opacity:.55}
+  .c27-body{display:grid;grid-template-columns:130px 1fr;gap:1.2rem;padding:1.2rem 1.1rem 1.3rem;align-items:center}
+  .c27-img{aspect-ratio:4/5;overflow:hidden;background:#e4dfd3}
+  .c27-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .c27-h{font-family:'Kaushan Script',cursive;color:var(--rcpt-red);font-size:clamp(2rem,6vw,2.6rem);line-height:1}
+  .c27-p{font-size:.7rem;letter-spacing:.04em;line-height:1.6;text-transform:uppercase;margin-top:.45rem}
+  .c27-cta{display:flex;justify-content:center;align-items:center;gap:.5rem;margin:0 1.1rem 1.1rem;
+    background:#161513;color:#EDE7D7;padding:1rem;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    transition:opacity .25s var(--ease)}
+  .c27-cta:hover{opacity:.85}
+  @media(max-width:520px){.c27-body{grid-template-columns:96px 1fr;gap:.9rem}}
+  @media(prefers-reduced-motion:reduce){.c27{transition:none}}
 </style>
 </head>
 <body>
@@ -606,8 +635,8 @@
 
   <!-- STICKY VIDEO HERO -->
   <section class="hero">
-    <video autoplay muted loop playsinline poster="assets/hero-poster.jpg">
-      <source src="our%20product%20images/My%20Movie%201.webm" type="video/webm" />
+    <video autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg">
+      <source src="assets/hero.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay">
       <div class="ticket">
@@ -618,7 +647,7 @@
             <h2>Endless Studio</h2>
           </div>
           <div class="tk-row">
-            <div><span class="lbl">Valid from / to</span><span class="val">Since 2022 — ∞</span></div>
+            <div><span class="lbl">Valid from / to</span><span class="val">Since 2024 — ∞</span></div>
             <div class="tk-digits">2&nbsp;0&nbsp;2&nbsp;6</div>
           </div>
           <div class="tk-row">
@@ -649,9 +678,9 @@
         <span class="lb-meta">Endless Studio · Amsterdam</span>
       </div>
             <div class="lb-row">
-        <figure><img src="assets/look-varsity.png" alt="90s Varsity Jacket" /></figure>
-        <figure><img src="assets/look-olive.png" alt="Graduation Hoodie — Olive" /></figure>
-        <figure><img src="assets/look-jersey.png" alt="Graduation Jersey" /></figure>
+        <figure><img src="assets/look-varsity.jpg" alt="90s Varsity Jacket" /></figure>
+        <figure><img src="assets/look-olive.jpg" alt="Graduation Hoodie — Olive" /></figure>
+        <figure><img src="assets/look-jersey.jpg" alt="Graduation Jersey" /></figure>
       </div>
             <div class="lb-foot">
         <a href="grad-project.html"><span class="n">01</span> 90s Varsity Jacket</a>
@@ -660,31 +689,31 @@
       </div>
     </section>
 
-    <!-- VIEW ALL PRODUCTS → links to The Grad Project -->
+    <!-- VIEW ALL PRODUCTS → links to Graduation Studio -->
     <div class="panel-inner">
       <section class="view-all">
         <div class="va-head">
           <div>
-            <span class="va-eyebrow">The Grad Project</span>
+            <span class="va-eyebrow">Graduation Studio</span>
             <h2>View all products</h2>
           </div>
           <p>Full graduation collections — hoodies, varsity, tailoring — designed, embroidered and delivered for your whole class.</p>
         </div>
         <div class="va-grid">
-          <a href="grad-project.html" class="prod">
-            <div class="prod-img"><span class="tag">Grad</span><img src="assets/p1.png" alt="Graduation Hoodie" /></div>
-            <div class="prod-meta"><h3>Graduation Hoodie</h3><span class="cat">The Grad Project</span></div>
+          <a href="graduation-studio.html#isa-names" class="prod">
+            <div class="prod-img"><span class="tag">Grad</span><img src="assets/p1.jpg" alt="Graduation Hoodie" /></div>
+            <div class="prod-meta"><h3>Graduation Hoodie</h3><span class="cat">Graduation Studio</span></div>
           </a>
-          <a href="grad-project.html" class="prod">
-            <div class="prod-img"><img src="assets/p2.png" alt="ISA '24 Varsity Jacket" /></div>
+          <a href="graduation-studio.html#isa-varsity" class="prod">
+            <div class="prod-img"><img src="assets/p2.jpg" alt="ISA '24 Varsity Jacket" /></div>
             <div class="prod-meta"><h3>ISA ’24 Varsity</h3><span class="cat">Outerwear</span></div>
           </a>
-          <a href="grad-project.html" class="prod">
-            <div class="prod-img"><img src="assets/p4.png" alt="Class Hoodie" /></div>
-            <div class="prod-meta"><h3>Class Hoodie</h3><span class="cat">The Grad Project</span></div>
+          <a href="graduation-studio.html#ise-olive" class="prod">
+            <div class="prod-img"><img src="assets/p4.jpg" alt="Class Hoodie" /></div>
+            <div class="prod-meta"><h3>Class Hoodie</h3><span class="cat">Graduation Studio</span></div>
           </a>
         </div>
-        <a href="grad-project.html" class="va-cta">View All Products →</a>
+        <a href="graduation-studio.html" class="va-cta">View All Products →</a>
       </section>
     </div>
   </main>
@@ -760,6 +789,20 @@
     </div>
   </footer>
 
+  <!-- CLASS OF '27 POP-UP -->
+  <div class="c27-bg" id="c27bg"></div>
+  <aside class="c27" id="class27" aria-modal="true" role="dialog" aria-labelledby="c27h" aria-hidden="true">
+    <div class="c27-top"><span>Graduation Studio · Now open</span><button type="button" class="c27-x" id="c27x" aria-label="Close">✕</button></div>
+    <div class="c27-body">
+      <div class="c27-img"><img src="assets/studio/ise-black-hanger.jpg" alt="ISE Graduation Hoodie" loading="lazy" /></div>
+      <div>
+        <div class="c27-h" id="c27h">Class of ’27?</div>
+        <p class="c27-p">See every school’s design — hoodies, varsity, jerseys — in the Graduation Studio.</p>
+      </div>
+    </div>
+    <a href="graduation-studio.html" class="c27-cta">View the Graduation Studio →</a>
+  </aside>
+
 <script>
   var schools = ["Amsterdam International Community School","International School Eindhoven","International School Almere","Erasmus University College","Student Football League","Amsterdam Investment Club","Craft 34"];
   var items = ["Endless Studio","A Graduation Brand","Class of 2026 — Always Grateful"].concat(schools);
@@ -824,6 +867,22 @@
     });
     document.addEventListener('click', function(e){ if(!lang.contains(e.target)) lang.removeAttribute('open'); });
   }
+
+  // Class of '27 pop-up — once per visit, after a short delay
+  (function(){
+    var pop=document.getElementById('class27'); if(!pop) return;
+    var seen=false; try{seen=sessionStorage.getItem('es_c27')==='1';}catch(e){}
+    if(seen) return;
+    var bg=document.getElementById('c27bg');
+    function hide(){ pop.classList.remove('show'); bg.classList.remove('show'); pop.setAttribute('aria-hidden','true');
+      document.body.classList.remove('c27-lock'); try{sessionStorage.setItem('es_c27','1');}catch(e){} }
+    setTimeout(function(){ pop.classList.add('show'); bg.classList.add('show'); pop.setAttribute('aria-hidden','false');
+      document.body.classList.add('c27-lock'); pop.querySelector('.c27-cta').focus({preventScroll:true}); },1800);
+    bg.addEventListener('click',hide);
+    document.getElementById('c27x').addEventListener('click',hide);
+    pop.querySelector('.c27-cta').addEventListener('click',function(){ try{sessionStorage.setItem('es_c27','1');}catch(e){} });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') hide(); });
+  })();
 </script>
 <script src="assets/i18n.js"></script>
 </body>

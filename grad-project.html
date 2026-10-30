@@ -255,7 +255,7 @@
         <a href="about.html">About Endless</a>
         <a href="contact.html">Contact Us</a>
         <a href="graduation-studio.html">Graduation Studio</a>
-        <a href="#">Language — English / Nederlands / Deutsch / Español</a>
+        <a href="#">Language — English / Deutsch / Español / Français</a>
       </nav>
     </header>
   </div>
@@ -267,7 +267,7 @@
       <span class="cn tl">The Grad Project ↗</span>
       <span class="cn tr">Class of ’26</span>
       <span class="cn bl">Amsterdam → Worldwide</span>
-      <span class="cn br">Est. 2022</span>
+      <span class="cn br">Est. 2024</span>
     </div>
     <div class="grad-inner">
       <div class="grad-eyebrow"><span class="tick"></span>Why we do this</div>
@@ -351,16 +351,16 @@
 
 <script>
   var products = [
-    {img:'assets/varsity-photo.png', title:'90s Varsity Jacket',
+    {img:'assets/varsity-photo.jpg', title:'90s Varsity Jacket',
      desc:'The classic. Heavyweight Melton wool body with contrast cream sleeves, chain-stitch and felt embroidery all over — chest, back and sleeves — and your class year stitched to last.',
      specs:[['Material','Melton wool'],['Detail','Embroidery all-over'],['Fit','Classic oversized']]},
-    {img:'assets/ziphoodie-photo.png', title:'Full-Zip Hoodie',
+    {img:'assets/ziphoodie-photo.jpg', title:'Full-Zip Hoodie',
      desc:'Everyday weight, endless wear. A 350 GSM full-zip in deep varsity blue — brushed-back loopback cotton, a smooth two-way zip and clean tonal embroidery at the chest.',
      specs:[['Material','350 GSM loopback'],['Detail','Two-way zip'],['Fit','Relaxed']]},
-    {img:'assets/jersey-photo.png', title:'Graduation Jersey',
+    {img:'assets/jersey-photo.jpg', title:'Graduation Jersey',
      desc:'A retro football jersey in deep brown with a soft pink collar and cuffs — tonal pinstripes, embroidered ES monogram and club crest, and your school scripted across the chest. Lightweight, breathable, made for the day and long after.',
      specs:[['Material','Knit jersey'],['Detail','Embroidered crest'],['Fit','Regular']]},
-    {img:'assets/ise-grad-photo.png', title:'ISE Graduation Hoodie',
+    {img:'assets/ise-grad-photo.jpg', title:'ISE Graduation Hoodie',
      desc:'The signature black piece. Full-width “Graduation Class Of · Twenty–Twenty Six” back embroidery with your school and year — the hoodie the whole class wears home.',
      specs:[['Material','350 GSM fleece'],['Detail','Full-back embroidery'],['Fit','Oversized']]}
   ];
@@ -384,21 +384,6 @@
   }
   if(strip){render(0);}
 
-  var items = ["Endless Studio","The Grad Project","Class of 2026 — Always Grateful",
-    "International School Eindhoven","Amsterdam International Community School","Erasmus University College"];
-  var t = document.getElementById('ticker');
-  if(t){var block = items.map(function(x){return '<span>'+x+'<span class="dot"> ◦ </span></span>';}).join('');t.innerHTML = block + block;}
-  var lang = document.getElementById('lang');
-  if(lang){
-    lang.querySelectorAll('.lang-menu a').forEach(function(a){
-      a.addEventListener('click',function(e){e.preventDefault();
-        lang.querySelector('.lang-code').textContent=a.getAttribute('data-code');
-        lang.querySelectorAll('.lang-menu a').forEach(function(x){x.classList.remove('active')});
-        a.classList.add('active');lang.removeAttribute('open');});
-    });
-    document.addEventListener('click',function(e){if(!lang.contains(e.target))lang.removeAttribute('open');});
-  }
-</script>
   var items = ["Endless Studio","The Grad Project","Class of 2026 — Always Grateful",
     "International School Eindhoven","Amsterdam International Community School","Erasmus University College"];
   var t = document.getElementById('ticker');
