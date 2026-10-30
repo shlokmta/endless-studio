@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18342149199"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "AW-18342149199");
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Locker Room — Club Kits & Teamwear · Endless Studio</title>
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+<meta name="description" content="Locker Room by Endless Studio Amsterdam — custom kits, training wear and club pieces for sports clubs. Designed with your club, embroidered with your crest." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#0A0A0A;--ink-2:#5f5f63;--paper:#F4F4F5;
+    --glass:rgba(248,248,249,0.55);--glass-line:rgba(255,255,255,0.55);
+    --beige:#ECE5D6;--line:rgba(10,10,10,0.10);
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--mono:'Space Mono',ui-monospace,monospace;
+    --container:1600px;--ease:cubic-bezier(.19,1,.22,1);
+    --card:#EDE7D7;--card-ink:#161513;--red:#D5231C;
+  }
+  html,body{height:100%}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  a{text-decoration:none;color:inherit}
+  ::selection{background:var(--ink);color:var(--paper)}
+
+  /* ── NAV (same as site) ── */
+  .navwrap{position:fixed;top:clamp(.7rem,1.6vw,1.1rem);left:0;right:0;z-index:100;
+    padding:0 clamp(.7rem,2.5vw,1.4rem);display:flex;justify-content:center}
+  .nav{width:100%;max-width:var(--container);background:var(--glass);
+    -webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);
+    border:1px solid var(--glass-line);border-radius:16px;overflow:visible;
+    box-shadow:0 6px 22px -14px rgba(0,0,0,.35),0 1px 4px -3px rgba(0,0,0,.18)}
+  .nav-ticker{height:24px;display:flex;align-items:center;overflow:hidden;border-radius:16px 16px 0 0;
+    background:var(--beige);border-bottom:1px solid var(--line);position:relative}
+  .nav-ticker::before,.nav-ticker::after{content:"";position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+  .nav-ticker::before{left:0;background:linear-gradient(90deg,var(--beige),transparent)}
+  .nav-ticker::after{right:0;background:linear-gradient(270deg,var(--beige),transparent)}
+  .ticker-track{display:flex;flex-shrink:0;white-space:nowrap;animation:scroll 44s linear infinite;will-change:transform}
+  .ticker-track span{font-size:.56rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink);opacity:.82;padding:0 1rem;display:inline-flex;align-items:center}
+  .ticker-track .dot{opacity:.4;padding:0 .1rem}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .nav-ticker:hover .ticker-track{animation-play-state:paused}
+  .nav-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:46px;padding:0 clamp(1rem,2.5vw,1.7rem)}
+  .nav-links{display:flex;align-items:center;gap:clamp(1.1rem,2vw,2rem)}
+  .nav-links.right{justify-content:flex-end}
+  .nav-links a{font-size:.7rem;font-weight:500;letter-spacing:.02em;color:var(--ink-2);
+    transition:color .25s var(--ease);position:relative;white-space:nowrap}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;height:1.5px;width:0;background:var(--ink);transition:width .35s var(--ease)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a:hover::after,.nav-links a.current::after{width:100%}
+  .nav-links a.current{color:var(--ink)}
+  .brand{display:flex;align-items:center;padding:0 1.4rem;line-height:1;transition:opacity .25s}
+  .brand img{height:28px;width:auto;display:block}
+  .brand:hover{opacity:.55}
+  .lang{position:relative}
+  .lang summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;
+    font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);transition:color .25s var(--ease)}
+  .lang summary::-webkit-details-marker{display:none}
+  .lang summary:hover,.lang[open] summary{color:var(--ink)}
+  .lang summary .caret{width:8px;height:8px;transition:transform .3s var(--ease)}
+  .lang[open] summary .caret{transform:rotate(180deg)}
+  .lang-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:150px;background:rgba(248,248,249,.9);
+    -webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);
+    border:1px solid var(--glass-line);border-radius:12px;overflow:hidden;box-shadow:0 12px 30px -14px rgba(0,0,0,.4);padding:.3rem}
+  .lang-menu a{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:8px;font-size:.74rem;font-weight:500;color:var(--ink-2);transition:.2s var(--ease)}
+  .lang-menu a .code{font-size:.6rem;letter-spacing:.1em;opacity:.6}
+  .lang-menu a:hover{background:rgba(10,10,10,.05);color:var(--ink)}
+  .lang-menu a.active{color:var(--ink)}
+  .burger{display:none;flex-direction:column;gap:5px;width:38px;height:38px;align-items:center;justify-content:center;cursor:pointer;border:none;background:transparent}
+  .burger span{width:18px;height:1.5px;background:var(--ink);transition:.3s var(--ease)}
+  .nav-toggle{display:none}
+  .mobile-links{display:none}
+
+  /* ── HERO: photo + team sheet ── */
+  .lr{max-width:1440px;margin:0 auto;padding:clamp(7.2rem,15vh,9rem) clamp(1.1rem,4vw,3rem) clamp(3rem,6vw,5rem)}
+  .lr-hero{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(1.6rem,4vw,4.5rem);align-items:center}
+  .lr-photo{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#dcdcdf}
+  .lr-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
+  .lr-photo .pill{position:absolute;left:.9rem;bottom:.9rem;background:var(--paper);font-family:var(--mono);
+    font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.4rem .7rem;border-radius:100px}
+  .eyebrow{font-family:var(--mono);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+  .lr-h1{margin-top:1rem;font-weight:700;letter-spacing:-.035em;line-height:.95;font-size:clamp(2.6rem,6.4vw,5.6rem)}
+  .lr-h1 .scr{font-family:'Kaushan Script',cursive;font-weight:400;letter-spacing:0;color:var(--red)}
+  .lr-copy{margin-top:clamp(1.1rem,2vw,1.6rem);font-size:clamp(.98rem,1.25vw,1.12rem);line-height:1.7;color:#3a3a40;max-width:48ch}
+
+  /* team sheet card */
+  .sheet{margin-top:clamp(1.5rem,2.6vw,2.2rem);background:var(--card);color:var(--card-ink);border:1.5px solid var(--card-ink);
+    font-family:var(--mono);max-width:520px;transform:rotate(-.6deg);box-shadow:0 26px 50px -30px rgba(0,0,0,.45)}
+  .sh-head{display:flex;justify-content:space-between;align-items:center;padding:.65rem .9rem;border-bottom:1.5px solid var(--card-ink);
+    font-size:.6rem;letter-spacing:.14em;text-transform:uppercase}
+  .sh-head b{font-size:.78rem;letter-spacing:.08em}
+  .sh-row{display:flex;align-items:flex-end;gap:.45rem;padding:.55rem .9rem;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;
+    border-bottom:1px solid rgba(22,21,19,.18)}
+  .sh-row:last-child{border-bottom:none}
+  .sh-row .k{color:#6d685e;white-space:nowrap}
+  .sh-row i{flex:1;border-bottom:2px dotted var(--card-ink);margin-bottom:4px;min-width:12px}
+  .sh-row .v{text-align:right}
+
+  .ctas{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:clamp(1.6rem,3vw,2.3rem)}
+  .btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--ink);color:var(--paper);padding:1rem 1.9rem;
+    font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:100px;transition:opacity .25s var(--ease)}
+  .btn:hover{opacity:.85}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper);opacity:1}
+
+  /* ── KIT ROOM strip ── */
+  .kits{margin-top:clamp(3.5rem,7vw,6rem)}
+  .kits-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;
+    border-bottom:1.5px solid var(--ink);padding-bottom:.9rem;margin-bottom:clamp(1.2rem,2.4vw,1.8rem)}
+  .kits-head h2{font-size:clamp(1.5rem,3vw,2.3rem);font-weight:700;letter-spacing:-.02em;line-height:1}
+  .kits-head span{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.7rem,1.4vw,1.2rem)}
+  .kit figure{aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#e4e4e7}
+  .kit img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--ease)}
+  .kit:hover img{transform:scale(1.035)}
+  .kit figcaption,.kit .cap{display:flex;justify-content:space-between;gap:.8rem;margin-top:.75rem;font-family:var(--mono);
+    font-size:.64rem;letter-spacing:.06em;text-transform:uppercase}
+  .kit .cap span:last-child{color:var(--ink-2)}
+
+  /* ── WHAT WE MAKE + HOW ── */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,4rem);margin-top:clamp(3.5rem,7vw,6rem)}
+  .two h3{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
+    padding-bottom:.8rem;border-bottom:1.5px solid var(--ink);margin-bottom:.4rem}
+  .make li,.how li{list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:baseline;
+    padding:1rem 0;border-bottom:1px solid var(--line)}
+  .make li b,.how li b{font-size:clamp(1.05rem,1.8vw,1.4rem);font-weight:600;letter-spacing:-.01em}
+  .make li span,.how li span{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-align:right;max-width:28ch}
+  .how li em{font-style:normal;font-family:var(--mono);font-size:.64rem;color:var(--ink-2);margin-right:.9rem}
+
+  /* ── CLOSING CTA ── */
+  .close{margin-top:clamp(3.5rem,7vw,6rem);background:#0e0e0e;color:var(--paper);border-radius:22px;
+    padding:clamp(2.2rem,5vw,4rem) clamp(1.4rem,4vw,3.4rem);display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+  .close h2{font-weight:700;letter-spacing:-.03em;line-height:.95;font-size:clamp(2.2rem,5.4vw,4.4rem)}
+  .close h2 .scr{font-family:'Kaushan Script',cursive;font-weight:400;letter-spacing:0;color:#e9a6b3}
+  .close p{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,244,245,.6);margin-top:1rem;line-height:1.8}
+  .close .btn{background:var(--paper);color:var(--ink)}
+  .close .mail{display:block;margin-top:.9rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,244,245,.6)}
+  .close .mail a{color:var(--paper);text-decoration:underline;text-underline-offset:3px}
+
+  .rise{opacity:0;transform:translateY(18px);animation:up 1s var(--ease) forwards}
+  .d1{animation-delay:.15s}.d2{animation-delay:.27s}.d3{animation-delay:.39s}.d4{animation-delay:.51s}.d5{animation-delay:.63s}
+  @keyframes up{to{opacity:1;transform:none}}
+
+  @media(max-width:900px){
+    .lr-hero,.two{grid-template-columns:1fr}
+    .lr-photo{aspect-ratio:4/5;max-height:72vh}
+    .kit-grid{grid-template-columns:1fr 1fr}
+    .kit:last-child{grid-column:1/-1}
+    .kit:last-child figure{aspect-ratio:16/10}
+  }
+  @media(max-width:820px){
+    .nav-row{grid-template-columns:auto 1fr auto}
+    .nav-links.left,.nav-links.right{display:none}
+    .brand{justify-self:start;padding-left:0}
+    .burger{display:flex;justify-self:end}
+    .nav-toggle:checked ~ .mobile-links{display:flex}
+    .nav-toggle:checked ~ .nav-row .burger span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .nav-toggle:checked ~ .nav-row .burger span:nth-child(2){opacity:0}
+    .nav-toggle:checked ~ .nav-row .burger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mobile-links{flex-direction:column;border-top:1px solid var(--line);padding:.4rem clamp(1rem,2.5vw,1.8rem) 1rem}
+    .mobile-links a{padding:.85rem 0;font-size:.85rem;font-weight:500;color:var(--ink-2);border-bottom:1px solid var(--line)}
+    .mobile-links a:last-child{border-bottom:none}
+  }
+  @media(max-width:520px){
+    .sheet{transform:none}
+    .make li,.how li{flex-direction:column;gap:.3rem}
+    .make li span,.how li span{text-align:left}
+  }
+  @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}.rise{opacity:1;transform:none;animation:none}}
+
+  /* ── SITE FOOTER ── */
+  .site-foot{background:#0e0e0e;color:#F4F4F5;font-family:var(--sans);padding:clamp(3rem,6vw,5rem) clamp(1.1rem,4vw,2.6rem) 2rem}
+  .foot-in{max-width:1400px;margin:0 auto}
+  .foot-top{display:flex;justify-content:space-between;gap:2.5rem;flex-wrap:wrap;padding-bottom:clamp(2rem,4vw,3rem);border-bottom:1px solid rgba(255,255,255,.12)}
+  .foot-brand .m{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1}
+  .foot-brand p{margin-top:.7rem;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,244,245,.5);line-height:1.7}
+  .foot-cols{display:flex;gap:clamp(2.2rem,6vw,5rem);flex-wrap:wrap}
+  .foot-col h4{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,244,245,.45);margin-bottom:1rem}
+  .foot-col a{display:block;font-size:.85rem;color:rgba(244,244,245,.8);padding:.32rem 0;transition:color .2s ease}
+  .foot-col a:hover{color:#fff}
+  .foot-disc{padding:clamp(1.6rem,3vw,2.2rem) 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .foot-disc h4{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,244,245,.4);margin-bottom:.8rem}
+  .foot-disc p{font-size:.66rem;line-height:1.75;color:rgba(244,244,245,.4);max-width:120ch}
+  .foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:1.4rem;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,244,245,.4)}
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="navwrap">
+    <header class="nav">
+      <input type="checkbox" id="navToggle" class="nav-toggle" hidden />
+      <div class="nav-ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+      <div class="nav-row">
+        <nav class="nav-links left">
+          <a href="grad-project.html">The Grad Project</a>
+          <a href="corporate.html">Corporate Clothing</a>
+          <a href="locker-room.html" class="current">Locker Room</a>
+        </nav>
+        <a href="index.html" class="brand" aria-label="Endless Studio home"><img src="assets/logo-black.png" alt="Endless Studio" /></a>
+        <nav class="nav-links right">
+          <a href="about.html">About Endless</a>
+          <a href="contact.html">Contact Us</a>
+          <a href="graduation-studio.html">Graduation Studio</a>
+          <details class="lang" id="lang">
+            <summary aria-label="Select language"><span class="lang-code">EN</span>
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div class="lang-menu">
+              <a href="#" data-code="EN" class="active">English<span class="code">EN</span></a>
+              <a href="#" data-code="FR">Français<span class="code">FR</span></a>
+              <a href="#" data-code="DE">Deutsch<span class="code">DE</span></a>
+              <a href="#" data-code="ES">Español<span class="code">ES</span></a>
+            </div>
+          </details>
+        </nav>
+        <label for="navToggle" class="burger" aria-label="Menu"><span></span><span></span><span></span></label>
+      </div>
+      <nav class="mobile-links">
+        <a href="grad-project.html">The Grad Project</a>
+        <a href="corporate.html">Corporate Clothing</a>
+        <a href="locker-room.html">Locker Room</a>
+        <a href="about.html">About Endless</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="graduation-studio.html">Graduation Studio</a>
+      </nav>
+    </header>
+  </div>
+
+  <main class="lr">
+    <!-- HERO -->
+    <section class="lr-hero">
+      <div class="lr-photo rise">
+        <img src="assets/locker/kit-back.jpg" alt="Endless Studios club kit — name and number on the back" />
+        <span class="pill">Match kit · Name &amp; number</span>
+      </div>
+      <div>
+        <div class="eyebrow rise d1">Locker Room · Sports Clubs</div>
+        <h1 class="lr-h1 rise d2">Kits for the<br>clubs that <span class="scr">live</span> it.</h1>
+        <p class="lr-copy rise d3">Locker Room is Endless Studio for sports clubs. Match kits, training wear and club pieces — designed with your committee, finished with your crest, names and numbers, and made for the whole squad.</p>
+
+        <div class="sheet rise d4" aria-label="Team sheet">
+          <div class="sh-head"><b>Team Sheet</b><span>Endless Studio · Locker Room</span></div>
+          <div class="sh-row"><span class="k">Club</span><i></i><span class="v">Yours</span></div>
+          <div class="sh-row"><span class="k">Kit</span><i></i><span class="v">Home · Away · Training</span></div>
+          <div class="sh-row"><span class="k">Detail</span><i></i><span class="v">Crest · Names · Numbers</span></div>
+          <div class="sh-row"><span class="k">Off the pitch</span><i></i><span class="v">Hoodies · Varsity · Travel</span></div>
+          <div class="sh-row"><span class="k">From</span><i></i><span class="v">First sketch → Kick-off</span></div>
+        </div>
+
+        <div class="ctas rise d5">
+          <a class="btn" href="contact.html?type=Team">Reach out →</a>
+          <a class="btn ghost" href="mailto:info@endless-studio.eu?subject=Locker%20Room%20%E2%80%94%20Club%20Kit%20Enquiry">Email us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- KIT ROOM -->
+    <section class="kits">
+      <div class="kits-head">
+        <h2>The Kit Room</h2>
+        <span>Recent jerseys · Endless Studio</span>
+      </div>
+      <div class="kit-grid">
+        <div class="kit"><figure><img src="assets/locker/jersey-green.jpg" alt="Green pinstripe Endless Studios jersey" loading="lazy" /></figure>
+          <div class="cap"><span>Pinstripe jersey</span><span>Forest / Gold</span></div></div>
+        <div class="kit"><figure><img src="assets/locker/jersey-front.jpg" alt="Retro jersey — front" loading="lazy" /></figure>
+          <div class="cap"><span>Retro jersey · Front</span><span>Cream / Brown</span></div></div>
+        <div class="kit"><figure><img src="assets/locker/jersey-back.jpg" alt="Retro jersey — back with number" loading="lazy" /></figure>
+          <div class="cap"><span>Retro jersey · Back</span><span>Your number</span></div></div>
+      </div>
+    </section>
+
+    <!-- WHAT WE MAKE / HOW IT WORKS -->
+    <section class="two">
+      <div>
+        <h3>What we make</h3>
+        <ul class="make">
+          <li><b>Match kits</b><span>Jerseys, shorts &amp; socks</span></li>
+          <li><b>Training wear</b><span>Tops, quarter-zips, track sets</span></li>
+          <li><b>Club hoodies</b><span>Embroidered crest &amp; club name</span></li>
+          <li><b>Varsity jackets</b><span>For seasons worth remembering</span></li>
+          <li><b>Travel &amp; supporters</b><span>Off-pitch pieces for the whole club</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>How it works</h3>
+        <ul class="how">
+          <li><b><em>01</em>Reach out</b><span>Tell us your club, sport &amp; timeline</span></li>
+          <li><b><em>02</em>Design</b><span>Crest, colours &amp; kit drawn up with you</span></li>
+          <li><b><em>03</em>Sample</b><span>Feel the fabric before you commit</span></li>
+          <li><b><em>04</em>Squad sizes</b><span>Names, numbers &amp; sizes collected</span></li>
+          <li><b><em>05</em>Delivered</b><span>Ready for kick-off</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CLOSING CTA -->
+    <section class="close">
+      <div>
+        <h2>Your club,<br><span class="scr">next season.</span></h2>
+        <p>Football · Hockey · Rugby · Basketball · Student leagues &amp; more</p>
+      </div>
+      <div>
+        <a class="btn" href="contact.html?type=Team">Reach out →</a>
+        <span class="mail">or <a href="mailto:info@endless-studio.eu?subject=Locker%20Room%20%E2%80%94%20Club%20Kit%20Enquiry">info@endless-studio.eu</a></span>
+      </div>
+    </section>
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-foot">
+    <div class="foot-in">
+      <div class="foot-top">
+        <div class="foot-brand">
+          <div class="m">Endless Studio</div>
+          <p>A graduation &amp; corporate wear brand<br>Amsterdam · Always Grateful</p>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h4>Explore</h4>
+            <a href="index.html">Home</a>
+            <a href="grad-project.html">The Grad Project</a>
+            <a href="corporate.html">Corporate Clothing</a>
+            <a href="locker-room.html">Locker Room</a>
+            <a href="graduation-studio.html">Graduation Studio</a>
+          </div>
+          <div class="foot-col">
+            <h4>Studio</h4>
+            <a href="about.html">About Endless</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="mailto:info@endless-studio.eu">info@endless-studio.eu</a>
+          </div>
+          <div class="foot-col">
+            <h4>Follow</h4>
+            <a href="https://www.instagram.com/endlesstudios.ams/" target="_blank" rel="noopener">Instagram ↗</a>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7465330279235076096" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-disc">
+        <h4>Disclaimer</h4>
+        <p>Endless Studio Amsterdam (“Endless Studio”) is a design and creative studio focused on the conception and development of custom apparel and related products. Endless Studio is headquartered in Amsterdam; however, references to “Endless Studio Amsterdam” are a brand designation only and do not imply that garments are manufactured in Amsterdam, the Netherlands, or within Europe. Production may be carried out through third‑party manufacturing partners in other jurisdictions, in accordance with applicable standards and commercial agreements. Certain product images displayed on this website have been created or enhanced using artificial intelligence–based tools. These images are intended solely to provide clear, accurate visual representations of apparel designs conceived by Endless Studio and manufactured in the past. All products shown on the website correspond to existing, live designs that have been produced; they are not hypothetical or purely conceptual mock‑ups. AI‑generated or enhanced imagery does not modify the underlying product specifications, and any such visuals should be understood as marketing materials illustrating genuine Endless Studio products.</p>
+      </div>
+      <div class="foot-base">
+        <span>© 2026 Endless Studio Amsterdam</span>
+        <span>Always Grateful — Class of 2026</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  var items=["Locker Room","Kits for sports clubs","Match · Training · Off the pitch","Crest · Names · Numbers","Always Grateful"];
+  var t=document.getElementById('ticker');
+  if(t){var b=items.map(function(x){return '<span>'+x+'<span class="dot"> ◦ </span></span>';}).join('');t.innerHTML=b+b;}
+  var lang=document.getElementById('lang');
+  if(lang){ document.addEventListener('click',function(e){ if(!lang.contains(e.target)) lang.removeAttribute('open'); }); }
+</script>
+<script src="assets/i18n.js"></script>
+</body>
+</html>
